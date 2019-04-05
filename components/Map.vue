@@ -1,7 +1,11 @@
 <template>
   <div>
+    <!-- Map itself -->
     <div id="map" class="w-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
+    
+    <!-- Circle that expands/collases the map -->
     <div id="circle" class="shadow-lg -mt-10 bg-blue" @click="enlarged = !enlarged" >
+      <!-- Down pointing chevron - Change the svg tag styles to update chevron look -->
       <svg 
         v-if="!enlarged" 
         xmlns="http://www.w3.org/2000/svg" 
@@ -9,6 +13,7 @@
         class="icon-cheveron-down text-white fill-current">
         <path class="secondary" fill-rule="evenodd" d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
       
+      <!-- Up pointing chevron -->
       <svg 
         v-else 
         xmlns="http://www.w3.org/2000/svg" 
@@ -25,10 +30,11 @@ import GoogleMapsLoader from 'google-maps'
 export default {
   data() {
     return {
-      enlarged: false
+      enlarged: false // True means map is expanded
     }
   },
   mounted: () => {
+    //Set up map
     console.log("init map")
     GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
     GoogleMapsLoader.load(function(google) {
@@ -49,7 +55,7 @@ export default {
 
 .map-tall {
   transition: height 0.2s;
-  height: 100%;
+  height: 90%;
 }
 
 #circle {
