@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="map" class="w-full h-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
+    <div id="map" class="w-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
     <div id="circle" class="shadow-lg -mt-10 bg-blue" @click="enlarged = !enlarged" >
       <svg 
         v-if="!enlarged" 
