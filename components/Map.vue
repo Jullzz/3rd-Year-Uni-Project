@@ -2,8 +2,19 @@
   <div>
     <div id="map" class="w-full h-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
     <div id="circle" class="shadow-lg -mt-10 bg-blue" @click="enlarged = !enlarged" >
-      <svg v-if="!enlarged" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-cheveron-down"><path class="secondary" fill-rule="evenodd" d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
-      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-cheveron-up"><path class="secondary" fill-rule="evenodd" d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"/></svg>
+      <svg 
+        v-if="!enlarged" 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        class="icon-cheveron-down text-white fill-current">
+        <path class="secondary" fill-rule="evenodd" d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
+      
+      <svg 
+        v-else 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        class="icon-cheveron-up text-white fill-current">
+        <path class="secondary" fill-rule="evenodd" d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"/></svg>
     </div>
   </div>
 </template>
@@ -32,13 +43,13 @@ export default {
 
 <style>
 .map-short {
-  height: 250px;
+  height: 33%;
   transition: height 0.2s;
 }
 
 .map-tall {
   transition: height 0.2s;
-  height: 600px;
+  height: 100%;
 }
 
 #circle {

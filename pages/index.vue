@@ -13,3 +13,8 @@ export default {
   }
 }
 </script>
+<style>
+html, body, div {
+  height: 100%;
+}
+</style>
