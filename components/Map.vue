@@ -4,7 +4,7 @@
     <div id="map" class="w-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
     
     <!-- Circle that expands/collases the map -->
-    <div id="circle" class="shadow-lg -mt-10 bg-blue" @click="enlarged = !enlarged" >
+    <div id="circle" class="shadow-lg -mt-10 bg-blue cursor-pointer" @click="enlarged = !enlarged" >
       <!-- Down pointing chevron - Change the svg tag styles to update chevron look -->
       <svg 
         v-if="!enlarged" 
