@@ -30,19 +30,40 @@ import GoogleMapsLoader from 'google-maps'
 export default {
   data() {
     return {
-      enlarged: false // True means map is expanded
+      enlarged: false, // True means map is expanded
+      map: null
     }
   },
-  mounted: () => {
-    //Set up map
-    console.log("init map")
-    GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
-    GoogleMapsLoader.load(function(google) {
-      new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: -36.757042, lng: 144.279056}
+  mounted() {
+    this.initMap()
+    this.addMarkers()
+  },
+  methods: {
+    initMap() {
+      //Set up map
+      console.log("init map")
+      var self = this
+      GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
+      GoogleMapsLoader.load(function(google) {
+        self.map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: {lat: -36.757042, lng: 144.279056}
+        });
+        // self.addMarkers(self.map)
       });
-    });
+      // this.addMarkers()
+    },
+    addMarkers() {
+      console.log('adding marker')
+      let self = this
+      GoogleMapsLoader.load(function(google) {
+      var marker = new google.maps.Marker({
+          position: {lat: -36.757234, lng: 144.279113},
+          map: self.map,
+          title: 'Hello World!'
+        });
+      })
+    }
   }
 }
 </script>
