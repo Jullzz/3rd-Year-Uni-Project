@@ -1,6 +1,6 @@
 # testFE2
 
-> My awe-inspiring Nuxt.js project
+> Prototype frontend for PRA Team B
 
 ## Build Setup
 
