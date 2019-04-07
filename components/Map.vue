@@ -50,6 +50,7 @@ export default {
   mounted() { // Lifecycle hook
     this.initMap()
     this.addMarkers()
+    this.addInfoWindows()
   },
 
   methods: {
@@ -66,34 +67,46 @@ export default {
       });
     },
 
-    addMarkers() {
+    addMarkers() { // Adds markers for each data point
+      // TODO: Add onclick event listener to set active data point, pass to parent
       console.log('adding marker')
-      let self = this
+      var self = this
       GoogleMapsLoader.load(function(google) {
         for(let i = 0; i < self.dataPoints.length; i++) {
-          var point = self.dataPoints[i]
-          point.m = new google.maps.Marker({
+          let point = self.dataPoints[i]
+          
+          point.marker = new google.maps.Marker({
             position: point.location,
             map: self.map,
             title: point.title
           });
-
-          point.info = new google.maps.InfoWindow({
-            content: "<div class='infoWindow'>" +
+        }
+      })
+    },
+    addInfoWindows() { // Adds info windows for each data point marker
+      console.log('adding info windows')
+      let self = this
+      GoogleMapsLoader.load(function(google) {
+        for(let i = 0; i < self.dataPoints.length; i++) {
+          let point = self.dataPoints[i]
+          
+          // HTML to be shown in window.
+          // NOTE - Window height is too short by default - Had to explicitly set height for class .gm-style-iw-c
+          let contentString = "<div class='infoWindow text-black'>" +
               "<h1>" + point.title + "</h1>" +
               "<b>Pedestrians:</b> " + point.counts.pedestrian +
-              "<b>Bikes:</b> " + point.counts.bike +
+              "<br /><b>Bikes:</b> " + point.counts.bike +
             "</div>"
+
+          //Construct new window object, store in data point
+          point.info = new google.maps.InfoWindow({
+            content: contentString
           });
-          point.m.addListener('click', function() {
-            point.info.open(self.map, point.m);
-          });
+
+          // Set onHover listeners for the info window to hide/show
+          point.marker.addListener('mouseover', () => point.info.open(self.map, point.marker))
+          point.marker.addListener('mouseout', () => point.info.close())
         }
-        // var marker = new google.maps.Marker({
-        //   position: {lat: -36.757234, lng: 144.279113},
-        //   map: self.map,
-        //   title: 'Hello World!'
-        // });
       })
     }
   }
@@ -113,7 +126,10 @@ export default {
 
 .infoWindow {
   max-height: 600px;
-  background-color: blue;
+}
+
+.gm-style-iw-c {
+  height: 90px;
 }
 
 #circle {
