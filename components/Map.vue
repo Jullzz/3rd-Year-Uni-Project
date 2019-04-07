@@ -31,13 +31,27 @@ export default {
   data() {
     return {
       enlarged: false, // True means map is expanded
-      map: null
+      map: null,
+      dataPoints: [
+        {
+          title: "Rosalind 1",
+          counts: {bike: 136, pedestrian: 195},
+          location: {lat: -36.757234, lng: 144.279113}
+        },
+        {
+          title: "Rosalind 2",
+          counts: {bike: 100, pedestrian: 131},
+          location: {lat: -36.748794, lng: 144.290756}
+        }
+      ]
     }
   },
-  mounted() {
+
+  mounted() { // Lifecycle hook
     this.initMap()
     this.addMarkers()
   },
+
   methods: {
     initMap() {
       //Set up map
@@ -46,22 +60,40 @@ export default {
       GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
       GoogleMapsLoader.load(function(google) {
         self.map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          zoom: 14,
           center: {lat: -36.757042, lng: 144.279056}
         });
-        // self.addMarkers(self.map)
       });
-      // this.addMarkers()
     },
+
     addMarkers() {
       console.log('adding marker')
       let self = this
       GoogleMapsLoader.load(function(google) {
-      var marker = new google.maps.Marker({
-          position: {lat: -36.757234, lng: 144.279113},
-          map: self.map,
-          title: 'Hello World!'
-        });
+        for(let i = 0; i < self.dataPoints.length; i++) {
+          var point = self.dataPoints[i]
+          point.m = new google.maps.Marker({
+            position: point.location,
+            map: self.map,
+            title: point.title
+          });
+
+          point.info = new google.maps.InfoWindow({
+            content: "<div class='infoWindow'>" +
+              "<h1>" + point.title + "</h1>" +
+              "<b>Pedestrians:</b> " + point.counts.pedestrian +
+              "<b>Bikes:</b> " + point.counts.bike +
+            "</div>"
+          });
+          point.m.addListener('click', function() {
+            point.info.open(self.map, point.m);
+          });
+        }
+        // var marker = new google.maps.Marker({
+        //   position: {lat: -36.757234, lng: 144.279113},
+        //   map: self.map,
+        //   title: 'Hello World!'
+        // });
       })
     }
   }
@@ -77,6 +109,11 @@ export default {
 .map-tall {
   transition: height 0.2s;
   height: 90%;
+}
+
+.infoWindow {
+  max-height: 600px;
+  background-color: blue;
 }
 
 #circle {
