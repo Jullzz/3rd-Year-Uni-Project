@@ -21,36 +21,61 @@
         class="icon-cheveron-up text-white fill-current">
         <path class="secondary" fill-rule="evenodd" d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"/></svg>
     </div>
+
     <button 
       @click="heatmapOn = !heatmapOn" 
       class="float-right text-black block mr-6 mt-2 border border-black rounded p-2">
       Heatmap toggle
     </button>
+
+    <Select 
+      v-if="map"
+      id="heatmapSelect"
+      v-model="heatmapType"
+      class="absolute shadow-lg text-black"
+      >
+      HeatMap Type
+        <Option :value="1" >Normal Heatmap</Option>
+        <Option :value="2" >Pedestrians Only</Option>
+        <Option :value="3" >Cyclists only</Option>
+        <Option :value="0" >No Heatmap</Option>
+      </DropdownMenu>
+    </Select>
   </div>
 </template>
 
 <script>
 import GoogleMapsLoader from 'google-maps'
+import {Select, Option} from 'iview'
 
 export default {
+  components: {
+    Select,
+    Option
+  },
   props: {
     pointUpdate: null
   },
   data() {
     return {
       enlarged: false, // True means map is expanded
-      map: null,
-      heatmapOn: true,
-      heatmap: null,
-      dataPoints: [
+      map: null, // Map object
+      heatmap: null, // Heatmap object
+      heatmapType: 1, // Type of heatmap layer
+        // 0 == No heatmap
+        // 1 == All hits
+        // 2 == Pedestrians only
+        // 3 == Cyclists only
+      heatmapData: null,
+      dataPoints: [ // Fake test data
         {
           title: "Rosalind 1",
-          counts: {bike: 136, pedestrian: 195},
+          counts: {bike: 264, pedestrian: 23},
           location: {lat: -36.757234, lng: 144.279113}
         },
         {
           title: "Rosalind 2",
-          counts: {bike: 23, pedestrian: 63},
+          counts: {bike: 0, pedestrian: 241},
           location: {lat: -36.748794, lng: 144.290756}
         }
       ]
@@ -58,25 +83,66 @@ export default {
   },
 
   watch: {
-    heatmapOn: function() {
+    heatmapOn: function() { // Toggle heatmap
       this.heatmap.setMap((this.heatmapOn) ? this.map : null)
+    },
+    heatmapType: function() {
+      switch (this.heatmapType) {
+        case 0:
+          console.log("case 0")
+          this.heatmap.setMap(null)
+          return
+          break;
+        
+        case 1:
+          console.log("case 1")
+          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
+            location: new google.maps.LatLng(point.location.lat, point.location.lng),
+            weight: (point.counts.bike + point.counts.pedestrian)*10000
+          }}))
+          break
+
+        case 2:
+          console.log("case 2")
+          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
+            location: new google.maps.LatLng(point.location.lat, point.location.lng),
+            weight: (point.counts.pedestrian)*10000
+          }}))
+          break
+
+        case 3:
+          console.log("case 3")
+          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
+            location: new google.maps.LatLng(point.location.lat, point.location.lng),
+            weight: (point.counts.bike)*10000
+          }}))
+          break
+
+        default:
+          return
+      }
+      // this.heatmap = new google.maps.visualization.HeatmapLayer({
+      //   data: heatMapData
+      // });
+      this.setMap();
     }
   },
 
   mounted() { // Lifecycle hook
-    this.initMap()
-    this.addMarkers()
-    this.addInfoWindows()
-    this.addHeatmap()
+    this.initMap() // Set up the map   
+    this.addMarkers() // Add the markers to the map - MAP MUST BE INITIALISED FIRST
+    this.addInfoWindows() // Add infor windows - MARKERS MUST BE ADDED FIRST  
+    this.addHeatmap() // Add heatmap - MAP MUST BE SET UP FIRST
   },
 
   methods: {
     initMap() {
       //Set up map
       console.log("init map")
-      var self = this
-      GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
-      GoogleMapsLoader.LIBRARIES = ['places', 'visualization'];
+      GoogleMapsLoader.KEY = process.env.API_KEY //API Key - Linked to James's account - DO NOT STEAL
+      GoogleMapsLoader.LIBRARIES = ['places', 'visualization'] //Google maps libs used - feel free to add more as needed
+      
+      var self = this // Give access to state from callback
       GoogleMapsLoader.load(function(google) {
         self.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
@@ -115,9 +181,9 @@ export default {
           // NOTE - Window height is too short by default - Had to explicitly set height for class .gm-style-iw-c
           let contentString = "<div class='infoWindow text-black'>" +
               "<h1>" + point.title + "</h1>" +
-              "<b>Pedestrians:</b> " + point.counts.pedestrian +
-              "<br /><b>Bikes:</b> " + point.counts.bike +
-            "</div>"
+              "Pedestrians:<b> " + point.counts.pedestrian +
+              "<br /></b>Bikes:<b> " + point.counts.bike +
+            "</b></div>"
 
           //Construct new window object, store in data point
           point.info = new google.maps.InfoWindow({
@@ -133,18 +199,23 @@ export default {
     addHeatmap() {
       let self = this
       GoogleMapsLoader.load(function(google) {
-        let heatMapData = self.dataPoints.map(point => {return {
+        self.heatmapData = new google.maps.MVCArray(self.dataPoints.map(point => { return {
           location: new google.maps.LatLng(point.location.lat, point.location.lng),
           weight: (point.counts.bike + point.counts.pedestrian)*10000
-        }})
+        }}))
 
         self.heatmap = new google.maps.visualization.HeatmapLayer({
-          data: heatMapData
+          data: self.heatmapData
         });
-        self.heatmap.setMap(self.map);
-        self.heatmap.set('radius', 25)        
-        // heatmap.set('dissipating', false)
+        // self.heatmap.setMap(self.map);
+        // self.heatmap.set('radius', 25)        
+        // heatmap.set('dissipating', false)\
+        self.setMap()
       });
+    },
+    setMap() {
+      this.heatmap.setMap(this.map)
+      this.heatmap.set('radius', 25)
     }
   }
 }
@@ -183,5 +254,14 @@ export default {
 
 #map {
   overflow: -moz-hidden-unscrollable;
+}
+
+#heatmapSelect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 70px;
+  margin-top: 9px;
+  width: 200px;
 }
 </style>

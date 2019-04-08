@@ -35,6 +35,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {src: '~plugins/iview', ssr: true}
   ],
 
   /*
@@ -61,5 +62,8 @@ module.exports = {
     extend(config, ctx) {
       
     }
+  },
+  env: {
+    API_KEY: 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
   }
 }
