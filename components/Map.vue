@@ -88,30 +88,25 @@ export default {
     },
     heatmapType: function() {
       switch (this.heatmapType) {
-        case 0:
-          console.log("case 0")
+        case 0: // Hide heatmap
           this.heatmap.setMap(null)
           return
-          break;
         
-        case 1:
-          console.log("case 1")
+        case 1: // total hits
           this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
             location: new google.maps.LatLng(point.location.lat, point.location.lng),
             weight: (point.counts.bike + point.counts.pedestrian)*10000
           }}))
           break
 
-        case 2:
-          console.log("case 2")
+        case 2: // Pedestrians Only
           this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
             location: new google.maps.LatLng(point.location.lat, point.location.lng),
             weight: (point.counts.pedestrian)*10000
           }}))
           break
 
-        case 3:
-          console.log("case 3")
+        case 3: // Cyclists only
           this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
             location: new google.maps.LatLng(point.location.lat, point.location.lng),
             weight: (point.counts.bike)*10000
@@ -121,9 +116,7 @@ export default {
         default:
           return
       }
-      // this.heatmap = new google.maps.visualization.HeatmapLayer({
-      //   data: heatMapData
-      // });
+
       this.setMap();
     }
   },
@@ -199,21 +192,21 @@ export default {
     addHeatmap() {
       let self = this
       GoogleMapsLoader.load(function(google) {
-        self.heatmapData = new google.maps.MVCArray(self.dataPoints.map(point => { return {
-          location: new google.maps.LatLng(point.location.lat, point.location.lng),
-          weight: (point.counts.bike + point.counts.pedestrian)*10000
+        self.heatmapData = new google.maps.MVCArray(
+          self.dataPoints.map(point => { 
+            return {
+              location: new google.maps.LatLng(point.location.lat, point.location.lng),
+              weight: (point.counts.bike + point.counts.pedestrian)*10000
         }}))
 
         self.heatmap = new google.maps.visualization.HeatmapLayer({
           data: self.heatmapData
         });
-        // self.heatmap.setMap(self.map);
-        // self.heatmap.set('radius', 25)        
-        // heatmap.set('dissipating', false)\
+
         self.setMap()
       });
     },
-    setMap() {
+    setMap() { // Use whenever updating heatmap
       this.heatmap.setMap(this.map)
       this.heatmap.set('radius', 25)
     }
