@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="map-container" class="w-full" :class="(!enlarged) ? 'map-short': 'map-tall'">
     <!-- Map itself -->
-    <div id="map" class="w-full bg-red z-0" :class="(!enlarged) ? 'map-short': 'map-tall'" ></div>
+    <div id="map" class="w-full bg-red z-0 h-full" ></div>
     
     <!-- Circle that expands/collases the map -->
     <div id="circle" class="shadow-lg -mt-10 bg-blue cursor-pointer" @click="enlarged = !enlarged" >
@@ -28,6 +28,9 @@
 import GoogleMapsLoader from 'google-maps'
 
 export default {
+  props: {
+    pointUpdate: null
+  },
   data() {
     return {
       enlarged: false, // True means map is expanded
@@ -80,6 +83,8 @@ export default {
             map: self.map,
             title: point.title
           });
+
+          point.marker.addListener('click', () => self.pointUpdate(point.title))
         }
       })
     },
@@ -142,5 +147,9 @@ export default {
   border-radius: 40px;
   left: 50%;
   margin-left: -40px;
+}
+
+#map {
+  overflow: -moz-hidden-unscrollable;
 }
 </style>
