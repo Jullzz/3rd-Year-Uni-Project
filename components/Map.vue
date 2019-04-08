@@ -21,6 +21,11 @@
         class="icon-cheveron-up text-white fill-current">
         <path class="secondary" fill-rule="evenodd" d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"/></svg>
     </div>
+    <button 
+      @click="heatmapOn = !heatmapOn" 
+      class="float-right text-black block mr-6 mt-2 border border-black rounded p-2">
+      Heatmap toggle
+    </button>
   </div>
 </template>
 
@@ -35,6 +40,8 @@ export default {
     return {
       enlarged: false, // True means map is expanded
       map: null,
+      heatmapOn: true,
+      heatmap: null,
       dataPoints: [
         {
           title: "Rosalind 1",
@@ -43,10 +50,16 @@ export default {
         },
         {
           title: "Rosalind 2",
-          counts: {bike: 100, pedestrian: 131},
+          counts: {bike: 23, pedestrian: 63},
           location: {lat: -36.748794, lng: 144.290756}
         }
       ]
+    }
+  },
+
+  watch: {
+    heatmapOn: function() {
+      this.heatmap.setMap((this.heatmapOn) ? this.map : null)
     }
   },
 
@@ -54,6 +67,7 @@ export default {
     this.initMap()
     this.addMarkers()
     this.addInfoWindows()
+    this.addHeatmap()
   },
 
   methods: {
@@ -62,6 +76,7 @@ export default {
       console.log("init map")
       var self = this
       GoogleMapsLoader.KEY = 'AIzaSyBVAaFiYCWzkMHq2O9HNYAfeGpo6u8ilKQ'
+      GoogleMapsLoader.LIBRARIES = ['places', 'visualization'];
       GoogleMapsLoader.load(function(google) {
         self.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
@@ -71,7 +86,6 @@ export default {
     },
 
     addMarkers() { // Adds markers for each data point
-      // TODO: Add onclick event listener to set active data point, pass to parent
       console.log('adding marker')
       var self = this
       GoogleMapsLoader.load(function(google) {
@@ -84,6 +98,8 @@ export default {
             title: point.title
           });
 
+          // Set active daat point in parent
+          // TODO: Change to use a unique ID
           point.marker.addListener('click', () => self.pointUpdate(point.title))
         }
       })
@@ -113,6 +129,22 @@ export default {
           point.marker.addListener('mouseout', () => point.info.close())
         }
       })
+    },
+    addHeatmap() {
+      let self = this
+      GoogleMapsLoader.load(function(google) {
+        let heatMapData = self.dataPoints.map(point => {return {
+          location: new google.maps.LatLng(point.location.lat, point.location.lng),
+          weight: (point.counts.bike + point.counts.pedestrian)*10000
+        }})
+
+        self.heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatMapData
+        });
+        self.heatmap.setMap(self.map);
+        self.heatmap.set('radius', 25)        
+        // heatmap.set('dissipating', false)
+      });
     }
   }
 }
