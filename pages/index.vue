@@ -1,34 +1,42 @@
 <template>
-  <div class="w-full h-full" id="main" >
-    <Map class="w-full" :pointUpdate="updateActivePoint" ></Map>
+  <div class="w-full h-full" id="main">
+    <Map class="w-full" :pointUpdate="updateActivePoint"></Map>
     <h1 v-if="activePoint === null">No point selected</h1>
-    <h1 v-else>{{activePoint}}</h1>
+    <h1 v-else>{{ activePoint }}</h1>
+  </div>
+  <div>
+    <DoughnutChart />
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import Map from '~/components/Map.vue'
+import Logo from "~/components/Logo.vue";
+import Map from "~/components/Map.vue";
+import DoughnutChart from "@/components/DoughnutChart.vue";
 
 export default {
   components: {
     Logo,
-    Map
+    Map,
+    DoughnutChart
   },
   data() {
     return {
       activePoint: null
-    }
+    };
   },
   methods: {
     updateActivePoint(newPoint) {
-      this.activePoint = newPoint
+      this.activePoint = newPoint;
     }
   }
-}
+};
 </script>
 <style>
-html, body, #__nuxt, #__layout {
+html,
+body,
+#__nuxt,
+#__layout {
   height: 100%;
 }
 </style>
