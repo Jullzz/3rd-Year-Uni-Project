@@ -5,7 +5,7 @@
     <h1 v-else>{{ activePoint }}</h1>
   </div>
   <div>
-    <DoughnutChart />
+    <DoughnutChart :chartdata="chartdata" :options="options" />
   </div>
 </template>
 
@@ -22,7 +22,21 @@ export default {
   },
   data() {
     return {
-      activePoint: null
+      activePoint: null,
+      options: {
+        responsive: true,
+        mainatainAspectRatio: false
+      },
+      chartdata: {
+        labels: ["Jan", "Feb", "Mar"],
+        datasets: [
+          {
+            label: "my activity",
+            backgroundColor: "#dd4b39",
+            data: [40, 50, 10]
+          }
+        ]
+      }
     };
   },
   methods: {
