@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: api
+    ports:
+     - "8000:8000"
+    volumes:
+     - ./api:/usr/src/app
+    links:
+      - db
+  db:
+    image: influxdb
+    ports:
+     - "8086:8086"
