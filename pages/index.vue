@@ -3,45 +3,42 @@
     <Map class="w-full" :pointUpdate="updateActivePoint"></Map>
     <h1 v-if="activePoint === null">No point selected</h1>
     <h1 v-else>{{ activePoint }}</h1>
-  </div>
-  <div>
-    <DoughnutChart :chartdata="chartdata" :options="options" />
+    <div>
+      <DoughnutCharts :Event="counts" />
+    </div>
+    <div>
+      <LineChart :bike="bike" :pedestrian="pedestrian" />
+    </div>
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
 import Map from "~/components/Map.vue";
-import DoughnutChart from "@/components/DoughnutChart.vue";
+import DoughnutCharts from "~/components/DoughnutCharts.vue";
+import LineChart from "~/components/LineChart.vue";
 
 export default {
   components: {
     Logo,
     Map,
-    DoughnutChart
+    DoughnutCharts,
+    LineChart
   },
   data() {
     return {
       activePoint: null,
-      options: {
-        responsive: true,
-        mainatainAspectRatio: false
-      },
-      chartdata: {
-        labels: ["Jan", "Feb", "Mar"],
-        datasets: [
-          {
-            label: "my activity",
-            backgroundColor: "#dd4b39",
-            data: [40, 50, 10]
-          }
-        ]
-      }
+      counts: null,
+      bike: null,
+      pedestrian: null
     };
   },
   methods: {
     updateActivePoint(newPoint) {
-      this.activePoint = newPoint;
+      this.activePoint = newPoint.title;
+      this.counts = newPoint.counts;
+      this.bike = newPoint.bike;
+      this.pedestrian = newPoint.pedestrian;
     }
   }
 };

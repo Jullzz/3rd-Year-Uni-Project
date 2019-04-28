@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import GoogleMapsLoader from 'google-maps'
-import {Select, Option} from 'iview'
+import GoogleMapsLoader from "google-maps";
+import { Select, Option } from "iview";
 
 export default {
   components: {
@@ -62,121 +62,156 @@ export default {
       map: null, // Map object
       heatmap: null, // Heatmap object
       heatmapType: 1, // Type of heatmap layer
-        // 0 == No heatmap
-        // 1 == All hits
-        // 2 == Pedestrians only
-        // 3 == Cyclists only
+      // 0 == No heatmap
+      // 1 == All hits
+      // 2 == Pedestrians only
+      // 3 == Cyclists only
       heatmapData: null,
-      dataPoints: [ // Fake test data
+      dataPoints: [
+        // Fake test data
         {
           title: "Rosalind 1",
-          counts: {bike: 264, pedestrian: 23},
-          location: {lat: -36.757234, lng: 144.279113}
+          counts: { bike: 264, pedestrian: 23 },
+          bike: [10, 20, 40, 30, 50, 60],
+          pedestrian: [1, 5, 6, 40, 60, 10],
+          location: { lat: -36.757234, lng: 144.279113 }
         },
         {
           title: "Rosalind 2",
-          counts: {bike: 0, pedestrian: 241},
-          location: {lat: -36.748794, lng: 144.290756}
+          counts: { bike: 100, pedestrian: 241 },
+          bike: [10, 20, 20, 30, 40, 30],
+          pedestrian: [1, 5, 6, 40, 60, 10],
+          location: { lat: -36.748794, lng: 144.290756 }
         }
       ]
-    }
+    };
   },
 
   watch: {
-    heatmapOn: function() { // Toggle heatmap
-      this.heatmap.setMap((this.heatmapOn) ? this.map : null)
+    heatmapOn: function() {
+      // Toggle heatmap
+      this.heatmap.setMap(this.heatmapOn ? this.map : null);
     },
     heatmapType: function() {
       switch (this.heatmapType) {
         case 0: // Hide heatmap
-          this.heatmap.setMap(null)
-          return
-        
+          this.heatmap.setMap(null);
+          return;
+
         case 1: // total hits
-          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
-            location: new google.maps.LatLng(point.location.lat, point.location.lng),
-            weight: (point.counts.bike + point.counts.pedestrian)*10000
-          }}))
-          break
+          this.heatmap.data = new google.maps.MVCArray(
+            this.dataPoints.map(point => {
+              return {
+                location: new google.maps.LatLng(
+                  point.location.lat,
+                  point.location.lng
+                ),
+                weight: (point.counts.bike + point.counts.pedestrian) * 10000
+              };
+            })
+          );
+          break;
 
         case 2: // Pedestrians Only
-          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
-            location: new google.maps.LatLng(point.location.lat, point.location.lng),
-            weight: (point.counts.pedestrian)*10000
-          }}))
-          break
+          this.heatmap.data = new google.maps.MVCArray(
+            this.dataPoints.map(point => {
+              return {
+                location: new google.maps.LatLng(
+                  point.location.lat,
+                  point.location.lng
+                ),
+                weight: point.counts.pedestrian * 10000
+              };
+            })
+          );
+          break;
 
         case 3: // Cyclists only
-          this.heatmap.data = new google.maps.MVCArray(this.dataPoints.map(point => { return {
-            location: new google.maps.LatLng(point.location.lat, point.location.lng),
-            weight: (point.counts.bike)*10000
-          }}))
-          break
+          this.heatmap.data = new google.maps.MVCArray(
+            this.dataPoints.map(point => {
+              return {
+                location: new google.maps.LatLng(
+                  point.location.lat,
+                  point.location.lng
+                ),
+                weight: point.counts.bike * 10000
+              };
+            })
+          );
+          break;
 
         default:
-          return
+          return;
       }
 
       this.setMap();
     }
   },
 
-  mounted() { // Lifecycle hook
-    this.initMap() // Set up the map   
-    this.addMarkers() // Add the markers to the map - MAP MUST BE INITIALISED FIRST
-    this.addInfoWindows() // Add infor windows - MARKERS MUST BE ADDED FIRST  
-    this.addHeatmap() // Add heatmap - MAP MUST BE SET UP FIRST
+  mounted() {
+    // Lifecycle hook
+    this.initMap(); // Set up the map
+    this.addMarkers(); // Add the markers to the map - MAP MUST BE INITIALISED FIRST
+    this.addInfoWindows(); // Add infor windows - MARKERS MUST BE ADDED FIRST
+    this.addHeatmap(); // Add heatmap - MAP MUST BE SET UP FIRST
   },
 
   methods: {
     initMap() {
       //Set up map
-      console.log("init map")
-      GoogleMapsLoader.KEY = process.env.API_KEY //API Key - Linked to James's account - DO NOT STEAL
-      GoogleMapsLoader.LIBRARIES = ['places', 'visualization'] //Google maps libs used - feel free to add more as needed
-      
-      var self = this // Give access to state from callback
+      console.log("init map");
+      GoogleMapsLoader.KEY = process.env.API_KEY; //API Key - Linked to James's account - DO NOT STEAL
+      GoogleMapsLoader.LIBRARIES = ["places", "visualization"]; //Google maps libs used - feel free to add more as needed
+
+      var self = this; // Give access to state from callback
       GoogleMapsLoader.load(function(google) {
-        self.map = new google.maps.Map(document.getElementById('map'), {
+        self.map = new google.maps.Map(document.getElementById("map"), {
           zoom: 14,
-          center: {lat: -36.757042, lng: 144.279056}
+          center: { lat: -36.757042, lng: 144.279056 }
         });
       });
     },
 
-    addMarkers() { // Adds markers for each data point
-      console.log('adding marker')
-      var self = this
+    addMarkers() {
+      // Adds markers for each data point
+      console.log("adding marker");
+      var self = this;
       GoogleMapsLoader.load(function(google) {
-        for(let i = 0; i < self.dataPoints.length; i++) {
-          let point = self.dataPoints[i]
-          
+        for (let i = 0; i < self.dataPoints.length; i++) {
+          let point = self.dataPoints[i];
+
           point.marker = new google.maps.Marker({
             position: point.location,
             map: self.map,
             title: point.title
           });
 
-          // Set active daat point in parent
+          // Set active data point in parent
           // TODO: Change to use a unique ID
-          point.marker.addListener('click', () => self.pointUpdate(point.title))
+          point.marker.addListener("click", () => self.pointUpdate(point));
         }
-      })
+      });
     },
-    addInfoWindows() { // Adds info windows for each data point marker
-      console.log('adding info windows')
-      let self = this
+    addInfoWindows() {
+      // Adds info windows for each data point marker
+      console.log("adding info windows");
+      let self = this;
       GoogleMapsLoader.load(function(google) {
-        for(let i = 0; i < self.dataPoints.length; i++) {
-          let point = self.dataPoints[i]
-          
+        for (let i = 0; i < self.dataPoints.length; i++) {
+          let point = self.dataPoints[i];
+
           // HTML to be shown in window.
           // NOTE - Window height is too short by default - Had to explicitly set height for class .gm-style-iw-c
-          let contentString = "<div class='infoWindow text-black'>" +
-              "<h1>" + point.title + "</h1>" +
-              "Pedestrians:<b> " + point.counts.pedestrian +
-              "<br /></b>Bikes:<b> " + point.counts.bike +
-            "</b></div>"
+          let contentString =
+            "<div class='infoWindow text-black'>" +
+            "<h1>" +
+            point.title +
+            "</h1>" +
+            "Pedestrians:<b> " +
+            point.counts.pedestrian +
+            "<br /></b>Bikes:<b> " +
+            point.counts.bike +
+            "</b></div>";
 
           //Construct new window object, store in data point
           point.info = new google.maps.InfoWindow({
@@ -184,34 +219,42 @@ export default {
           });
 
           // Set onHover listeners for the info window to hide/show
-          point.marker.addListener('mouseover', () => point.info.open(self.map, point.marker))
-          point.marker.addListener('mouseout', () => point.info.close())
+          point.marker.addListener("mouseover", () =>
+            point.info.open(self.map, point.marker)
+          );
+          point.marker.addListener("mouseout", () => point.info.close());
         }
-      })
+      });
     },
     addHeatmap() {
-      let self = this
+      let self = this;
       GoogleMapsLoader.load(function(google) {
         self.heatmapData = new google.maps.MVCArray(
-          self.dataPoints.map(point => { 
+          self.dataPoints.map(point => {
             return {
-              location: new google.maps.LatLng(point.location.lat, point.location.lng),
-              weight: (point.counts.bike + point.counts.pedestrian)*10000
-        }}))
+              location: new google.maps.LatLng(
+                point.location.lat,
+                point.location.lng
+              ),
+              weight: (point.counts.bike + point.counts.pedestrian) * 10000
+            };
+          })
+        );
 
         self.heatmap = new google.maps.visualization.HeatmapLayer({
           data: self.heatmapData
         });
 
-        self.setMap()
+        self.setMap();
       });
     },
-    setMap() { // Use whenever updating heatmap
-      this.heatmap.setMap(this.map)
-      this.heatmap.set('radius', 25)
+    setMap() {
+      // Use whenever updating heatmap
+      this.heatmap.setMap(this.map);
+      this.heatmap.set("radius", 25);
     }
   }
-}
+};
 </script>
 
 <style>
@@ -234,7 +277,7 @@ export default {
 }
 
 #circle {
-  position:absolute;
+  position: absolute;
   z-index: 100;
   width: 80px;
   height: 80px;
