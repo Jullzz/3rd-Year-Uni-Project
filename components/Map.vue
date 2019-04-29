@@ -299,6 +299,9 @@ export default {
 .ivu-select-item-selected {
   color: #2f8132;
 }
+.ivu-select-item-selected:hover {
+  color: #421987;
+}
 
 #circle {
   position: absolute;
