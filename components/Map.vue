@@ -42,13 +42,6 @@
       </svg>
     </div>
 
-    <button
-      @click="heatmapOn = !heatmapOn"
-      class="float-right text-black block mr-6 mt-2 border border-black rounded p-2"
-    >
-      Heatmap toggle
-    </button>
-
     <Select
       v-if="map"
       id="heatmapSelect"
