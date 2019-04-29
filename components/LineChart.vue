@@ -40,17 +40,17 @@ export default {
         datasets: [
           {
             label: "Bike",
-            borderColor: "#f87979",
+            borderColor: "#E66A6A",
             data: this.bike
           },
           {
             label: "Pedestrian",
-            borderColor: "#5bf8bf",
+            borderColor: "#8662C7",
             data: this.pedestrian
           },
           {
             label: "Total",
-            borderColor: "black",
+            borderColor: "#7BC47F",
             data: this.total
           }
         ]

@@ -4,7 +4,7 @@
     <div id="map" class="w-full bg-red z-0 h-full" ></div>
     
     <!-- Circle that expands/collases the map -->
-    <div id="circle" class="shadow-lg -mt-10 bg-blue cursor-pointer" @click="enlarged = !enlarged" >
+    <div id="circle" class="shadow-lg -mt-10 bg-green-500 cursor-pointer" @click="enlarged = !enlarged" >
       <!-- Down pointing chevron - Change the svg tag styles to update chevron look -->
       <svg 
         v-if="!enlarged" 
@@ -39,7 +39,6 @@
         <Option :value="2" >Pedestrians Only</Option>
         <Option :value="3" >Cyclists only</Option>
         <Option :value="0" >No Heatmap</Option>
-      </DropdownMenu>
     </Select>
   </div>
 </template>
@@ -274,6 +273,10 @@ export default {
 
 .gm-style-iw-c {
   height: 90px;
+}
+
+.ivu-select-item-selected {
+  color:#2F8132;
 }
 
 #circle {

@@ -42,14 +42,14 @@ export default {
           {
             label: "Data One",
             backgroundColor: "#f87979",
-            backgroundColor: ["red", "blue"],
-            borderColor: "rgba(255,99,132,1)",
+            backgroundColor: ["#7BC47F", "#207227"],
+            borderColor: "#05400A",
             borderWidth: 2,
-            hoverBackgroundColor: ["green", "yellow"],
-            hoverBorderColor: "rgba(255,99,132,1)",
+            hoverBackgroundColor: ["#C1EAC5", "#05400A"],
+            //hoverBorderColor: "rgba(255,99,132,1)",
             data: [this.bike, this.pedestrian]
           }
-        ]
+        ] 
       };
     }
   }

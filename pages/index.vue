@@ -6,7 +6,7 @@
     <div>
       <DoughnutCharts :Event="counts" />
     </div>
-    <div>
+    <div class="mt-10">
       <LineChart :bike="bike" :pedestrian="pedestrian" />
     </div>
   </div>
