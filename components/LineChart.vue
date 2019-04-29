@@ -20,6 +20,16 @@ export default {
       datacollection: null
     };
   },
+  computed: {
+    total: function() {
+      var sum = []
+      var ped = this.pedestrian
+      this.bike.forEach((num, index) => {
+        sum.push(num + ped[index])
+      });
+      return sum
+    }
+  },
   beforeUpdate() {
     this.fillData();
   },
@@ -37,6 +47,11 @@ export default {
             label: "Pedestrian",
             borderColor: "#5bf8bf",
             data: this.pedestrian
+          },
+          {
+            label: "Total",
+            borderColor: "black",
+            data: this.total
           }
         ]
       };
