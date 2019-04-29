@@ -4,10 +4,14 @@
     <h1 v-if="activePoint === null">No point selected</h1>
     <h1 v-else>{{ activePoint }}</h1>
     <div>
+<<<<<<< HEAD
       <DoughnutCharts :Event="counts" />
     </div>
     <div>
       <LineChart :bike="bike" :pedestrian="pedestrian" />
+=======
+      <DoughnutChart />
+>>>>>>> origin/Doughnut-Chart-Proto
     </div>
   </div>
 </template>
