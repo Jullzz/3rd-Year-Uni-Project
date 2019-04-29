@@ -17,12 +17,11 @@ app.listen(HTTP_PORT, () => {
 
 // Root path
 app.get("/", (req, res, next) => {
-    console.log('james')
-    res.json({"data": "hello"})
+    res.json({"API Working?": "true"})
 });
 
 app.get("/api/getdbdata", (req, res, next) => {
-    influx.query('SELECT value FROM cpu_load_short').then(data =>
+    influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data));
     //res.json(data)
 });
