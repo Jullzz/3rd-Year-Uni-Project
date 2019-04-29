@@ -22,12 +22,12 @@ export default {
   },
   computed: {
     total: function() {
-      var sum = []
-      var ped = this.pedestrian
+      var sum = [];
+      var ped = this.pedestrian;
       this.bike.forEach((num, index) => {
-        sum.push(num + ped[index])
+        sum.push(num + ped[index]);
       });
-      return sum
+      return sum;
     }
   },
   beforeUpdate() {
@@ -36,21 +36,33 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: ["1pm", "2pm", "3pm", "4pm", "5pm"],
+        labels: ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"],
         datasets: [
           {
             label: "Bike",
             borderColor: "#E66A6A",
+            pointBackgroundColor: "#E66A6A",
+            pointRadius: 5,
+            pointHoverBackgroundColor: "#E66A6A",
+            pointHoverRadius: 7,
             data: this.bike
           },
           {
             label: "Pedestrian",
             borderColor: "#8662C7",
+            pointBackgroundColor: "#8662C7",
+            pointRadius: 5,
+            pointHoverBackgroundColor: "#8662C7",
+            pointHoverRadius: 7,
             data: this.pedestrian
           },
           {
             label: "Total",
             borderColor: "#7BC47F",
+            pointBackgroundColor: "#7BC47F",
+            pointRadius: 5,
+            pointHoverBackgroundColor: "#7BC47F",
+            pointHoverRadius: 7,
             data: this.total
           }
         ]

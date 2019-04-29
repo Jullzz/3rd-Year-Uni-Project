@@ -1,44 +1,65 @@
 <template>
-  <div id="map-container" class="w-full" :class="(!enlarged) ? 'map-short': 'map-tall'">
+  <div
+    id="map-container"
+    class="w-full"
+    :class="!enlarged ? 'map-short' : 'map-tall'"
+  >
     <!-- Map itself -->
-    <div id="map" class="w-full bg-red z-0 h-full" ></div>
-    
+    <div id="map" class="w-full bg-red z-0 h-full"></div>
+
     <!-- Circle that expands/collases the map -->
-    <div id="circle" class="shadow-lg -mt-10 bg-green-500 cursor-pointer" @click="enlarged = !enlarged" >
+    <div
+      id="circle"
+      class="shadow-lg -mt-10 bg-green-500 cursor-pointer"
+      @click="enlarged = !enlarged"
+    >
       <!-- Down pointing chevron - Change the svg tag styles to update chevron look -->
-      <svg 
-        v-if="!enlarged" 
-        xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 24 24" 
-        class="icon-cheveron-down text-white fill-current">
-        <path class="secondary" fill-rule="evenodd" d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
-      
+      <svg
+        v-if="!enlarged"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="icon-cheveron-down text-white fill-current"
+      >
+        <path
+          class="secondary"
+          fill-rule="evenodd"
+          d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"
+        />
+      </svg>
+
       <!-- Up pointing chevron -->
-      <svg 
-        v-else 
-        xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 24 24" 
-        class="icon-cheveron-up text-white fill-current">
-        <path class="secondary" fill-rule="evenodd" d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"/></svg>
+      <svg
+        v-else
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="icon-cheveron-up text-white fill-current"
+      >
+        <path
+          class="secondary"
+          fill-rule="evenodd"
+          d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"
+        />
+      </svg>
     </div>
 
-    <button 
-      @click="heatmapOn = !heatmapOn" 
-      class="float-right text-black block mr-6 mt-2 border border-black rounded p-2">
+    <button
+      @click="heatmapOn = !heatmapOn"
+      class="float-right text-black block mr-6 mt-2 border border-black rounded p-2"
+    >
       Heatmap toggle
     </button>
 
-    <Select 
+    <Select
       v-if="map"
       id="heatmapSelect"
       v-model="heatmapType"
       class="absolute shadow-lg text-black"
-      >
+    >
       HeatMap Type
-        <Option :value="1" >Normal Heatmap</Option>
-        <Option :value="2" >Pedestrians Only</Option>
-        <Option :value="3" >Cyclists only</Option>
-        <Option :value="0" >No Heatmap</Option>
+      <Option :value="1">Normal Heatmap</Option>
+      <Option :value="2">Pedestrians Only</Option>
+      <Option :value="3">Cyclists only</Option>
+      <Option :value="0">No Heatmap</Option>
     </Select>
   </div>
 </template>
@@ -276,7 +297,7 @@ export default {
 }
 
 .ivu-select-item-selected {
-  color:#2F8132;
+  color: #2f8132;
 }
 
 #circle {
