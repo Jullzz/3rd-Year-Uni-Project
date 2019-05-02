@@ -22,11 +22,21 @@ app.get("/", (req, res, next) => {
 
 app.get("/api/getdbdata", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
-        res.json(data));
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
     //res.json(data)
 });
 
-app.get("/api/post/insertData", (req, res, next) => {
-    insertToDB(req.data)
-    res.json({"ok": True})
+app.get("/api/1", (req, res, next) => {
+    influx.query('CREATE DATABASE mydb').then(data =>
+    res.json(data)).catch(err => res.status(500).json({error: err.message}));
+});
+
+app.get("/api/3", (req, res, next) => {
+    influx.query('INSERT INTO "mydb" cpu,host=serverA,region=us_west value=0.64').then(data =>
+    res.json(data)).catch(err => res.status(500).json({error: err.message}));
+}); //INSERT DOES NOT WORK
+
+app.get("/api/2", (req, res, next) => {
+    influx.query('SHOW DATABASES').then(data =>
+    res.json(data)).catch(err => res.status(500).json({error: err.message}));
 });
