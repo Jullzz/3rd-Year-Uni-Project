@@ -11,5 +11,7 @@ services:
       - db
   db:
     image: influxdb
-    ports:
-     - "8086:8086"
+    volumes:
+     - /var/lib/influxdb 
+    # ports:
+    #  - "8086:8086"
