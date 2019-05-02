@@ -26,17 +26,7 @@ app.get("/api/getdbdata", (req, res, next) => {
     //res.json(data)
 });
 
-app.get("/api/1", (req, res, next) => {
-    influx.query('CREATE DATABASE mydb').then(data =>
-    res.json(data)).catch(err => res.status(500).json({error: err.message}));
-});
-
-app.get("/api/3", (req, res, next) => {
-    influx.query('INSERT INTO "mydb" cpu,host=serverA,region=us_west value=0.64').then(data =>
-    res.json(data)).catch(err => res.status(500).json({error: err.message}));
-}); //INSERT DOES NOT WORK
-
-app.get("/api/2", (req, res, next) => {
-    influx.query('SHOW DATABASES').then(data =>
+app.get("/test", (req, res, next) => {
+    influx.query('CREATE DATABASE mydb; SHOW DATABASES').then(data =>
     res.json(data)).catch(err => res.status(500).json({error: err.message}));
 });
