@@ -1,7 +1,9 @@
 FROM node:8
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/
+# RUN npm install -g nodemon
+# RUN npm install -s express
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
