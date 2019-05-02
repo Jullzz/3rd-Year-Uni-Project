@@ -15,3 +15,9 @@ services:
      - /var/lib/influxdb 
     # ports:
     #  - "8086:8086"
+  processing:
+    build: flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./flask:/app
