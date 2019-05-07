@@ -3,6 +3,9 @@ import http.client
 import sys
 app = Flask(__name__)
 
+# API SERVER ADDRESS:
+#   http://web:8000
+
 @app.route('/')
 def hello_world():
     return sys.version

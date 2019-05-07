@@ -35,9 +35,15 @@ app.get("/api/getdbdata", (req, res, next) => {
 ....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
 ....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
-*/app.get("/test/makedb", (req, res, next) => {
-    influx.query('CREATE DATABASE mydb; SHOW DATABASES').then(data =>
-    res.json(data)).catch(err => res.status(500).json({error: err.message}));
+*/
+
+app.get("/test/makedb", (req, res, next) => {
+    influx.query('CREATE DATABASE mydb; SHOW DATABASES')
+    .then(data => res.status(200).json(data))
+    .catch(err => 
+        res.status(500)
+        .json({error: err.message})
+    );
 });
 
 app.get("/test/populatedb", (req, res, next) => {
