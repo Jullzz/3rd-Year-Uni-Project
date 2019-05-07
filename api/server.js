@@ -61,7 +61,7 @@ app.get("/test/populatedb", (req, res, next) => {
         {
             measurement: 'cpu_load_short',
             tags: {host: 'server11', direction: "out"},
-            fields: {value:  0.99}
+            fields: {value:  444.99}
         }
     ])
     .catch(err => console.log(err))
