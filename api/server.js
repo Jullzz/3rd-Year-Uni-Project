@@ -17,7 +17,7 @@ app.listen(HTTP_PORT, () => {
 
 // Root path
 app.get("/", (req, res, next) => {
-    res.json({"API Working?": "true"})
+    res.sendFile(__dirname + '/public/index.html')
 });
 
 app.get("/api/getdbdata", (req, res, next) => {
@@ -26,7 +26,44 @@ app.get("/api/getdbdata", (req, res, next) => {
     //res.json(data)
 });
 
-app.get("/test", (req, res, next) => {
+
+/*
+.########.########..######..########..........##.....######..########.########.##.....##.########.
+....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
+....##....##.......##..........##...........##......##.......##..........##....##.....##.##.....##
+....##....######....######.....##..........##........######..######......##....##.....##.########.
+....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
+....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
+....##....########..######.....##.......##...........######..########....##.....#######..##.......
+*/app.get("/test/makedb", (req, res, next) => {
     influx.query('CREATE DATABASE mydb; SHOW DATABASES').then(data =>
     res.json(data)).catch(err => res.status(500).json({error: err.message}));
+});
+
+app.get("/test/populatedb", (req, res, next) => {
+    influx.writePoints([
+        {
+            measurement: 'cpu_load_short',
+            tags: {host: 'server02', direction: "out"},
+            fields: {value: 3.2}
+        },
+        {
+            measurement: 'cpu_load_short',
+            tags: {host: 'server03', direction: "out"},
+            fields: {value: 2.2}
+        },
+        {
+            measurement: 'cpu_load_short',
+            tags: {host: 'server11', direction: "out"},
+            fields: {value:  0.99}
+        }
+    ])
+    .catch(err => console.log(err))
+    .then(result => res.json(result))
+    // influx.writePoints([{
+    //     measurement: "cpu_load_short",
+    //     tags: { direction: null, host: "server01", region: "us-west" },
+    //     fields: { value: "1.2" },
+    //     timestamp: 1566509505369703044
+    // }]).then(result => res.json(result))
 });
