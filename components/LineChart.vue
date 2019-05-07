@@ -1,6 +1,6 @@
 <template>
-  <div v-if="bike != null">
-    <line-chart :chart-data="datacollection" />
+  <div v-if="bike != null" class="container">
+    <line-chart :chart-data="datacollection" class="chart" />
   </div>
 </template>
 
@@ -73,4 +73,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  max-width: 100%;
+}
+.chart {
+  width: 100%;
+  height: 400px;
+}
 </style>

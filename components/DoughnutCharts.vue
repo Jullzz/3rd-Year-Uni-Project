@@ -1,21 +1,45 @@
 <template>
   <div>
     <div v-if="Event != null">
-      <h2 class="title">{{ total }} Hits</h2>
-      <DoughnutChart :chart-data="datacollection" />
+      <div class="container" align="center">
+        <div>
+          <div class="direction_left">
+            <div class="container">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg"
+                class="cyclist"
+              />
+              <Direction align="center" class="direction" />
+            </div>
+          </div>
+          <div class="doughnut_chart">
+            <h2 class="title">{{ total }} Hits</h2>
+            <DoughnutChart :chart-data="datacollection" />
+          </div>
+          <div class="direction_right">
+            <Direction align="center" class="direction" />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ic_directions_walk_48px.svg/200px-Ic_directions_walk_48px.svg.png"
+              class="cyclist"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import DoughnutChart from "@/components/DoughnutChart.js";
+import Direction from "~/components/Direction.vue";
 
 export default {
   props: {
     Event: null
   },
   components: {
-    DoughnutChart
+    DoughnutChart,
+    Direction
   },
   data() {
     return {
@@ -49,7 +73,7 @@ export default {
             //hoverBorderColor: "rgba(255,99,132,1)",
             data: [this.bike, this.pedestrian]
           }
-        ] 
+        ]
       };
     }
   }
@@ -57,9 +81,31 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding-left: 15px;
+  max-width: 2000px;
+}
 .title {
   text-align: center;
   margin-top: 40px;
-  font-size: 48px;
+  font-size: 75px;
+}
+.direction_left,
+.direction_right {
+  width: 600px;
+  float: left;
+}
+.direction {
+  width: 375px;
+  float: left;
+}
+.cyclist {
+  padding-top: 225px;
+  width: 200px;
+  float: left;
+}
+.doughnut_chart {
+  width: 475px;
+  float: left;
 }
 </style>

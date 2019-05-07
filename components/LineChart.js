@@ -1,16 +1,18 @@
 import {
   Line,
   mixins
-} from 'vue-chartjs' // We specify what type of chart we want from vue-chartjs and the mixins module
+} from "vue-chartjs"; // We specify what type of chart we want from vue-chartjs and the mixins module
 const {
   reactiveProp
-} = mixins
-export default { //We are extending the base chart class as mentioned above
+} = mixins;
+export default {
+  //We are extending the base chart class as mentioned above
   extends: Line,
   mixins: [reactiveProp],
   data() {
     return {
-      options: { //Chart.js options
+      options: {
+        //Chart.js options
         scales: {
           yAxes: [{
             ticks: {
@@ -21,7 +23,7 @@ export default { //We are extending the base chart class as mentioned above
             },
             scaleLabel: {
               display: true,
-              labelString: 'Hits',
+              labelString: "Hits",
               fontSize: 24,
               fontStyle: "bold",
               fontColor: "#207227"
@@ -33,7 +35,7 @@ export default { //We are extending the base chart class as mentioned above
             },
             scaleLabel: {
               display: true,
-              labelString: 'Time',
+              labelString: "Time",
               fontSize: 24,
               fontStyle: "bold",
               fontColor: "#207227"
@@ -41,16 +43,15 @@ export default { //We are extending the base chart class as mentioned above
           }]
         },
         legend: {
-          display: true,
-          position: "bottom"
+          display: true
         },
         responsive: true,
         maintainAspectRatio: false
       }
-    }
+    };
   },
   mounted() {
     // this.chartData is created in the mixin
-    this.renderChart(this.chartData, this.options)
+    this.renderChart(this.chartData, this.options);
   }
-}
+};
