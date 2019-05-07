@@ -21,7 +21,7 @@ export default {
     };
   },
   computed: {
-    total: function() {
+    total() {
       var sum = [];
       var ped = this.pedestrian;
       this.bike.forEach((num, index) => {

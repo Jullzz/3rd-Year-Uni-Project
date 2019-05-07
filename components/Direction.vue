@@ -1,30 +1,42 @@
 <template>
   <div class="Direction">
-    <h1 class="Total">48</h1>
+    <h1 class="Total">{{ Total.sum }} Hits</h1>
     <div class="West_dir">
       <h1 class="West_hit">
-        20
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/1/12/Arrow_left.svg"
           class="left"
           align="center"
         />
+        {{ Direction.west }} West
       </h1>
     </div>
     <div class="East_dir">
       <h1 class="East_hit">
+        {{ Direction.east }} East
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Arrow_right.svg"
           class="right"
           align="center"
-        />28
+        />
       </h1>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    Direction: null
+  },
+  computed: {
+    Total() {
+      return {
+        sum: this.Direction.west + this.Direction.east
+      };
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -41,7 +53,7 @@ export default {};
 }
 .right,
 .left {
-  width: 300px;
+  width: 130px;
   padding-right: 15px;
 }
 </style>

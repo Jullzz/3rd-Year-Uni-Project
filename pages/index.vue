@@ -4,7 +4,7 @@
     <h1 v-if="activePoint === null">No point selected</h1>
     <h1 v-else>{{ activePoint }}</h1>
     <div>
-      <DoughnutCharts :Event="counts" />
+      <DoughnutCharts :Event="counts" :DirectionV="direction" />
     </div>
     <div class="mt-10">
       <LineChart :bike="bike" :pedestrian="pedestrian" />
@@ -30,7 +30,8 @@ export default {
       activePoint: null,
       counts: null,
       bike: null,
-      pedestrian: null
+      pedestrian: null,
+      direction: null
     };
   },
   methods: {
@@ -39,6 +40,7 @@ export default {
       this.counts = newPoint.counts;
       this.bike = newPoint.bike;
       this.pedestrian = newPoint.pedestrian;
+      this.direction = newPoint.direction;
     }
   }
 };

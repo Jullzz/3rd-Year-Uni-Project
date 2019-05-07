@@ -87,14 +87,34 @@ export default {
           counts: { bike: 264, pedestrian: 23 },
           bike: [10, 20, 40, 30, 50, 60],
           pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.757234, lng: 144.279113 }
+          location: { lat: -36.757234, lng: 144.279113 },
+          direction: {
+            bike: {
+              west: 100,
+              east: 164
+            },
+            pedestrian: {
+              west: 10,
+              east: 13
+            }
+          }
         },
         {
           title: "Rosalind 2",
           counts: { bike: 100, pedestrian: 241 },
           bike: [10, 20, 20, 30, 40, 30],
           pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.748794, lng: 144.290756 }
+          location: { lat: -36.748794, lng: 144.290756 },
+          direction: {
+            bike: {
+              west: 40,
+              east: 60
+            },
+            pedestrian: {
+              west: 100,
+              east: 141
+            }
+          }
         }
       ]
     };

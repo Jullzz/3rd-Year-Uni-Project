@@ -9,7 +9,11 @@
                 src="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg"
                 class="cyclist"
               />
-              <Direction align="center" class="direction" />
+              <Direction
+                align="center"
+                class="direction"
+                :Direction="direction_bike"
+              />
             </div>
           </div>
           <div class="doughnut_chart">
@@ -17,7 +21,11 @@
             <DoughnutChart :chart-data="datacollection" />
           </div>
           <div class="direction_right">
-            <Direction align="center" class="direction" />
+            <Direction
+              align="center"
+              class="direction"
+              :Direction="direction_pes"
+            />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ic_directions_walk_48px.svg/200px-Ic_directions_walk_48px.svg.png"
               class="cyclist"
@@ -35,7 +43,8 @@ import Direction from "~/components/Direction.vue";
 
 export default {
   props: {
-    Event: null
+    Event: null,
+    DirectionV: null
   },
   components: {
     DoughnutChart,
@@ -46,18 +55,22 @@ export default {
       bike: 1,
       pedestrian: 1,
       total: 0,
-      datacollection: null
+      datacollection: null,
+      direction_bike: null,
+      direction_pes: null
     };
   },
   beforeUpdate() {
-    this.updateEvent(this.Event);
+    this.updateEvent(this.Event, this.DirectionV);
     this.fillData();
   },
   methods: {
-    updateEvent(newPoint) {
+    updateEvent(newPoint, direction) {
       this.bike = newPoint.bike;
       this.pedestrian = newPoint.pedestrian;
       this.total = newPoint.bike + newPoint.pedestrian;
+      this.direction_bike = direction.bike;
+      this.direction_pes = direction.pedestrian;
     },
     fillData() {
       this.datacollection = {
@@ -87,7 +100,7 @@ export default {
 }
 .title {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 10px;
   font-size: 75px;
 }
 .direction_left,
@@ -100,12 +113,13 @@ export default {
   float: left;
 }
 .cyclist {
-  padding-top: 225px;
+  padding-top: 175px;
   width: 200px;
   float: left;
 }
 .doughnut_chart {
   width: 475px;
   float: left;
+  padding-bottom: 30px;
 }
 </style>
