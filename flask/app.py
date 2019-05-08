@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import http.client, sys, requests
+import http.client, sys, requests, json
 app = Flask(__name__)
 
 # API SERVER ADDRESS:
@@ -11,7 +11,13 @@ def hello_world():
 
 @app.route('/displayAll')
 def get_data():
-    return requests.get('http://web:8000/api/getdbdata').content
+    response = requests.get('http://web:8000/api/getdbdata').content
+    y = json.loads(response)
+    return y[2]['host']
+
+@app.route('/post')
+def post_data():
+    return
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
