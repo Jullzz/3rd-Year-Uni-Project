@@ -15,6 +15,12 @@ def get_data():
     y = json.loads(response)
     return y[2]['host']
 
+@app.route('/FuckenSendIt')
+def send_data():
+    response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
+    requests.get('http://web:8000/test/addData', json=response)
+    return 'i tried'
+
 @app.route('/post')
 def post_data():
     return

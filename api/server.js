@@ -40,12 +40,20 @@ app.get("/api/getdbdata", (req, res, next) => {
 app.get("/test/makedb", (req, res, next) => {
     influx.query('CREATE DATABASE mydb; SHOW DATABASES')
     .then(data => res.status(200).json(data))
-    .catch(err => 
+    .catch(err =>
         res.status(500)
         .json({error: err.message})
     );
 });
-
+app.get("/test/addData", (req, res, next) => {
+    influx.writePoints(
+        {
+            measurement: req.params.measurement,
+            tags: {host: req.params.measurement, direction: req.params.direction},
+            fields: { value: req.params.value}
+        }
+    )
+})
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
