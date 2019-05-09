@@ -46,13 +46,15 @@ app.get("/test/makedb", (req, res, next) => {
     );
 });
 app.get("/test/addData", (req, res, next) => {
-    influx.writePoints(
-        {
-            measurement: req.params.measurement,
-            tags: {host: req.params.measurement, direction: req.params.direction},
-            fields: { value: req.params.value}
-        }
-    )
+    console.log(req.body);
+    res.json(req.body);
+    // influx.writePoints(
+    //     {
+    //         measurement: req.params.measurement,
+    //         tags: {host: req.params.measurement, direction: req.params.direction},
+    //         fields: { value: req.params.value}
+    //     }
+    // )
 })
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([

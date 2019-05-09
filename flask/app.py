@@ -13,13 +13,19 @@ def hello_world():
 def get_data():
     response = requests.get('http://web:8000/api/getdbdata').content
     y = json.loads(response)
-    return y[2]['host']
+
+    ret = app.response_class(
+        response=json.dumps(y),
+        status=200,
+        mimetype='application/json'
+    )
+    return ret
+    # return json.dumps(y), 200, 'application/json'
 
 @app.route('/FuckenSendIt')
 def send_data():
     response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
-    requests.get('http://web:8000/test/addData', json=response)
-    return 'i tried'
+    return requests.get('http://web:8000/test/addData', json=response).content
 
 @app.route('/post')
 def post_data():
