@@ -66,10 +66,4 @@ app.get("/test/populatedb", (req, res, next) => {
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-    // influx.writePoints([{
-    //     measurement: "cpu_load_short",
-    //     tags: { direction: null, host: "server01", region: "us-west" },
-    //     fields: { value: "1.2" },
-    //     timestamp: 1566509505369703044
-    // }]).then(result => res.json(result))
 });

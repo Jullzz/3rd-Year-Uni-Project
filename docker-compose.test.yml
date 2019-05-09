@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build: 
+      context: api
+      dockerfile: ./Dockerfile.test
+    volumes:
+    #  - ./api:/usr/src/app
+     - /usr/src/app/node_modules
+    links:
+      - db
+  db:
+    image: influxdb
+    volumes:
+     - /var/lib/influxdb 
+  processing:
+    build: flask
+    volumes:
+      - ./flask:/app
+    links:
+      - web
