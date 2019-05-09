@@ -46,15 +46,23 @@ app.get("/test/makedb", (req, res, next) => {
     );
 });
 app.get("/test/addData", (req, res, next) => {
-    console.log(req.body);
-    res.json(req.body);
-    // influx.writePoints(
-    //     {
-    //         measurement: req.params.measurement,
-    //         tags: {host: req.params.measurement, direction: req.params.direction},
-    //         fields: { value: req.params.value}
-    //     }
-    // )
+    // console.log(req.body);
+    // res.json(req.body);
+    // data.forEach(element => {
+    //     element.measurement = 'cpu_load_short';
+    // });
+    // console.log(data);
+    let data = req.body.map(point => {
+        return {
+            measurement: "cpu_load_short",
+            tags: {host: point.host, direction: point.direction, region: point.region},
+            fields: {value: point.value}
+        }
+    });
+    console.log(data);
+    influx.writePoints(data)
+    .catch(err => console.log(err))
+    .then(result => res.json({done: true}));
 })
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
