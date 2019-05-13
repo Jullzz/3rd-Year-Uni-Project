@@ -1,5 +1,6 @@
 <template>
   <div v-if="bike != null" class="container">
+    <!-- data is passed through to display the linechart-->
     <line-chart :chart-data="datacollection" class="chart" />
   </div>
 </template>
@@ -21,6 +22,7 @@ export default {
     };
   },
   computed: {
+    //Calculate and create a new array with the total hits every hour
     total() {
       var sum = [];
       var ped = this.pedestrian;
@@ -31,9 +33,11 @@ export default {
     }
   },
   beforeUpdate() {
+    //chart data to be update before upadting the page
     this.fillData();
   },
   methods: {
+    //create the data for the chart with some sytles
     fillData() {
       this.datacollection = {
         labels: ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"],
@@ -45,6 +49,7 @@ export default {
             pointRadius: 5,
             pointHoverBackgroundColor: "#E66A6A",
             pointHoverRadius: 7,
+            //data array for the bike
             data: this.bike
           },
           {
@@ -54,6 +59,7 @@ export default {
             pointRadius: 5,
             pointHoverBackgroundColor: "#8662C7",
             pointHoverRadius: 7,
+            //data array for the pedestrian
             data: this.pedestrian
           },
           {
@@ -63,6 +69,7 @@ export default {
             pointRadius: 5,
             pointHoverBackgroundColor: "#7BC47F",
             pointHoverRadius: 7,
+            //data array for the total hits
             data: this.total
           }
         ]

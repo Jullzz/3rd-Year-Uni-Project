@@ -11,6 +11,7 @@ export default {
   mixins: [reactiveProp],
   data() {
     return {
+      // options object used to style the display of the chart
       options: {
         //Chart.js options
         scales: {
@@ -43,7 +44,8 @@ export default {
           }]
         },
         legend: {
-          display: true
+          display: true,
+          position: "bottom"
         },
         responsive: true,
         maintainAspectRatio: false

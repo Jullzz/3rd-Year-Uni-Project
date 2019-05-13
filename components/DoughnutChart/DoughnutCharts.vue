@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div v-if="Event != null" align="center">
-      <div class="container" style="max-width: 100%">
+    <div v-if="Hits != null" align="center">
+      <div class="container">
+        <!-- display the direction of the CYCLIST -->
         <div class="direction_left">
-          <div class="container" style="max-width: 100%;">
+          <div class="container">
             <img src="~/assets/images/Bicycle.png" class="cyclist" />
             <Direction
               align="center"
@@ -12,14 +13,15 @@
             />
           </div>
         </div>
-
+        <!-- Displays the doughnut chart -->
         <div class="doughnut_chart">
+          <!-- Tota hits to be show for UI ease -->
           <h2 class="title">{{ total }} Hits</h2>
           <DoughnutChart :chart-data="datacollection" />
         </div>
-
+        <!-- display the direction of the PEDESTRIAN -->
         <div class="direction_right">
-          <div class="container" style="max-width: 100%;">
+          <div class="container">
             <Direction
               align="center"
               class="direction"
@@ -39,7 +41,7 @@ import Direction from "~/components/Direction/Direction.vue";
 
 export default {
   props: {
-    Event: null,
+    Hits: null,
     DirectionV: null
   },
   components: {
@@ -57,10 +59,12 @@ export default {
     };
   },
   beforeUpdate() {
-    this.updateEvent(this.Event, this.DirectionV);
+    //function will be called to update data before updating page
+    this.updateEvent(this.Hits, this.DirectionV);
     this.fillData();
   },
   methods: {
+    //local data will be instatiated by prop data
     updateEvent(newPoint, direction) {
       this.bike = newPoint.bike;
       this.pedestrian = newPoint.pedestrian;
@@ -68,6 +72,8 @@ export default {
       this.direction_bike = direction.bike;
       this.direction_pes = direction.pedestrian;
     },
+    //data will be passed into a doughnut chart js file to render the chart
+    //with provided data selected by user
     fillData() {
       this.datacollection = {
         labels: ["pedestrian", "cyclist"],
@@ -79,7 +85,8 @@ export default {
             borderColor: "#05400A",
             borderWidth: 2,
             hoverBackgroundColor: ["#C1EAC5", "#05400A"],
-            //hoverBorderColor: "rgba(255,99,132,1)",
+            hoverBorderColor: "#207227",
+            //Prop data array passed in doughnut js file
             data: [this.bike, this.pedestrian]
           }
         ]
@@ -90,6 +97,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  max-width: 100%;
+}
 .title {
   margin-top: 10px;
   font-size: 4vw;

@@ -1,14 +1,16 @@
 import {
   Doughnut,
   mixins
-} from 'vue-chartjs'
+} from 'vue-chartjs' // We specify what type of chart we want from vue-chartjs and the mixins module
 
 export default {
-  extends: Doughnut,
+  extends: Doughnut, //We are extending the base chart class as mentioned above
   mixins: [mixins.reactiveProp],
   data() {
     return {
+      // options object used to style the display of the chart
       options: {
+        //Chart.js options
         responsive: true,
         maintainAspectRatio: false,
         legend: {
@@ -19,7 +21,6 @@ export default {
   },
   mounted() {
     // this.chartData is created in the mixin.
-    // If you want to pass options please create a local options object
     this.renderChart(this.chartData, this.options)
   }
 }

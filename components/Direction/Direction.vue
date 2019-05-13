@@ -1,11 +1,14 @@
 <template>
   <div class="Direction">
+    <!-- Sum total of hit going both direction -->
     <h1 class="Total">{{ Total.sum }} Hits</h1>
     <div class="container">
+      <!-- display hits going west by passing a single prop data-->
       <West :west="Direction.west" />
     </div>
 
     <div class="container">
+      <!-- displays hits going east by passing a single prop data-->
       <East :east="Direction.east" />
     </div>
   </div>
@@ -24,6 +27,7 @@ export default {
     East
   },
   computed: {
+    //calculated the total of hits
     Total() {
       return {
         sum: this.Direction.west + this.Direction.east

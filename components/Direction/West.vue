@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- displays hit going west with an image -->
     <div class="image_west">
       <img src="~/assets/images/Left_arrow.png" />
     </div>
