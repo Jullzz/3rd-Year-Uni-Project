@@ -3,6 +3,7 @@
     <!-- displays hits going east with an image -->
     <h1 class="text_east">{{ east }} East</h1>
     <div class="image_east">
+      <!-- static images used.. located in assest folder -->
       <img src="~/assets/images/Right_arrow.png" />
     </div>
   </div>

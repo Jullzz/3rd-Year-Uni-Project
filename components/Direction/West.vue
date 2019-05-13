@@ -2,6 +2,7 @@
   <div class="container">
     <!-- displays hit going west with an image -->
     <div class="image_west">
+      <!-- static images used.. located in assest folder -->
       <img src="~/assets/images/Left_arrow.png" />
     </div>
     <h1 class="text_west">{{ west }} West</h1>

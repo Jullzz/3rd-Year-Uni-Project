@@ -5,6 +5,7 @@
         <!-- display the direction of the CYCLIST -->
         <div class="direction_left">
           <div class="container">
+            <!-- static images used.. located in assest folder -->
             <img src="~/assets/images/Bicycle.png" class="cyclist" />
             <Direction
               align="center"
@@ -27,6 +28,7 @@
               class="direction"
               :Direction="direction_pes"
             />
+            <!-- static images used.. located in assest folder -->
             <img src="~/assets/images/Pedestrian.png" class="cyclist" />
           </div>
         </div>
