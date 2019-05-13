@@ -1,35 +1,31 @@
 <template>
   <div>
-    <div v-if="Event != null">
-      <div class="container" align="center">
-        <div>
-          <div class="direction_left">
-            <div class="container">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg"
-                class="cyclist"
-              />
-              <Direction
-                align="center"
-                class="direction"
-                :Direction="direction_bike"
-              />
-            </div>
+    <div v-if="Event != null" align="center">
+      <div class="container" style="max-width: 100%">
+        <div class="direction_left">
+          <div class="container" style="max-width: 100%;">
+            <img src="~/assets/images/Bicycle.png" class="cyclist" />
+            <Direction
+              align="center"
+              class="direction"
+              :Direction="direction_bike"
+            />
           </div>
-          <div class="doughnut_chart">
-            <h2 class="title">{{ total }} Hits</h2>
-            <DoughnutChart :chart-data="datacollection" />
-          </div>
-          <div class="direction_right">
+        </div>
+
+        <div class="doughnut_chart">
+          <h2 class="title">{{ total }} Hits</h2>
+          <DoughnutChart :chart-data="datacollection" />
+        </div>
+
+        <div class="direction_right">
+          <div class="container" style="max-width: 100%;">
             <Direction
               align="center"
               class="direction"
               :Direction="direction_pes"
             />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ic_directions_walk_48px.svg/200px-Ic_directions_walk_48px.svg.png"
-              class="cyclist"
-            />
+            <img src="~/assets/images/Pedestrian.png" class="cyclist" />
           </div>
         </div>
       </div>
@@ -38,8 +34,8 @@
 </template>
 
 <script>
-import DoughnutChart from "@/components/DoughnutChart.js";
-import Direction from "~/components/Direction.vue";
+import DoughnutChart from "~/components/DoughnutChart/DoughnutChart.js";
+import Direction from "~/components/Direction/Direction.vue";
 
 export default {
   props: {
@@ -94,32 +90,29 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  padding-left: 15px;
-  max-width: 2000px;
-}
 .title {
-  text-align: center;
   margin-top: 10px;
-  font-size: 75px;
+  font-size: 4vw;
 }
 .direction_left,
 .direction_right {
-  width: 600px;
+  margin: auto;
+  width: 37.5%;
   float: left;
+  padding: 10px;
+  padding-top: 20vh;
 }
 .direction {
-  width: 375px;
+  width: 60%;
   float: left;
 }
 .cyclist {
-  padding-top: 175px;
-  width: 200px;
+  width: 40%;
   float: left;
+  padding-top: 5vh;
 }
 .doughnut_chart {
-  width: 475px;
+  width: 25%;
   float: left;
-  padding-bottom: 30px;
 }
 </style>

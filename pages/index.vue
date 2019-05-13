@@ -15,8 +15,8 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import Map from "~/components/Map.vue";
-import DoughnutCharts from "~/components/DoughnutCharts.vue";
-import LineChart from "~/components/LineChart.vue";
+import DoughnutCharts from "@/components/DoughnutChart/DoughnutCharts.vue";
+import LineChart from "~/components/LineChart/LineChart.vue";
 
 export default {
   components: {
