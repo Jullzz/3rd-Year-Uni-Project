@@ -1,6 +1,6 @@
 var request = require("request");
 
-var base_url = "http://127.0.0.1:8000/"
+var base_url = "http://localhost:8000/api/getdbdata"
 
 // describe("Hello World Suite", function() {
 //     it("check if text is 'Hello World'", function(done) {
@@ -15,7 +15,7 @@ var base_url = "http://127.0.0.1:8000/"
 //     });
 // });
 
-describe("jfhb", () => {
+describe("bbbb", () => {
     it("API Response should be valid json", function(done) {
         request.get(base_url, function(error, response, body) {
             console.log(error);

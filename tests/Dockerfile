@@ -17,4 +17,4 @@ RUN npm install
 COPY . .
 RUN node node_modules/jasmine/bin/jasmine init
 EXPOSE 8000
-CMD [ "node_modules/jasmine/bin/jasmine", "spec" ]
+CMD [ "npm", "start" ]
