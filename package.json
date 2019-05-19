@@ -34,6 +34,7 @@
     "babel-jest": "^24.8.0",
     "babel-preset-env": "^1.7.0",
     "jest": "^24.8.0",
+    "jest-transform-stub": "^2.0.0",
     "nodemon": "^1.18.9",
     "tailwindcss": "^0.7.0",
     "vue-jest": "^3.0.4",
@@ -43,11 +44,5 @@
     "presets": [
       "@babel/preset-env"
     ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.vue$": "vue-jest",
-      "^.+\\.js$": "babel-jest"
-    }
   }
 }

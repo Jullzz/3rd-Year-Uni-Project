@@ -17,7 +17,7 @@
         <!-- Displays the doughnut chart -->
         <div class="doughnut_chart">
           <!-- Tota hits to be show for UI ease -->
-          <h2 class="title">{{ total }} Hits</h2>
+          <h2 class="title" id="total">{{ total }} Hits</h2>
           <DoughnutChart :chart-data="datacollection" />
         </div>
         <!-- display the direction of the PEDESTRIAN -->
@@ -52,9 +52,9 @@ export default {
   },
   data() {
     return {
-      bike: 1,
-      pedestrian: 1,
-      total: 0,
+      bike: null,
+      pedestrian: null,
+      total: null,
       datacollection: null,
       direction_bike: null,
       direction_pes: null

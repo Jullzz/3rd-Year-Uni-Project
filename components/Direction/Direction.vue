@@ -4,12 +4,12 @@
     <h1 class="Total">{{ Total.sum }} Hits</h1>
     <div class="container">
       <!-- display hits going west by passing a single prop data-->
-      <West :west="Direction.west" />
+      <West :west="west" />
     </div>
 
     <div class="container">
       <!-- displays hits going east by passing a single prop data-->
-      <East :east="Direction.east" />
+      <East :east="east" />
     </div>
   </div>
 </template>
@@ -26,12 +26,30 @@ export default {
     West,
     East
   },
+  mounted() {
+    this.setProps(this.Direction);
+  },
+  beforeUpdate() {
+    this.setProps(this.Direction);
+  },
+  data() {
+    return {
+      west: null,
+      east: null
+    };
+  },
   computed: {
     //calculated the total of hits
     Total() {
       return {
-        sum: this.Direction.west + this.Direction.east
+        sum: this.west + this.east
       };
+    }
+  },
+  methods: {
+    setProps(Direction) {
+      this.east = Direction.east;
+      this.west = Direction.west;
     }
   }
 };

@@ -5,7 +5,7 @@
       <!-- static images used.. located in assest folder -->
       <img src="~/assets/images/Left_arrow.png" />
     </div>
-    <h1 class="text_west">{{ west }} West</h1>
+    <h1 class="text_west" id="West">{{ west }} West</h1>
   </div>
 </template>
 
