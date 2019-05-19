@@ -4,9 +4,7 @@ import {
 } from '@vue/test-utils'
 import LineChart from '@/components/LineChart/LineChart.vue'
 import LineChartjs from '@/components/LineChart/LineChart.js'
-import {
-  CustomConsole
-} from '@jest/console';
+
 
 describe('Direction.vue', () => {
 
