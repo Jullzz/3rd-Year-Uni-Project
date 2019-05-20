@@ -66,6 +66,7 @@ app.get("/test/addData", (req, res, next) => {
 })
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
+        /*
         {
             measurement: 'cpu_load_short',
             tags: {host: 'server02', direction: "out"},
@@ -81,13 +82,42 @@ app.get("/test/populatedb", (req, res, next) => {
             tags: {host: 'server11', direction: "out"},
             fields: {value:  444.99}
         }
+        */
+              //Data that according to data model
+              {
+                measurement: 'cpu_load_short',
+                fields: 
+                {
+                    PedestrianN: 1,
+                    CyclistN: 2,
+                    PedestrianS: 3,
+                    CyclistS: 2,
+                    Direction1: "North",
+                    Direction2: "South",
+                    Altitude: 1.2,
+                    Longitude: 3.5
+                },
+                tags: {LocationPoint: 1}
+                
+            },
+            {
+                measurement: 'cpu_load_short',
+                fields: 
+                {
+                    PedestrianN: 2,
+                    CyclistN: 4,
+                    PedestrianS: 4,
+                    CyclistS: 2,
+                    Direction1: "North",
+                    Direction2: "South",
+                    Altitude: 2.0,
+                    Longitude: 3.0
+                },
+                tags: {LocationPoint: 2}
+            }
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-    // influx.writePoints([{
-    //     measurement: "cpu_load_short",
-    //     tags: { direction: null, host: "server01", region: "us-west" },
-    //     fields: { value: "1.2" },
-    //     timestamp: 1566509505369703044
-    // }]).then(result => res.json(result))
 });
+
+
