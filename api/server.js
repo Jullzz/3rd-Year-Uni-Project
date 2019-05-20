@@ -20,11 +20,25 @@ app.get("/", (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
 
+
 app.get("/api/getdbdata", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
-    //res.json(data)
 });
+
+//TO TEST
+//NOT A SECURE PROGRAMMING
+//localhost:8000/api/database?start=1
+//localhost:8000/api/database?start=1558314310232664671
+app.get("/api/database", (req, res, next) => {
+    // req.query.start 
+    // req.query.end 
+    var time = req.query.start
+    console.log("TEST TEST " +  req.query.start)
+    //console.log('SELECT * FROM cpu_load_short WHERE time > '+test)
+        influx.query('SELECT * FROM cpu_load_short WHERE time > '+ time).then(data =>
+            res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+    });
 
 
 /*
@@ -78,7 +92,8 @@ app.get("/test/populatedb", (req, res, next) => {
                     Direction2: "South",
                     Altitude: 1.2,
                     Longitude: 3.5
-                }
+                },
+                tags: {CollectionPoint: 2}
             },
             {
                 measurement: 'cpu_load_short',
@@ -92,7 +107,23 @@ app.get("/test/populatedb", (req, res, next) => {
                     Direction2: "South",
                     Altitude: 1.2,
                     Longitude: 3.5
-                }
+                },
+                tags: {CollectionPoint: 1}
+            },
+            {
+                measurement: 'cpu_load_short',
+                fields: 
+                {
+                    PedestrianDirection1: 17,
+                    CyclistDirection1: 16,
+                    PedestrianDirection2: 12,
+                    CyclistDirection2: 15,
+                    Direction1: "North",
+                    Direction2: "South",
+                    Altitude: 1.2,
+                    Longitude: 3.5
+                },
+                tags: {CollectionPoint: 1}
             }
     ])
     .catch(err => console.log(err))
