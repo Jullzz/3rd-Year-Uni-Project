@@ -88,32 +88,29 @@ app.get("/test/populatedb", (req, res, next) => {
                 measurement: 'cpu_load_short',
                 fields: 
                 {
-                    PedestrianN: 1,
-                    CyclistN: 2,
-                    PedestrianS: 3,
-                    CyclistS: 2,
+                    PedestrianDirection1: 1,
+                    CyclistDirection1: 2,
+                    PedestrianDirection2: 3,
+                    CyclistDirection2: 2,
                     Direction1: "North",
                     Direction2: "South",
                     Altitude: 1.2,
                     Longitude: 3.5
-                },
-                tags: {LocationPoint: 1}
-                
+                }
             },
             {
                 measurement: 'cpu_load_short',
                 fields: 
                 {
-                    PedestrianN: 2,
-                    CyclistN: 4,
-                    PedestrianS: 4,
-                    CyclistS: 2,
+                    PedestrianDirection1: 20,
+                    CyclistDirection1: 10,
+                    PedestrianDirection2: 30,
+                    CyclistDirection2: 15,
                     Direction1: "North",
                     Direction2: "South",
-                    Altitude: 2.0,
-                    Longitude: 3.0
-                },
-                tags: {LocationPoint: 2}
+                    Altitude: 1.2,
+                    Longitude: 3.5
+                }
             }
     ])
     .catch(err => console.log(err))
