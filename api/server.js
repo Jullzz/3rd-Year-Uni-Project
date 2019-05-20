@@ -66,24 +66,6 @@ app.get("/test/addData", (req, res, next) => {
 })
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
-        /*
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server02', direction: "out"},
-            fields: {value: 3.2}
-        },
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server03', direction: "out"},
-            fields: {value: 2.2}
-        },
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server11', direction: "out"},
-            fields: {value:  444.99}
-        }
-        */
-              //Data that according to data model
               {
                 measurement: 'cpu_load_short',
                 fields: 
