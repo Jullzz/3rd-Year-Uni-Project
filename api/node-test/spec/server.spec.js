@@ -45,3 +45,5 @@ describe("Server", () =>
         });   
     });
 });
+
+//sudo npm test
