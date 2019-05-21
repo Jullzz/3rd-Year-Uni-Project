@@ -30,17 +30,28 @@ app.get("/api/getdbdata", (req, res, next) => {
 //NOT A SECURE PROGRAMMING
 //localhost:8000/api/database?start=1
 //localhost:8000/api/database?start=1558314310232664671
-app.get("/api/database", (req, res, next) => {
-    // req.query.start 
-    // req.query.end 
+app.get("/api/database/time", (req, res, next) => {
     var time = req.query.start
-    console.log("TEST TEST " +  req.query.start)
+    //console.log("TEST TEST " +  req.query.start)
     //console.log('SELECT * FROM cpu_load_short WHERE time > '+test)
         influx.query('SELECT * FROM cpu_load_short WHERE time > '+ time).then(data =>
             res.json(data)).catch(err => res.status(404).json({error: err.message}));;
     });
 
-
+//localhost:8000/api/database/location?collectionpoint=2
+app.get("/api/database/location", (req, res, next) => {
+    var collectionP = req.query.collectionpoint
+        influx.query('SELECT * FROM cpu_load_short WHERE CollectionPoint =' + '\''+ collectionP + '\'').then(data =>
+                res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+    });
+/*
+app.get("/api/database/time", (req, res, next) => {
+    var timeS = req.query.start
+    var timeE = req.query.end
+    influx.query('SELECT * FROM cpu_load_short WHERE time > '+ timeS + ).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+            });
+*/      
 /*
 .########.########..######..########..........##.....######..########.########.##.....##.########.
 ....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
