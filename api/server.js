@@ -20,6 +20,10 @@ app.get("/", (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
 
+app.get("/testpoint", (req, res, next) => {
+    res.json({sent: true})
+});
+
 app.get("/api/getdbdata", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
