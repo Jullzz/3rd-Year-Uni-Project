@@ -20,6 +20,10 @@ app.get("/", (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
 
+app.get("/testpoint", (req, res, next) => {
+    res.json({sent: true})
+});
+
 app.get("/api/getdbdata", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
@@ -84,10 +88,4 @@ app.get("/test/populatedb", (req, res, next) => {
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-    // influx.writePoints([{
-    //     measurement: "cpu_load_short",
-    //     tags: { direction: null, host: "server01", region: "us-west" },
-    //     fields: { value: "1.2" },
-    //     timestamp: 1566509505369703044
-    // }]).then(result => res.json(result))
 });

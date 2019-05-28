@@ -10,12 +10,11 @@ WORKDIR /usr/src/app/
 COPY package*.json ./
 
 RUN npm install
-RUN npm install -g jasmine
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
-# RUN node node_modules/jasmine/bin/jasmine init
+RUN node node_modules/jasmine/bin/jasmine init
 EXPOSE 8000
-CMD [ "npm", "start" ]
+CMD [ "node_modules/jasmine/bin/jasmine", "spec" ]
