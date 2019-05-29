@@ -1,6 +1,6 @@
 var request = require("request");
 
-var base_url = "http://localhost:5000/"
+var base_url = "http://processing:5000/"
 
 function isJson(str) {
     try {
@@ -15,9 +15,9 @@ describe("Testing API Connection", () =>
 {
     it("Processing Server Response should be valid json", function(done) 
     {
-        request.get('http://processing:5000/displayAll', function(error, response, body) 
+        request.get(base_url + 'displayAll', function(error, response, body) 
         {
-            expect(isJson(body)).toEqual(true)
+            expect(isJson(body[0])).toEqual(true)
             done();
         })
     });

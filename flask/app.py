@@ -19,7 +19,7 @@ def get_data():
         status=200,
         mimetype='application/json'
     )
-    return ret
+    return response
     # return json.dumps(y), 200, 'application/json'
 
 @app.route('/sendIt')
