@@ -50,12 +50,6 @@ app.get("/test/makedb", (req, res, next) => {
     );
 });
 app.get("/test/addData", (req, res, next) => {
-    // console.log(req.body);
-    // res.json(req.body);
-    // data.forEach(element => {
-    //     element.measurement = 'cpu_load_short';
-    // });
-    // console.log(data);
     let data = req.body.map(point => {
         return {
             measurement: "cpu_load_short",

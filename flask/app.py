@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'hey'
+    return render_template('index.html')
 
 @app.route('/displayAll')
 def get_data():
@@ -22,7 +22,7 @@ def get_data():
     return ret
     # return json.dumps(y), 200, 'application/json'
 
-@app.route('/FuckenSendIt')
+@app.route('/sendIt')
 def send_data():
     response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
     return requests.get('http://web:8000/test/addData', json=response).content

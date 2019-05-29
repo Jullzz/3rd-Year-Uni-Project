@@ -1,14 +1,24 @@
 var request = require("request");
 
-var base_url = "http://localhost:8000/"
+var base_url = "http://localhost:5000/"
 
-describe("Testing API Connection", () => {
-    it("API Response should be valid json", function(done) {
-        request.get(base_url + 'testpoint', function(error, response, body) {
-            expect(
-                JSON.parse(body)
-            ).toEqual({sent: true})
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+describe("Testing API Connection", () => 
+{
+    it("Processing Server Response should be valid json", function(done) 
+    {
+        request.get('http://processing:5000/displayAll', function(error, response, body) 
+        {
+            expect(isJson(body)).toEqual(true)
             done();
-        });
+        })
     });
 });
