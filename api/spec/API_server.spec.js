@@ -24,7 +24,6 @@ describe("Testing API Connection", () => {
     {
         request.get(base_url + 'api/getdbdata', function(error, response, body) 
         {
-            console.log("There shouldnt be anthing here ==>"+body)
             expect(isJson(body[0])).toEqual(false)
             done();
         })
@@ -37,7 +36,6 @@ describe("Testing API Connection", () => {
     {
         request.get(base_url + 'api/getdbdata', function(error, response, body) 
         {
-            console.log("should be data"+ body);
             expect(isJson(body[1])).toEqual(true)
             done();
         })

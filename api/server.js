@@ -53,15 +53,22 @@ app.get("/test/addData", (req, res, next) => {
     let data = req.body.map(point => {
         return {
             measurement: "cpu_load_short",
-            tags: {host: point.host, direction: point.direction, region: point.region},
+            tags: {host: point.host, direction: point.direction},
             fields: {value: point.value}
         }
     });
-    console.log(data);
     influx.writePoints(data)
     .catch(err => console.log(err))
     .then(result => res.json({done: true}));
 })
+
+/*app.get("/test/addSingleData", (req, res, next) => {
+    console.log(req.body + "//////////////////////////////////////");
+    influx.writePoints(req.body)
+    .catch(err => console.log(err));
+    return data;
+})*/
+
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
         {

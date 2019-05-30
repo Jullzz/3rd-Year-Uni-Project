@@ -1,5 +1,19 @@
 <!doctype html>
 <title>Index</title>
+<body>
 <h1>Index Page</h1>
 <h4><a href ='/displayAll'>Pull Data From Database</a></h4>
 <h4><a href = '/sendIt'>Double Database</a></h4>
+
+<form action='/sendCustomData' method="POST">
+    Time:<br>
+    <input type="text" name="time"><br>
+    Direction:<br>
+    <input type="text" name="direction"><br>
+    Host:<br>
+    <input type="text" name="host"><br>
+    Value:<br>
+    <input type="number" name="value"><br>
+    <input type="submit" value=Submit>
+</form>
+</body>

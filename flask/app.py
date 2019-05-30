@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import http.client, sys, requests, json
 app = Flask(__name__)
 
@@ -20,16 +20,32 @@ def get_data():
         mimetype='application/json'
     )
     return response
-    # return json.dumps(y), 200, 'application/json'
+
+
 
 @app.route('/sendIt')
 def send_data():
     response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
+    print(response)
     return requests.get('http://web:8000/test/addData', json=response).content
 
 @app.route('/post')
 def post_data():
     return
+
+@app.route('/sendCustomData', methods=['GET','POST'])
+def send_customer_data():
+    if request.method =='POST':
+        data_dict = {
+            'direction': request.form['direction'],
+            'host': request.form['host'],
+            'value': int(request.form['value'])
+        }
+        info = json.dumps(data_dict)
+        #return info
+        response = requests.get('http://web:8000/test/addSingleData', json=info)
+    return response.content
+
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
