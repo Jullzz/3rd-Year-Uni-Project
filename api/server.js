@@ -6,13 +6,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const Influx = require('influx');
-const influx = new Influx.InfluxDB('http://db:8086/mydb')
+const influx = new Influx.InfluxDB('http://db:8086/mydb');
+
 
 var HTTP_PORT = 8000
 
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT)) 
+    influx.query('CREATE DATABASE mydb;');
 });
 
 // Root path
@@ -24,30 +26,15 @@ app.get("/testpoint", (req, res, next) => {
     res.json({sent: true})
 });
 
-app.get("/api/getdbdata", (req, res, next) => {
+app.get("/api/getPointData", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
     //res.json(data)
 });
 
-
-/*
-.########.########..######..########..........##.....######..########.########.##.....##.########.
-....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
-....##....##.......##..........##...........##......##.......##..........##....##.....##.##.....##
-....##....######....######.....##..........##........######..######......##....##.....##.########.
-....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
-....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
-....##....########..######.....##.......##...........######..########....##.....#######..##.......
-*/
-
-app.get("/test/makedb", (req, res, next) => {
-    influx.query('CREATE DATABASE mydb; SHOW DATABASES')
-    .then(data => res.status(200).json(data))
-    .catch(err =>
-        res.status(500)
-        .json({error: err.message})
-    );
+app.get("/api/deleteAllData", (req, res, next) => {
+    influx.query('DELETE FROM "cpu_load_short"').then(data =>
+        res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
 
 app.get("/test/writePoints", (req, res, next) => {
@@ -75,6 +62,16 @@ app.get("/test/writePoint", (req, res, next) => {
     .catch(err => console.log(err))
     .then(result => res.json({done: true}));
 })
+
+/*
+.########.########..######..########..........##.....######..########.########.##.....##.########.
+....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
+....##....##.......##..........##...........##......##.......##..........##....##.....##.##.....##
+....##....######....######.....##..........##........######..######......##....##.....##.########.
+....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
+....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
+....##....########..######.....##.......##...........######..########....##.....#######..##.......
+*/
 
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([

@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 # API SERVER ADDRESS:
 #   http://web:8000
+API_SA = 'http://web:8000'
 
 @app.route('/')
 def hello_world():
@@ -11,7 +12,7 @@ def hello_world():
 
 @app.route('/displayAll')
 def get_data():
-    response = requests.get('http://web:8000/api/getdbdata').content
+    response = requests.get(API_SA +'/api/getPointData').content
     y = json.loads(response)
 
     ret = app.response_class(
@@ -25,13 +26,11 @@ def get_data():
 
 @app.route('/sendIt')
 def send_data():
-    response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
-    print(response)
-    return requests.get('http://web:8000/test/writePoints', json=response).content
+    return requests.get(API_SA +'/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
 
-@app.route('/post')
+@app.route('/deleteAll')
 def post_data():
-    return
+    return requests.get(API_SA+ '/api/deleteAllData').content
 
 @app.route('/sendCustomData', methods=['GET','POST'])
 def send_customer_data():
@@ -42,8 +41,9 @@ def send_customer_data():
             'value': int(request.form['value'])
         }
         info = json.dumps(data_dict)
-        info = [info]
-        response = requests.get('http://web:8000/test/writePoint', json=info)
+        #info_array = [info, info, info]
+        info_array = [info]
+        response = requests.get(API_SA +'/test/writePoint', json=info_array)
     return response.content
 
 
