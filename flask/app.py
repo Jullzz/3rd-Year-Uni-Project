@@ -27,7 +27,7 @@ def get_data():
 def send_data():
     response = json.loads(requests.get('http://web:8000/api/getdbdata').content)
     print(response)
-    return requests.get('http://web:8000/test/addData', json=response).content
+    return requests.get('http://web:8000/test/writePoints', json=response).content
 
 @app.route('/post')
 def post_data():
@@ -42,8 +42,8 @@ def send_customer_data():
             'value': int(request.form['value'])
         }
         info = json.dumps(data_dict)
-        #return info
-        response = requests.get('http://web:8000/test/addSingleData', json=info)
+        info = [info]
+        response = requests.get('http://web:8000/test/writePoint', json=info)
     return response.content
 
 

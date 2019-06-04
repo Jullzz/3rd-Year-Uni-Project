@@ -49,7 +49,8 @@ app.get("/test/makedb", (req, res, next) => {
         .json({error: err.message})
     );
 });
-app.get("/test/addData", (req, res, next) => {
+
+app.get("/test/writePoints", (req, res, next) => {
     let data = req.body.map(point => {
         return {
             measurement: "cpu_load_short",
@@ -62,12 +63,18 @@ app.get("/test/addData", (req, res, next) => {
     .then(result => res.json({done: true}));
 })
 
-/*app.get("/test/addSingleData", (req, res, next) => {
-    console.log(req.body + "//////////////////////////////////////");
-    influx.writePoints(req.body)
-    .catch(err => console.log(err));
-    return data;
-})*/
+app.get("/test/writePoint", (req, res, next) => {
+    let data = [JSON.parse(req.body)].map(point => {
+        return {
+            measurement: "cpu_load_short",
+            tags: {host: point.host, direction: point.direction},
+            fields: {value: point.value}
+        }
+    });
+    influx.writePoints(data)
+    .catch(err => console.log(err))
+    .then(result => res.json({done: true}));
+})
 
 app.get("/test/populatedb", (req, res, next) => {
     influx.writePoints([
