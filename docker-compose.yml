@@ -23,3 +23,8 @@ services:
       - ./flask:/app
     links:
       - web
+  reverseproxy:
+    build: reverseproxy
+    ports:
+      - 80:80
+    restart: always

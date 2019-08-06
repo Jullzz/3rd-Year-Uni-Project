@@ -11,6 +11,8 @@ const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
 var HTTP_PORT = 8000
 
+const BASE_URL = "/api/"
+
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT)) 
@@ -18,26 +20,26 @@ app.listen(HTTP_PORT, () => {
 });
 
 // Root path
-app.get("/", (req, res, next) => {
+app.get(BASE_URL, (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
 
-app.get("/testpoint", (req, res, next) => {
+app.get(BASE_URL + "testpoint", (req, res, next) => {
     res.json({sent: true})
 });
 
-app.get("/api/getPointData", (req, res, next) => {
+app.get(BASE_URL + "getPointData", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
     //res.json(data)
 });
 
-app.get("/api/deleteAllData", (req, res, next) => {
+app.get(BASE_URL + "deleteAllData", (req, res, next) => {
     influx.query('DELETE FROM "cpu_load_short"').then(data =>
         res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
 
-app.get("/test/writePoints", (req, res, next) => {
+app.get(BASE_URL + "test/writePoints", (req, res, next) => {
     let data = req.body.map(point => {
         return {
             measurement: "cpu_load_short",
@@ -50,10 +52,12 @@ app.get("/test/writePoints", (req, res, next) => {
     .then(result => res.json({done: true}));
 })
 
-app.get("/test/writePoint", (req, res, next) => {
+app.get(BASE_URL + "test/writePoint", (req, res, next) => {
     let data = [JSON.parse(req.body)].map(point => {
+        // console.log(typeof point.time)
         return {
             measurement: "cpu_load_short",
+            // timestamp: point.time,
             tags: {host: point.host, direction: point.direction},
             fields: {value: point.value}
         }
@@ -73,7 +77,7 @@ app.get("/test/writePoint", (req, res, next) => {
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
 */
 
-app.get("/test/populatedb", (req, res, next) => {
+app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
