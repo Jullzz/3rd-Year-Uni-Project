@@ -28,7 +28,7 @@ def get_data():
 
 @app.route(URL_BASE + 'sendIt')
 def send_data():
-    return requests.get(API_SA +'/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
+    return requests.get(API_SA +'/api/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
 
 @app.route(URL_BASE + 'deleteAll')
 def post_data():
@@ -46,7 +46,7 @@ def send_customer_data():
         info = json.dumps(data_dict)
         #info_array = [info, info, info]
         info_array = [info]
-        response = requests.get(API_SA +'/test/writePoint', json=info_array)
+        response = requests.get(API_SA +'/api/test/writePoint', json=info_array)
     return response.content
 
 
