@@ -17,12 +17,15 @@
     "@nuxtjs/axios": "^5.3.6",
     "@types/google-maps": "^3.2.0",
     "babel": "^6.23.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.27",
     "chart.js": "^2.8.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "google-maps": "^3.3.0",
     "iview": "^3.3.3",
     "nuxt": "^2.7.1",
+    "vue": "^2.6.10",
     "vue-chartjs": "^3.4.2"
   },
   "devDependencies": {
