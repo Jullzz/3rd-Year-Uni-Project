@@ -8,7 +8,7 @@
     <div>
       <!-- Upon empty location... such is displayed-->
       <h1 v-if="activePoint === null">No point selected</h1>
-      <h1 v-else>{{ activePoint }}</h1>
+      <h1 class="act" v-else>{{ activePoint }}</h1>
     </div>
     <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
@@ -64,5 +64,9 @@ body,
 #__nuxt,
 #__layout {
   height: 100%;
+}
+.act {
+  font-size: 40px;
+  font-weight: bold;
 }
 </style>
