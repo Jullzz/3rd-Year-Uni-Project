@@ -19,11 +19,11 @@ export default {
 
 <style scoped>
 .image_east {
-  padding-top: 20px;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-top: 25px;
+  padding-left: 4px;
+  padding-right: 4px;
   float: left;
-  width: 6vw;
+  width: 4vw;
 }
 .text_east {
   float: left;

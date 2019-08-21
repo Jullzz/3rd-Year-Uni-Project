@@ -3,7 +3,20 @@
     <div>
       <NavBar />
     </div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
+    <div class="main">
+      <h1 class="title">
+        Time Series Table
+      </h1>
+    </div>
+    <b-table
+      class="table"
+      striped
+      hover
+      :items="items"
+      :fields="fields"
+      :foot-clone="footClone"
+      :head-variant="headVariant"
+    ></b-table>
   </div>
 </template>
 
@@ -83,8 +96,29 @@ export default {
           CyclistS: 20,
           Total: 110
         }
-      ]
+      ],
+      footClone: true,
+      headVariant: "dark"
     };
   }
 };
 </script>
+
+<style scoped>
+.title {
+  width: 60%;
+  float: right;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 35px;
+  font-weight: bold;
+}
+.main {
+  max-width: 100%;
+}
+.table {
+  font-size: 20px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+</style>

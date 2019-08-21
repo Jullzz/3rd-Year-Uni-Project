@@ -59,17 +59,6 @@ export default {
 .container {
   max-width: 100%;
 }
-.image_west {
-  padding-top: 20px;
-  padding-left: 5px;
-  padding-right: 5px;
-  float: left;
-  width: 6vw;
-}
-.text_west {
-  float: left;
-  font-size: 3vw;
-}
 .Total {
   font-size: 4vw;
 }
