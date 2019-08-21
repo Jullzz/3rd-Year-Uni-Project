@@ -1,10 +1,15 @@
 <template>
   <div class="w-full h-full" id="main">
+    <div>
+      <NavBar />
+    </div>
     <!-- map display -->
-    <Map class="w-full" :pointUpdate="updateActivePoint"></Map>
-    <!-- Upon empty location... such is displayed-->
-    <h1 v-if="activePoint === null">No point selected</h1>
-    <h1 v-else>{{ activePoint }}</h1>
+    <Map class="w-full" :pointUpdate="updateActivePoint" />
+    <div>
+      <!-- Upon empty location... such is displayed-->
+      <h1 v-if="activePoint === null">No point selected</h1>
+      <h1 v-else>{{ activePoint }}</h1>
+    </div>
     <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
       <DoughnutCharts :Hits="hits" :DirectionV="direction" />
@@ -21,13 +26,15 @@ import Logo from "~/components/Logo.vue";
 import Map from "~/components/Map.vue";
 import DoughnutCharts from "@/components/DoughnutChart/DoughnutCharts.vue";
 import LineChart from "~/components/LineChart/LineChart.vue";
+import NavBar from "~/components/NavBar/NavBar.vue";
 
 export default {
   components: {
     Logo,
     Map,
     DoughnutCharts,
-    LineChart
+    LineChart,
+    NavBar
   },
   data() {
     return {

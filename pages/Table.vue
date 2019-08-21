@@ -1,13 +1,47 @@
 <template>
   <div>
-    <b-table striped hover :items="items"></b-table>
+    <div>
+      <NavBar />
+    </div>
+    <b-table striped hover :items="items" :fields="fields"></b-table>
   </div>
 </template>
 
 <script>
+import NavBar from "~/components/NavBar/NavBar.vue";
+
 export default {
+  components: {
+    NavBar
+  },
   data() {
     return {
+      fields: {
+        Location: {
+          label: "Location",
+          sortable: true
+        },
+        PedestrianN: {
+          label: "PedestrianN",
+          sortable: false
+        },
+        PedestrianS: {
+          label: "PedestrianS",
+          sortable: false
+        },
+        CyclistN: {
+          label: "CyclistN",
+          sortable: false
+        },
+        CyclistS: {
+          label: "CyclistS",
+          sortable: false
+        },
+        Total: {
+          label: "Total",
+          sortable: true
+        }
+      },
       items: [
         {
           Location: "Bendigo1",
