@@ -66,7 +66,7 @@ body,
   height: 100%;
 }
 .act {
-  font-size: 40px;
+  font-size: 2vw;
   font-weight: bold;
 }
 </style>
