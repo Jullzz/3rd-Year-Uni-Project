@@ -31,7 +31,6 @@ app.get(BASE_URL + "testpoint", (req, res, next) => {
 app.get(BASE_URL + "getPointData", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
-    //res.json(data)
 });
 
 app.get(BASE_URL + "deleteAllData", (req, res, next) => {
@@ -81,20 +80,111 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
-            tags: {host: 'server02', direction: "out"},
-            fields: {value: 3.2}
+            tags: { 
+                title: 'Rosalind1'
+            },
+            fields: {
+                location: {lat: '3.3', lng:'5'},
+                direction1: 'East',
+                direction2: 'West',
+                bikeDir1: '1',
+                bikeDir2: '1',
+                pedDir1: '1',
+                pedDir2: '1' 
+            }
         },
         {
             measurement: 'cpu_load_short',
-            tags: {host: 'server03', direction: "out"},
-            fields: {value: 2.2}
+            tags: { 
+                title: 'Rosalind1'
+            },
+            fields: {
+                location: {lat: '3.3', lng:'5'},
+                direction1: 'East',
+                direction2: 'West',
+                bikeDir1: '2',
+                bikeDir2: '2',
+                pedDir1: '2',
+                pedDir2: '2' 
+            }
         },
         {
             measurement: 'cpu_load_short',
-            tags: {host: 'server11', direction: "out"},
-            fields: {value:  444.99}
+            tags: { 
+                title: 'Rosalind1'
+            },
+            fields: {
+                location: {lat: '3.3', lng:'5'},
+                direction1: 'East',
+                direction2: 'West',
+                bikeDir1: '3',
+                bikeDir2: '3',
+                pedDir1: '3',
+                pedDir2: '3' 
+            }
         }
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
 });
+
+app.get(BASE_URL + "test/PullUnitById", (req, res, next) => {
+
+});
+
+app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
+    let newobj= {
+        title: '',
+        counts: {bike: 0, pedestrian:0},
+        pedestrian: [50],
+        bike: [50],
+        location: { lat: 0, lng: 0},
+        direction: {
+            bike: {
+                Dir1: 0,
+                Dir2: 0,
+            },
+            pedestrian: {
+                Dir1: 0,
+                Dir2: 0,
+            }
+        }
+    }
+    influx.query('SELECT * FROM cpu_load_short').then(data =>
+    {
+        for(i=0;i<data.length;i++)
+        {
+            newobj.title = data[i].title;
+            newobj.counts.bike +=data[i].bikeDir1;
+            newobj.counts.bike +=data[i].bikeDir2;
+            newobj.counts.ped +=data[i].bikeDir1;
+            newobj.counts.ped +=data[i].bikeDir2;
+            newobj.direction.bike.Dir1 += data[i].bikeDir1;
+            newobj.direction.bike.Dir2 += data[i].bikeDir2;
+            newobj.direction.bike.Dir1 += data[i].pedDir1;
+            newobj.direction.bike.Dir2 += data[i].pedDir2;
+            newobj.location = data[i].location
+            newobj.pedestrian.push(data[i].pedDir1+data[i].pedDir2);
+            newobj.bike.push(data[i].bikeDir1+data[i].bikeDir2);
+
+        }
+        res.json(newobj).catch(err => res.status(404).json({error: err.message}));; 
+    });
+
+{
+    //   title:
+    //   counts: {bike: , pedestrian:}
+    //   pedestrian: [],
+    //   bike[],
+    //   location: { lat: , lng: },
+    //   direction: {
+    //     bike: {
+    //       west: ,
+    //       east:
+    //     },
+    //     pedestrian: {
+    //       west: ,
+    //       east:
+    //     }
+    //   }
+    // }
