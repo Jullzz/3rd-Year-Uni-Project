@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.6.0",
     "@types/google-maps": "^3.2.0",
     "babel": "^6.23.0",
     "bootstrap": "^4.3.1",

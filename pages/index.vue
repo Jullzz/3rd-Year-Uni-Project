@@ -4,7 +4,7 @@
       <NavBar />
     </div>
     <!-- map display -->
-    <Map class="w-full" :pointUpdate="updateActivePoint" />
+    <Map class="w-full" :pointUpdate="updateActivePoint" :dataPoints="api" />
     <div>
       <!-- Upon empty location... such is displayed-->
       <h1 v-if="activePoint === null">No point selected</h1>
@@ -35,6 +35,19 @@ export default {
     DoughnutCharts,
     LineChart,
     NavBar
+  },
+  async asyncData({ $axios, error }) {
+    try {
+      const { data } = await $axios.get("http://localhost:3000/test");
+      return {
+        api: data
+      };
+    } catch (e) {
+      error({
+        statusCode: 503,
+        message: "Unable to fetch events at this time. Plaese try again."
+      });
+    }
   },
   data() {
     return {

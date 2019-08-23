@@ -40,6 +40,7 @@
           d="M8.7 13.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 10.42l-3.3 3.3z"
         />
       </svg>
+      <div></div>
     </div>
 
     <Select
@@ -67,7 +68,8 @@ export default {
     Option
   },
   props: {
-    pointUpdate: null
+    pointUpdate: null,
+    dataPoints: null
   },
   data() {
     return {
@@ -79,46 +81,72 @@ export default {
       // 1 == All hits
       // 2 == Pedestrians only
       // 3 == Cyclists only
-      heatmapData: null,
-      dataPoints: [
-        // Fake test data
-        {
-          title: "Rosalind 1",
-          counts: { bike: 264, pedestrian: 23 },
-          bike: [10, 20, 40, 30, 50, 60],
-          pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.757234, lng: 144.279113 },
-          direction: {
-            bike: {
-              west: 100,
-              east: 164
-            },
-            pedestrian: {
-              west: 10,
-              east: 13
-            }
-          }
-        },
-        {
-          title: "Rosalind 2",
-          counts: { bike: 100, pedestrian: 241 },
-          bike: [10, 20, 20, 30, 40, 30],
-          pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.748794, lng: 144.290756 },
-          direction: {
-            bike: {
-              west: 40,
-              east: 60
-            },
-            pedestrian: {
-              west: 100,
-              east: 141
-            }
-          }
-        }
-      ]
-    };
+      heatmapData: null
+        };
   },
+      // dataPoints: [
+      //   // Fake test data
+      //   {
+      //     title: "Rosalind 1",
+      //     counts: { bike: 264, pedestrian: 23 },
+      //     bike: [10, 20, 40, 30, 50, 60],
+      //     pedestrian: [1, 5, 6, 40, 60, 10],
+      //     location: { lat: -36.757234, lng: 144.279113 },
+      //     direction: {
+      //       bike: {
+      //         west: 100,
+      //         east: 164
+      //       },
+      //       pedestrian: {
+      //         west: 10,
+      //         east: 13
+      //       }
+      //     }
+      //   },
+      // {
+      //   title: "Rosalind 2",
+      //   counts: { bike: 100, pedestrian: 241 },
+      //   bike: [10, 20, 20, 30, 40, 30],
+      //   pedestrian: [1, 5, 6, 40, 60, 10],
+      //   location: { lat: -36.748794, lng: 144.290756 },
+      //   direction: {
+      //     bike: {
+      //       west: 40,
+      //       east: 60
+      //     },
+      //     pedestrian: {
+      //       west: 100,
+      //       east: 141
+      //     }
+      //   }
+      // }
+      //   // {
+      //   //   title:
+      //   //   counts: {bike: , pedestrian:}
+      //   //   pedestrian: [],
+      //   //   location: { lat: , lng: },
+      //   //   direction: {
+      //   //     bike: {
+      //   //       west: ,
+      //   //       east:
+      //   //     },
+      //   //     pedestrian: {
+      //   //       west: ,
+      //   //       east:
+      //   //     }
+      //   //   }
+      //   // }
+
+      //   // [
+      //   //   {
+      //   //     time:
+      //   //     pedestrian: {
+      //   //       total:
+      //   //       east: [] west: []
+      //   //     }
+      //   //   }
+      //   // ]
+      // ]
 
   watch: {
     heatmapOn: function() {
