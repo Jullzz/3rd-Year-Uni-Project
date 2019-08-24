@@ -47,7 +47,7 @@
     }
   ],
   "test2": [{
-      "Location": "Bendigo1",
+      "Location": "Roland St",
       "PedestrianN": 10,
       "PedestrianS": 50,
       "CyclistN": 30,
@@ -55,7 +55,7 @@
       "Total": 110
     },
     {
-      "Location": "Bendigo2",
+      "Location": "Bendigo Ave",
       "PedestrianN": 20,
       "PedestrianS": 40,
       "CyclistN": 20,
@@ -63,15 +63,15 @@
       "Total": 110
     },
     {
-      "Location": "Bendigo3",
+      "Location": "Barkers cres",
       "PedestrianN": 30,
       "PedestrianS": 30,
       "CyclistN": 30,
       "CyclistS": 20,
-      "Total": 110
+      "Total": 140
     },
     {
-      "Location": "Bendigo4",
+      "Location": "Park Ave",
       "PedestrianN": 40,
       "PedestrianS": 20,
       "CyclistN": 20,
@@ -79,7 +79,7 @@
       "Total": 110
     },
     {
-      "Location": "Bendigo5",
+      "Location": "Ave 1",
       "PedestrianN": 50,
       "PedestrianS": 10,
       "CyclistN": 30,
