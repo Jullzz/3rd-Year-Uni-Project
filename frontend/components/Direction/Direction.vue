@@ -4,12 +4,12 @@
     <h1 class="Total">{{ Total.sum }} Hits</h1>
     <div class="container">
       <!-- display hits going west by passing a single prop data-->
-      <West :west="west" />
+      <West :west="Direction.west" />
     </div>
 
     <div class="container">
       <!-- displays hits going east by passing a single prop data-->
-      <East :east="east" />
+      <East :east="Direction.east" />
     </div>
   </div>
 </template>

@@ -27,19 +27,19 @@ export default {
   components: {
     NavBar
   },
-  async asyncData({ $axios, error }) {
-    try {
-      const { data } = await $axios.get("http://localhost:3000/test2");
-      return {
-        items: data
-      };
-    } catch (e) {
-      error({
-        statusCode: 503,
-        message: "Unable to fetch events at this time. Plaese try again."
-      });
-    }
-  },
+  // async asyncData({ $axios, error }) {
+  //   try {
+  //     const { data } = await $axios.get("http://localhost:3000/test2");
+  //     return {
+  //       items: data
+  //     };
+  //   } catch (e) {
+  //     error({
+  //       statusCode: 503,
+  //       message: "Unable to fetch events at this time. Plaese try again."
+  //     });
+  //   }
+  // },
   data() {
     return {
       fields: {
@@ -68,48 +68,48 @@ export default {
           sortable: true
         }
       },
-      // items: [
-      //   {
-      //     Location: "Bendigo1",
-      //     PedestrianN: 10,
-      //     PedestrianS: 50,
-      //     CyclistN: 30,
-      //     CyclistS: 20,
-      //     Total: 110
-      //   },
-      //   {
-      //     Location: "Bendigo2",
-      //     PedestrianN: 20,
-      //     PedestrianS: 40,
-      //     CyclistN: 20,
-      //     CyclistS: 30,
-      //     Total: 110
-      //   },
-      //   {
-      //     Location: "Bendigo3",
-      //     PedestrianN: 30,
-      //     PedestrianS: 30,
-      //     CyclistN: 30,
-      //     CyclistS: 20,
-      //     Total: 110
-      //   },
-      //   {
-      //     Location: "Bendigo4",
-      //     PedestrianN: 40,
-      //     PedestrianS: 20,
-      //     CyclistN: 20,
-      //     CyclistS: 30,
-      //     Total: 110
-      //   },
-      //   {
-      //     Location: "Bendigo5",
-      //     PedestrianN: 50,
-      //     PedestrianS: 10,
-      //     CyclistN: 30,
-      //     CyclistS: 20,
-      //     Total: 110
-      //   }
-      // ],
+      items: [
+        {
+          Location: "Bendigo1",
+          PedestrianN: 10,
+          PedestrianS: 50,
+          CyclistN: 30,
+          CyclistS: 20,
+          Total: 110
+        },
+        {
+          Location: "Bendigo2",
+          PedestrianN: 20,
+          PedestrianS: 40,
+          CyclistN: 20,
+          CyclistS: 30,
+          Total: 110
+        },
+        {
+          Location: "Bendigo3",
+          PedestrianN: 30,
+          PedestrianS: 30,
+          CyclistN: 30,
+          CyclistS: 20,
+          Total: 110
+        },
+        {
+          Location: "Bendigo4",
+          PedestrianN: 40,
+          PedestrianS: 20,
+          CyclistN: 20,
+          CyclistS: 30,
+          Total: 110
+        },
+        {
+          Location: "Bendigo5",
+          PedestrianN: 50,
+          PedestrianS: 10,
+          CyclistN: 30,
+          CyclistS: 20,
+          Total: 110
+        }
+      ],
       footClone: true,
       headVariant: "dark"
     };

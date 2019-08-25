@@ -4,7 +4,7 @@
       <NavBar />
     </div>
     <!-- map display -->
-    <Map class="w-full" :pointUpdate="updateActivePoint" :dataPoints="api" />
+    <Map class="w-full" :pointUpdate="updateActivePoint" />
     <div>
       <!-- Upon empty location... such is displayed-->
       <h1 v-if="activePoint === null">No point selected</h1>
@@ -38,10 +38,11 @@ export default {
   },
   // async asyncData({ $axios, error }) {
   //   try {
-  //     const { data } = await $axios.get("http://localhost:3000/test");
-  //     return {
-  //       api: data
-  //     };
+  //     const { data } = await $axios.get("http://web:8000/api/getPointData");
+  //     console.log(data);
+  //     // return {
+  //     //   api: data
+  //     // };
   //   } catch (e) {
   //     error({
   //       statusCode: 503,
