@@ -24,7 +24,11 @@ def get_data():
     )
     return response
 
-
+@app.route('test')
+def test():
+    req = request.get().content
+    console.log(req)
+    return req
 
 @app.route(URL_BASE + 'sendIt')
 def send_data():
