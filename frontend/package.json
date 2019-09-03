@@ -37,7 +37,11 @@
     "bootstrap-vue": "^2.0.0-rc.28",
     "jest": "^24.8.0",
     "jest-transform-stub": "^2.0.0",
+<<<<<<< HEAD
     "jquery": "^3.4.1",
+=======
+    "jquery": "^1.9.1",
+>>>>>>> 1560686c5be496ea23e3af99a02f05717fcb31b6
     "nodemon": "^1.18.9",
     "tailwindcss": "^0.7.0",
     "vue": "^2.6.10",
