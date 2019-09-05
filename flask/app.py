@@ -24,9 +24,9 @@ def get_data():
     )
     return response
 
-@app.route(URL_BASE + 'test')
+@app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    console.log(request)
+    print(request.data)
     return request
 
 
