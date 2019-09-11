@@ -74,6 +74,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 ....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
 ....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
+*/
 
 app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
@@ -83,43 +84,48 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
                 title: 'Rosalind1'
             },
             fields: {
-                location: {lat: '3.3', lng:'5'},
+                lat: 3.3,
+                lng:5,
                 direction1: 'East',
                 direction2: 'West',
-                bikeDir1: '1',
-                bikeDir2: '1',
-                pedDir1: '1',
-                pedDir2: '1' 
+                bikeDir1: 1,
+                bikeDir2: 1,
+                pedDir1: 1,
+                pedDir2: 1 
             }
         },
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: 'Rosalind1'
+                title: 'Rosalind1',
+                //time: Math.round(new Date().getTime() +10 /1000)
             },
             fields: {
-                location: {lat: '3.3', lng:'5'},
+                lat: 3.3,
+                lng: 5,
                 direction1: 'East',
                 direction2: 'West',
-                bikeDir1: '2',
-                bikeDir2: '2',
-                pedDir1: '2',
-                pedDir2: '2' 
+                bikeDir1: 2,
+                bikeDir2: 2,
+                pedDir1: 2,
+                pedDir2: 2
             }
         },
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: 'Rosalind1'
+                title: 'Rosalind1',
+                //time: Math.round(new Date().getTime() +20 /1000)
             },
             fields: {
-                location: {lat: '3.3', lng:'5'},
+                lat: 3.3,
+                lng:5,
                 direction1: 'East',
                 direction2: 'West',
-                bikeDir1: '3',
-                bikeDir2: '3',
-                pedDir1: '3',
-                pedDir2: '3' 
+                bikeDir1: 3,
+                bikeDir2: 3,
+                pedDir1: 3,
+                pedDir2: 3 
             }
         }
     ])
@@ -127,16 +133,13 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     .then(result => res.json(result))
 });
 
-app.get(BASE_URL + "test/PullUnitById", (req, res, next) => {
-
-});
 
 app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
     let newobj = {
         title: '',
         counts: { bike: 0, pedestrian: 0 },
-        pedestrian: [50],
-        bike: [50],
+        pedestrian: [],
+        bike: [],
         location: { lat: 0, lng: 0 },
         direction: {
             bike: {
@@ -152,19 +155,25 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data => {
         for (i = 0; i < data.length; i++) {
             newobj.title = data[i].title;
-            newobj.counts.bike += data[i].bikeDir1;
-            newobj.counts.bike += data[i].bikeDir2;
-            newobj.counts.ped += data[i].bikeDir1;
-            newobj.counts.ped += data[i].bikeDir2;
-            newobj.direction.bike.Dir1 += data[i].bikeDir1;
-            newobj.direction.bike.Dir2 += data[i].bikeDir2;
-            newobj.direction.bike.Dir1 += data[i].pedDir1;
-            newobj.direction.bike.Dir2 += data[i].pedDir2;
+            newobj.counts.bike += (data[i].bikeDir1 + data[i].bikeDir2);
+            newobj.counts.pedestrian +=(data[i].pedDir2 +data[i].pedDir1);
+            //newobj.location.lat = data[i].lat;
+            //newobj.location.lng = data[i].lng;
+            newobj.direction.bike.Dir1 = data[i].bikeDir1;
+            newobj.direction.bike.Dir2 = data[i].bikeDir2;
+            newobj.direction.pedestrian.Dir1 = data[i].pedDir1;
+            newobj.direction.pedestrian.Dir2 = data[i].pedDir2;
             newobj.location = data[i].location
             newobj.pedestrian.push(data[i].pedDir1 + data[i].pedDir2);
             newobj.bike.push(data[i].bikeDir1 + data[i].bikeDir2);
-
         }
         res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
     });;
-});*/
+});
+
+app.get(BASE_URL + "test/PullAll", (req, res, next) => {
+    influx.query('SELECT * FROM cpu_load_short').then(data => {
+
+        res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
+    });;
+});
