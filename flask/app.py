@@ -32,7 +32,8 @@ def test():
     print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64)
     print(loadString, file=sys.stderr)
-    print(int.from_bytes(loadString, byteorder='big'), file=sys.stderr)
+    for x in loadString:
+    print(x, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
