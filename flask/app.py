@@ -26,7 +26,9 @@ def get_data():
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    load64 = json.loads(request.get_data().decode('utf-8')).get('payload_raw')
+    obj = json.loads(request.get_data().decode('utf-8'))
+    print(obj)
+    load64 = obj.get('payload_raw')
     print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64)
     print(loadString, file=sys.stderr)
