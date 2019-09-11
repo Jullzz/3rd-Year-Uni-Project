@@ -27,12 +27,8 @@ def get_data():
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
     obj = json.loads(request.get_data().decode('utf-8'))
-    print(obj.get('counter'), file=sys.stderr)
     load64 = obj.get('payload_raw')
-    print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64)
-    print(loadString, file=sys.stderr)
-    out=""
     for x in loadString:
         print(x, file=sys.stderr)
     return "done"
