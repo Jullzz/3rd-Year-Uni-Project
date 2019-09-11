@@ -97,7 +97,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
             measurement: 'cpu_load_short',
             tags: { 
                 title: 'Rosalind1',
-                //time: Math.round(new Date().getTime() +10 /1000)
+                timestamp: Math.round(new Date().getTime() +10 /1000)
             },
             fields: {
                 lat: 3.3,
@@ -114,7 +114,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
             measurement: 'cpu_load_short',
             tags: { 
                 title: 'Rosalind1',
-                //time: Math.round(new Date().getTime() +20 /1000)
+                timestamp: Math.round(new Date().getTime() +20 /1000)
             },
             fields: {
                 lat: 3.3,
@@ -139,7 +139,7 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
         counts: { bike: 0, pedestrian: 0 },
         pedestrian: [],
         bike: [],
-        location: { lat: 0, lng: 0 },
+        location: { lat: 0, lag: 0 },
         direction: {
             bike: {
                 Dir1: 0,
@@ -156,16 +156,16 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
             newobj.title = data[i].title;
             newobj.counts.bike += (data[i].bikeDir1 + data[i].bikeDir2);
             newobj.counts.pedestrian +=(data[i].pedDir2 +data[i].pedDir1);
-            //newobj.location.lat = data[i].lat;
-            //newobj.location.lng = data[i].lng;
+            newobj.location.lat = data[i].lat;
+            newobj.location.lag = data[i].lng;
             newobj.direction.bike.Dir1 = data[i].bikeDir1;
             newobj.direction.bike.Dir2 = data[i].bikeDir2;
             newobj.direction.pedestrian.Dir1 = data[i].pedDir1;
             newobj.direction.pedestrian.Dir2 = data[i].pedDir2;
-            newobj.location = data[i].location
             newobj.pedestrian.push(data[i].pedDir1 + data[i].pedDir2);
             newobj.bike.push(data[i].bikeDir1 + data[i].bikeDir2);
         }
         res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
     });;
 });
+
