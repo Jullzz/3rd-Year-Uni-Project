@@ -28,7 +28,7 @@ def get_data():
 def test():
     load64 = json.loads(request.get_data().decode('utf-8')).get('payload_raw')
     print(load64, file=sys.stderr)
-    loadString = base64.b64decode(load64+"==")
+    loadString = base64.b64decode(load64)
     print(loadString, file=sys.stderr)
     print(int.from_bytes(loadString, byteorder='big'), file=sys.stderr)
     return "done"
