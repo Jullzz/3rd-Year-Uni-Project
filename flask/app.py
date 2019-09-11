@@ -32,8 +32,9 @@ def test():
     print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64)
     print(loadString, file=sys.stderr)
+    out=""
     for x in loadString:
-    print(x, file=sys.stderr)
+        out = out + x +", "
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
