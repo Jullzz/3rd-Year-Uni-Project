@@ -30,6 +30,7 @@ def test():
     print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64+"==")
     print(loadString, file=sys.stderr)
+    print(loadString.decode('utf-8'), file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
