@@ -75,7 +75,6 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 ....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
 */
-
 app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
@@ -167,13 +166,6 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
             newobj.pedestrian.push(data[i].pedDir1 + data[i].pedDir2);
             newobj.bike.push(data[i].bikeDir1 + data[i].bikeDir2);
         }
-        res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
-    });;
-});
-
-app.get(BASE_URL + "test/PullAll", (req, res, next) => {
-    influx.query('SELECT * FROM cpu_load_short').then(data => {
-
         res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
     });;
 });
