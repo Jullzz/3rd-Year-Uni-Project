@@ -74,7 +74,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 ....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
 ....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
-
+*/
 app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
@@ -167,4 +167,4 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
         }
         res.json(newobj).catch(err => res.status(404).json({ error: err.message }));;
     });;
-});*/
+});
