@@ -26,7 +26,7 @@ def get_data():
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    print(request.get_data(), file=sys.stderr)
+    print(bytes(request.get_data().decode('utf-8'), file=sys.stderr)
     print("done", file=sys.stderr)
     return "done"
 
