@@ -26,8 +26,8 @@ def get_data():
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    print(request.data)
-    return
+    #print(request.data)
+    return 0
 
 @app.route(URL_BASE + 'sendIt')
 def send_data():
