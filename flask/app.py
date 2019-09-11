@@ -34,7 +34,7 @@ def test():
     print(loadString, file=sys.stderr)
     out=""
     for x in loadString:
-        out = out + x +", "
+        print(x, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
