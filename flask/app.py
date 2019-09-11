@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import http.client, sys, requests, json
+import http.client, sys, requests, json, base64
 app = Flask(__name__)
 URL_BASE = "/flask/"
 
@@ -26,8 +26,9 @@ def get_data():
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    print(json.loads(request.get_data().decode('utf-8')).get('app_id'), file=sys.stderr)
-    print("done", file=sys.stderr)
+    load64 = json.loads(request.get_data().decode('utf-8')).get('app_id')
+    loadString = base64.b64decode(load64)
+    print(loadString, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
