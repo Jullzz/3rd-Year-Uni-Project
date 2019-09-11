@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import http.client, sys, requests, json, base64
+import http.client, sys, requests, json, base64, struct
 app = Flask(__name__)
 URL_BASE = "/flask/"
 
@@ -30,7 +30,7 @@ def test():
     print(load64, file=sys.stderr)
     loadString = base64.b64decode(load64+"==")
     print(loadString, file=sys.stderr)
-    print("Load: "+loadString.decode('utf16'), file=sys.stderr)
+    print("Load: "+struct.unpack('>HH', loadString), file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
