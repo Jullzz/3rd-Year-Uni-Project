@@ -1,7 +1,7 @@
 <template>
   <div
     id="map-container"
-    class="w-full"
+    class="w-full relative"
     :class="!enlarged ? 'map-short' : 'map-tall'"
   >
     <!-- Map itself -->
