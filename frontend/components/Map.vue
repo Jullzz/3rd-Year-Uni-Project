@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      enlarged: false, // True means map is expanded
+      enlarged: true, // True means map is expanded
       map: null, // Map object
       heatmap: null, // Heatmap object
       heatmapType: 1, // Type of heatmap layer
@@ -329,7 +329,7 @@ export default {
 
 .map-tall {
   transition: height 0.2s;
-  height: 90%;
+  height: 85%;
 }
 
 .infoWindow {

@@ -11,7 +11,7 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 /* Plugins */
 
-import nuxt_plugin_axios_00a8b48a from 'nuxt_plugin_axios_00a8b48a' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_axios_5896226e from 'nuxt_plugin_axios_5896226e' // Source: ./axios.js (mode: 'all')
 import nuxt_plugin_iview_fabcf5d2 from 'nuxt_plugin_iview_fabcf5d2' // Source: ../plugins/iview (mode: 'all')
 
 // Component: <ClientOnly>
@@ -142,8 +142,8 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_axios_00a8b48a === 'function') {
-    await nuxt_plugin_axios_00a8b48a(app.context, inject)
+  if (typeof nuxt_plugin_axios_5896226e === 'function') {
+    await nuxt_plugin_axios_5896226e(app.context, inject)
   }
 
   if (typeof nuxt_plugin_iview_fabcf5d2 === 'function') {
