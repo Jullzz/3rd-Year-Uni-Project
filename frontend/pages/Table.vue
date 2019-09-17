@@ -15,6 +15,7 @@
           v-for="i in num_pages()"
           v-bind:class="[i == currentPage ? 'active' : '']"
           v-on:click="change_page(i)"
+          :key="i"
         >
           {{ i }}
         </div>
@@ -242,8 +243,9 @@ table tbody tr:nth-child(2n) td {
 .pagination {
   font-family: "Open Sans", sans-serif;
   text-align: right;
-  width: 750px;
-  padding: 8px;
+  width: 100%;
+  padding-top: 8px;
+  text-align: center;
 }
 
 .arrow_down {
