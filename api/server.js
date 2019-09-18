@@ -169,3 +169,26 @@ app.get(BASE_URL + "test/PullAllUnits", (req, res, next) => {
     });;
 });
 
+app.get(BASE_URL + "test/singleData", (req, res, next) => {
+    influx.writePoints([
+        {
+            measurement: 'cpu_load_short',
+            tags: { 
+                title: 'Rosalind1'
+            },
+            fields: {
+                lat: 3.3,
+                lng:5,
+                direction1: 'East',
+                direction2: 'West',
+                bikeDir1: 1,
+                bikeDir2: 1,
+                pedDir1: 1,
+                pedDir2: 1 
+            }
+        }
+    ])
+    .catch(err => console.log(err))
+    .then(result => res.json(result))
+});
+

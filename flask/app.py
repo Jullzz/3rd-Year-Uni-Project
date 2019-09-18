@@ -5,7 +5,7 @@ URL_BASE = "/flask/"
 
 # API SERVER ADDRESS:
 #   http://web:8000
-API_SA = 'http://web:8000'
+API_SA = 'http://web:8000/api'
 
 @app.route(URL_BASE)
 def hello_world():
@@ -24,19 +24,36 @@ def get_data():
     )
     return response
 
-@app.route('test')
+@app.route(URL_BASE + 'test', methods=['POST'])
 def test():
-    req = request.get().content
-    console.log(req)
-    return req
+    obj = json.loads(request.get_data().decode('utf-8'))
+    load64 = obj.get('payload_raw')
+    loadString = base64.b64decode(load64)
+
+    data_dict = {
+            # 'time': int(request.form['time']),
+            'title': 'Rosalind1'
+            'lat': loadString[0],
+            'lng':loadString[1],
+            'direction1': loadString[2],
+            'direction2': loadString[3],
+            'bikeDir1': loadString[4],
+            'bikeDir2': loadString[5],
+            'pedDir1': loadString[6],
+            'pedDir2': loadString[7] 
+    }
+    info = json.dumps(data_dict)
+    info_array = [info]
+    response = requests.get(API_SA +'/test/singleData', json=info_array)
+    return "done"
 
 @app.route(URL_BASE + 'sendIt')
 def send_data():
-    return requests.get(API_SA +'/api/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
+    return requests.get(API_SA +'/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
 
 @app.route(URL_BASE + 'deleteAll')
 def post_data():
-    return requests.get(API_SA+ '/api/deleteAllData').content
+    return requests.get(API_SA+ '/deleteAllData').content
 
 @app.route(URL_BASE + 'sendCustomData', methods=['GET','POST'])
 def send_customer_data():
@@ -50,7 +67,7 @@ def send_customer_data():
         info = json.dumps(data_dict)
         #info_array = [info, info, info]
         info_array = [info]
-        response = requests.get(API_SA +'/api/test/writePoint', json=info_array)
+        response = requests.get(API_SA +'/test/writePoint', json=info_array)
     return response.content
 
 
