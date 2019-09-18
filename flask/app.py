@@ -31,7 +31,6 @@ def test():
     loadString = base64.b64decode(load64)
 
     data_dict = {
-            # 'time': int(request.form['time']),
             'title': 'Rosalind1'
             'lat': loadString[0],
             'lng':loadString[1],
