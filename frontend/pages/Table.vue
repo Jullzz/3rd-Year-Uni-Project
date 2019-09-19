@@ -3,9 +3,9 @@
     <div>
       <NavBar />
     </div>
-    <div class="main">
-      <h1 class="title">
-        Time Series Table
+    <div class="main w-full text-center">
+      <h1 class="title text-green-700">
+        Detailed Data Table
       </h1>
     </div>
     <div id="sixthTable">
@@ -15,6 +15,7 @@
           v-for="i in num_pages()"
           v-bind:class="[i == currentPage ? 'active' : '']"
           v-on:click="change_page(i)"
+          :key="i"
         >
           {{ i }}
         </div>
@@ -214,7 +215,7 @@ table {
 
 table th {
   text-align: center;
-  background: #44475c;
+  background: #3d4852;
   color: #fff;
   cursor: pointer;
   padding: 8px;
@@ -227,7 +228,7 @@ table th:hover {
 table td {
   text-align: center;
   padding: 8px;
-  border-right: 2px solid #7d82a8;
+  border-right: 2px solid #3d4852;
   font-size: 20px;
   font-weight: bold;
 }
@@ -235,14 +236,16 @@ table td:last-child {
   border-right: none;
 }
 table tbody tr:nth-child(2n) td {
-  background: #d4d8f9;
+  @apply bg-green-100
+  /* background: #a3c58e; */
 }
 
 .pagination {
   font-family: "Open Sans", sans-serif;
   text-align: right;
-  width: 750px;
-  padding: 8px;
+  width: 100%;
+  padding-top: 8px;
+  text-align: center;
 }
 
 .arrow_down {
@@ -265,7 +268,7 @@ table tbody tr:nth-child(2n) td {
   padding: 4px 10px;
   color: #fff;
   border-radius: 4px;
-  background: #44475c;
+  background: #3d4852;
   margin: 0px 5px;
   cursor: pointer;
 }
