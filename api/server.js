@@ -107,7 +107,7 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
                 title: 'Rosalind1'
             },
             fields: {
-                lat: 3.3,
+                lat: res.lat,
                 lng:5,
                 direction1: 'East',
                 direction2: 'West',
