@@ -41,6 +41,7 @@ def test():
     #        'pedDir1': loadString[6],
     #        'pedDir2': loadString[7] 
     #}
+    data_dict = 'null'
     info = json.dumps(data_dict)
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
