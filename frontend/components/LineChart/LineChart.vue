@@ -14,33 +14,82 @@ export default {
   },
   props: {
     bike: null,
-    pedestrian: null
+    pedestrian: null,
+    label: { data: "" }
   },
   data() {
     return {
-      datacollection: null
+      datacollection: null,
+      Bike: null,
+      Pedestrian: null,
+      Labels: ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"]
     };
   },
   computed: {
     //Calculate and create a new array with the total hits every hour
     total() {
       var sum = [];
-      var ped = this.pedestrian;
-      this.bike.forEach((num, index) => {
+      var ped = this.Pedestrian;
+      this.Bike.forEach((num, index) => {
         sum.push(num + ped[index]);
       });
       return sum;
     }
   },
   beforeUpdate() {
+    this.totalCal();
     //chart data to be update before upadting the page
     this.fillData();
   },
   methods: {
+    labelCheck() {
+      if (this.label.data === "Hourly") {
+        this.Labels = ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"];
+      } else if (this.label.data === "Daily") {
+        this.Labels = [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ];
+      } else if (this.label.data === "Weekly") {
+        this.Labels = [
+          "Week 1",
+          "Week 2",
+          "Week 3",
+          "Week 4",
+          "Week 5",
+          "Week 6"
+        ];
+      } else if (this.label.data === "Monthly") {
+        this.Labels = ["January", "February", "March", "April", "May", "June"];
+      } else if (this.label.data === "Yearly") {
+        this.Labels = ["2014", "2015", "2016", "2017", "2018", "2019"];
+      }
+    },
+    totalCal() {
+      var sum = [];
+      var bikeW = this.bike.west;
+      var bikeE = this.bike.east;
+      var pedW = this.pedestrian.west;
+      var pedE = this.pedestrian.east;
+
+      bikeW.forEach((num, index) => {
+        sum.push(num + bikeE[index]);
+      });
+      this.Bike = sum;
+      pedW.forEach((num, index) => {
+        sum.push(num + pedE[index]);
+        this.Pedestrian = sum;
+      });
+    },
     //create the data for the chart with some sytles
     fillData() {
+      this.labelCheck();
       this.datacollection = {
-        labels: ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"],
+        labels: this.Labels,
         datasets: [
           {
             label: "Bike",
@@ -50,7 +99,7 @@ export default {
             pointHoverBackgroundColor: "#E66A6A",
             pointHoverRadius: 7,
             //data array for the bike
-            data: this.bike
+            data: this.Bike
           },
           {
             label: "Pedestrian",
@@ -60,7 +109,7 @@ export default {
             pointHoverBackgroundColor: "#8662C7",
             pointHoverRadius: 7,
             //data array for the pedestrian
-            data: this.pedestrian
+            data: this.Pedestrian
           },
           {
             label: "Total",

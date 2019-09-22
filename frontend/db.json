@@ -1,51 +1,148 @@
 {
-  "test": [{
+  "mapping": [{
       "title": "Rosalind 1",
-      "counts": {
-        "bike": 264,
-        "pedestrian": 23
-      },
-      "bike": [10, 20, 40, 30, 50, 60],
-      "pedestrian": [1, 5, 6, 40, 60, 10],
-      "location": {
-        "lat": -36.757234,
-        "lng": 144.279113
-      },
-      "direction": {
-        "bike": {
-          "west": 100,
-          "east": 164
-        },
-        "pedestrian": {
-          "west": 10,
-          "east": 13
-        }
-      }
-    },
-    {
-      "title": "Rosalind 2",
-      "counts": {
-        "bike": 100,
-        "pedestrian": 241
-      },
-      "bike": [10, 20, 20, 30, 40, 30],
-      "pedestrian": [1, 5, 6, 40, 60, 10],
       "location": {
         "lat": -36.748794,
         "lng": 144.290756
       },
-      "direction": {
-        "bike": {
-          "west": 40,
-          "east": 60
-        },
-        "pedestrian": {
-          "west": 100,
-          "east": 141
-        }
+      "counts": {
+        "bike": 264,
+        "pedestrian": 23
+      }
+    },
+    {
+      "title": "Bendigo",
+      "location": {
+        "lat": -36.757234,
+        "lng": 144.279113
+      },
+      "counts": {
+        "bike": 100,
+        "pedestrian": 12
       }
     }
   ],
+  "HourlyRosalind_1": {
+    "direction": {
+      "bike": {
+        "west": [15, 18, 6, 20, 4, 10],
+        "east": [5, 7, 13, 10, 15, 20]
+      },
+      "pedestrian": {
+        "west": [18, 25, 4, 9, 8, 19],
+        "east": [19, 15, 3, 7, 13, 29]
+      }
+    }
+  },
+  "DailyRosalind_1": {
+    "direction": {
+      "bike": {
+        "west": [20, 8, 1, 41, 2, 1],
+        "east": [30, 20, 14, 9, 30, 9]
+      },
+      "pedestrian": {
+        "west": [80, 5, 14, 2, 3, 14],
+        "east": [10, 45, 53, 1, 16, 9]
+      }
+    }
+  },
+  "WeeklyRosalind_1": {
+    "direction": {
+      "bike": {
+        "west": [15, 18, 6, 20, 4, 10],
+        "east": [5, 7, 13, 10, 15, 20]
+      },
+      "pedestrian": {
+        "west": [18, 25, 4, 9, 8, 19],
+        "east": [19, 15, 3, 7, 13, 29]
+      }
+    }
+  },
+  "MonthlyRosalind_1": {
+    "direction": {
+      "bike": {
+        "west": [15, 18, 6, 20, 4, 10],
+        "east": [5, 7, 13, 10, 15, 20]
+      },
+      "pedestrian": {
+        "west": [18, 25, 4, 9, 8, 19],
+        "east": [19, 15, 3, 7, 13, 29]
+      }
+    }
+  },
+  "YearlyRosalind_1": {
+    "direction": {
+      "bike": {
+        "west": [15, 18, 6, 20, 4, 10],
+        "east": [5, 7, 13, 10, 15, 20]
+      },
+      "pedestrian": {
+        "west": [18, 25, 4, 9, 8, 19],
+        "east": [19, 15, 3, 7, 13, 29]
+      }
+    }
+  },
+  "HourlyBendigo": {
+    "direction": {
+      "bike": {
+        "west": [40, 30, 2, 5, 4, 18],
+        "east": [7, 7, 15, 1, 25, 21]
+      },
+      "pedestrian": {
+        "west": [14, 21, 7, 10, 4, 13],
+        "east": [12, 17, 1, 4, 10, 21]
+      }
+    }
+  },
+  "DailyBendigo": {
+    "direction": {
+      "bike": {
+        "west": [40, 30, 2, 5, 4, 18],
+        "east": [7, 7, 15, 1, 25, 21]
+      },
+      "pedestrian": {
+        "west": [14, 21, 7, 10, 4, 13],
+        "east": [12, 17, 1, 4, 10, 21]
+      }
+    }
+  },
+  "WeeklyBendigo": {
+    "direction": {
+      "bike": {
+        "west": [40, 30, 2, 5, 4, 18],
+        "east": [7, 7, 15, 1, 25, 21]
+      },
+      "pedestrian": {
+        "west": [14, 21, 7, 10, 4, 13],
+        "east": [12, 17, 1, 4, 10, 21]
+      }
+    }
+  },
+  "MonthlyBendigo": {
+    "direction": {
+      "bike": {
+        "west": [40, 30, 2, 5, 4, 18],
+        "east": [7, 7, 15, 1, 25, 21]
+      },
+      "pedestrian": {
+        "west": [14, 21, 7, 10, 4, 13],
+        "east": [12, 17, 1, 4, 10, 21]
+      }
+    }
+  },
+  "YearlyBendigo": {
+    "direction": {
+      "bike": {
+        "west": [40, 30, 2, 5, 4, 18],
+        "east": [7, 7, 15, 1, 25, 21]
+      },
+      "pedestrian": {
+        "west": [14, 21, 7, 10, 4, 13],
+        "east": [12, 17, 1, 4, 10, 21]
+      }
+    }
+  },
+
   "test2": [{
       "Location": "Roland St",
       "PedestrianN": 10,

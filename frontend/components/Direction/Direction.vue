@@ -1,15 +1,15 @@
 <template>
   <div class="Direction">
     <!-- Sum total of hit going both direction -->
-    <h1 class="Total">{{ Total.sum }} Hits</h1>
+    <h1 class="Total" :key="this.Direction">{{ sum }} Hits</h1>
     <div class="container">
       <!-- display hits going west by passing a single prop data-->
-      <West :west="Direction.west" />
+      <West :west="west" />
     </div>
 
     <div class="container">
       <!-- displays hits going east by passing a single prop data-->
-      <East :east="Direction.east" />
+      <East :east="east" />
     </div>
   </div>
 </template>
@@ -28,28 +28,34 @@ export default {
   },
   mounted() {
     this.setProps(this.Direction);
+    console.log("init: " + this.Direction.west);
   },
   beforeUpdate() {
     this.setProps(this.Direction);
+    console.log("init2: " + this.Direction);
   },
   data() {
     return {
       west: null,
-      east: null
+      east: null,
+      sum: null
     };
-  },
-  computed: {
-    //calculated the total of hits
-    Total() {
-      return {
-        sum: this.west + this.east
-      };
-    }
   },
   methods: {
     setProps(Direction) {
-      this.east = Direction.east;
-      this.west = Direction.west;
+      this.east = this.TotalCal(Direction.east);
+      this.west = this.TotalCal(Direction.west);
+      this.Total();
+    },
+    TotalCal(data) {
+      var sum = null;
+      data.forEach((num, index) => {
+        sum = sum + num;
+      });
+      return sum;
+    },
+    Total() {
+      this.sum = this.east + this.west;
     }
   }
 };
