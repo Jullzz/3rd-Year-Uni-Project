@@ -6,14 +6,19 @@
     <!-- map display -->
     <Map class="w-full" :pointUpdate="updateActivePoint" :dataPoints="map" />
     <div style="width: 100%">
-      <!-- ChoiceBox-->
+      <!-- ChoiceBox of Locations-->
       <h1 style="float: left;">
+        <!-- Displays choice Locatiton upon selection-->
         Location: {{ this.childData.data }}
+        <!-- location Choicebox component-->
         <ChoiceBox :dataTitle="title" :data="childData" />
       </h1>
+      <!-- ChoiceBox of Times-->
       <h1 style="float: right;">
-        Duration: {{ this.time.data
-        }}<ChoiceBox :dataTitle="timeArray" :data="time" />
+        <!-- Displays choice of Duration upon selection-->
+        Duration: {{ this.time.data }}
+        <!-- Duration Choicebox component-->
+        <ChoiceBox :dataTitle="timeArray" :data="time" />
       </h1>
     </div>
     <div>
@@ -37,6 +42,7 @@ import ChoiceBox from "~/components/ChoiceBox.vue";
 
 import axios from "axios";
 
+// Setting a base url used for multiple calls
 const baseUrl = "http://localhost:3000/";
 
 export default {
@@ -48,12 +54,14 @@ export default {
     NavBar,
     ChoiceBox
   },
+  // Calls in the first set of array to define locations of pathways
   async asyncData({ $axios, error }) {
     let url = baseUrl + "mapping";
     console.log(url);
     try {
       const { data } = await $axios.get(url);
       return {
+        // Said Array of location will be send to the map component to be displayed
         map: data
       };
     } catch (e) {
@@ -93,19 +101,24 @@ export default {
     this.CBoxTitle(this.map);
   },
   beforeUpdate() {
+    // Conditional statement to prevent infinite loops
     if (this.markerSelected === true) {
+      // infinite loop prevetion for general
       this.choiceboxCheck(this.childData.data);
       this.markerSelected = false;
     } else if (this.childData.data !== this.chilDataComparator) {
+      // infinite loop prevetion for location selection call
       this.choiceboxCheck(this.childData.data);
       this.chilDataComparator = this.childData.data;
     }
     if (this.timeComparator !== this.time.data) {
+      // infinite loop prevetion for Time selection call
       this.timeUpdate(this.time.data);
       this.timeComparator = this.time.data;
     }
   },
   methods: {
+    // API call to attain location marker to display on maps
     async locationMapping() {
       let url = baseUrl + "Hourly" + this.locationTitle.replace(" ", "_");
       console.log(url);
@@ -116,6 +129,7 @@ export default {
         console.log(err);
       }
     },
+    // API call to update duration upon changes
     async timeUpdate(newPoint) {
       let url = baseUrl + newPoint + this.locationTitle.replace(" ", "_");
       console.log(url);
@@ -126,23 +140,27 @@ export default {
         console.log(err);
       }
     },
+    // Checks if  location selected exist
+    // Updates choiceBox placeholder
     updateActivePoint(newPoint) {
       this.choiceboxCheck(newPoint.title);
       this.childData.data = newPoint.title;
     },
+    // initialize different variables with data to display on charts
     updateByLocation(newPoint) {
-      //console.log(newPoint);
-      //console.log("test");
+      // Data for doughnut chart
       this.direction = newPoint.direction;
-
+      // Data for linechart
       this.pedestrian = newPoint.direction.pedestrian;
       this.bike = newPoint.direction.bike;
       console.log();
     },
+    // updates when changes are made to the duration
     updateByTime(newPoint) {
       this.pedestrian = newPoint.direction.pedestrian;
       this.bike = newPoint.direction.bike;
     },
+    // intialise an array for the choiceboxes
     CBoxTitle(data) {
       let arr = [];
       data.forEach((item, index) => {
@@ -154,6 +172,7 @@ export default {
       });
       this.title = arr;
     },
+    // Func to check is location exist
     choiceboxCheck(title) {
       for (let i = 0; i < this.map.length; i++) {
         if (this.map[i].title === title) {

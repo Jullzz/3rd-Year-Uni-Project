@@ -37,11 +37,13 @@ export default {
     }
   },
   beforeUpdate() {
+    // calls func to get total hits array
     this.totalCal();
     //chart data to be update before upadting the page
     this.fillData();
   },
   methods: {
+    // Func fro dyanamic labeling depending on the duration selected
     labelCheck() {
       if (this.label.data === "Hourly") {
         this.Labels = ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"];
@@ -69,20 +71,23 @@ export default {
         this.Labels = ["2014", "2015", "2016", "2017", "2018", "2019"];
       }
     },
+    // combine east and west array received from parrent
     totalCal() {
-      var sum = [];
+      var sumB = [];
+      var sumP = [];
       var bikeW = this.bike.west;
       var bikeE = this.bike.east;
       var pedW = this.pedestrian.west;
       var pedE = this.pedestrian.east;
-
+      // array for bike
       bikeW.forEach((num, index) => {
-        sum.push(num + bikeE[index]);
+        sumB.push(num + bikeE[index]);
       });
-      this.Bike = sum;
+      this.Bike = sumB;
+      //array for pedestrian
       pedW.forEach((num, index) => {
-        sum.push(num + pedE[index]);
-        this.Pedestrian = sum;
+        sumP.push(num + pedE[index]);
+        this.Pedestrian = sumP;
       });
     },
     //create the data for the chart with some sytles

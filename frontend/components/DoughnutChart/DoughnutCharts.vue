@@ -60,24 +60,27 @@ export default {
     };
   },
   beforeUpdate() {
-    //function will be called to update data before updating page
+    //function will be called to update data before rerendering page
     this.updateEvent(this.DirectionV);
     this.fillData();
   },
   methods: {
-    //local data will be instatiated by prop data
+    // Data from parent pages will be locally initialised on local variables
     updateEvent(newPoint) {
-      console.log("out: " + newPoint.bike.east);
+      // Calculating total Cyclist and Pedestrians
+      // Data retreived from aprrents is an array
       this.bike = this.totalCal(newPoint.bike.east, newPoint.bike.west);
       this.pedestrian = this.totalCal(
         newPoint.pedestrian.east,
         newPoint.pedestrian.west
       );
-      console.log("out2: " + this.bike);
+      // Calculating total
       this.total = this.bike + this.pedestrian;
+      // Initialise data to pass to child component
       this.direction_bike = newPoint.bike;
       this.direction_pes = newPoint.pedestrian;
     },
+    // Func to calculate total in an array
     totalCal(arr1, arr2) {
       var sum = 0;
       arr1.forEach((num, index) => {

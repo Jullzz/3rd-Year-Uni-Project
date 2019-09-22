@@ -28,11 +28,9 @@ export default {
   },
   mounted() {
     this.setProps(this.Direction);
-    console.log("init: " + this.Direction.west);
   },
   beforeUpdate() {
     this.setProps(this.Direction);
-    console.log("init2: " + this.Direction);
   },
   data() {
     return {
@@ -42,11 +40,16 @@ export default {
     };
   },
   methods: {
+    // Data from parent retreived and will be initialised
+    // on local data
     setProps(Direction) {
+      // datas retreived is an array
       this.east = this.TotalCal(Direction.east);
       this.west = this.TotalCal(Direction.west);
       this.Total();
     },
+    // func to convert from array to variable
+    // func to calculated total
     TotalCal(data) {
       var sum = null;
       data.forEach((num, index) => {
@@ -54,6 +57,7 @@ export default {
       });
       return sum;
     },
+    //fucn to calculated total hits
     Total() {
       this.sum = this.east + this.west;
     }
