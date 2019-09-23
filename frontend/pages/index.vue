@@ -13,18 +13,18 @@
       <!-- ChoiceBox-->
       <div class="inline-block pl-8">
       <h1>
-        Location: {{ this.childData.data }}
+        <!-- Location: {{ this.childData.data }} -->
         <ChoiceBox :dataTitle="title" :data="childData" />
       </h1>
       </div>
       <div class="float-right pr-8">
       <h1>
-        Duration: {{ this.time.data
-        }}<ChoiceBox :dataTitle="timeArray" :data="time" />
+        Duration: {{ this.time.data }}
+        <ChoiceBox :dataTitle="timeArray" :data="time" />
       </h1>
       </div>
     </div>
-    
+    <!-- {{ this.childData.data }} -->
     <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
       <DoughnutCharts :Hits="hits" :DirectionV="direction" />
@@ -53,13 +53,6 @@ export default {
     NavBar,
     ChoiceBox
   },
-  beforeUpdate() {
-    if (this.childData.data !== this.chilDataComparator) {
-      this.choiceboxCheck(this.childData.data);
-      this.chilDataComparator = this.childData.data;
-    }
-  },
-
   data() {
     return {
       chilDataComparator: "No Location Selected",
@@ -119,6 +112,14 @@ export default {
         }
       ]
     };
+  },
+  watch: {
+    'childData.data': function(val) {
+        if (this.childData.data !== this.chilDataComparator) {
+          this.choiceboxCheck(this.childData.data);
+          this.chilDataComparator = this.childData.data;
+        }
+    }
   },
   methods: {
     //declaring data needed for components to display charts
