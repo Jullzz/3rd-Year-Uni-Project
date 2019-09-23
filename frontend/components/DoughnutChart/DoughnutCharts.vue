@@ -104,7 +104,7 @@ export default {
 }
 .title {
   margin-top: 10px;
-  font-size: 4vw;
+  font-size: 3vw;
 }
 .direction_left,
 .direction_right {

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <!-- displays hits going east with an image -->
-    <h1 class="text_east" id="East">{{ east }} East</h1>
-    <div class="image_east">
+    <h1 class="text_east inline" id="East">{{ east }} East</h1>
+    <div class="image_east inline-block">
       <!-- static images used.. located in assest folder -->
       <img src="~/assets/images/Right_arrow.png" />
     </div>
@@ -22,11 +22,9 @@ export default {
   padding-top: 25px;
   padding-left: 4px;
   padding-right: 4px;
-  float: left;
   width: 4vw;
 }
 .text_east {
-  float: left;
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 </style>

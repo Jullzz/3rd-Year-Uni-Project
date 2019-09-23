@@ -1,5 +1,5 @@
 <template>
-  <div class="Direction">
+  <div class="Direction text-center">
     <!-- Sum total of hit going both direction -->
     <h1 class="Total">{{ Total.sum }} Hits</h1>
     <div class="container">
@@ -60,6 +60,6 @@ export default {
   max-width: 100%;
 }
 .Total {
-  font-size: 4vw;
+  font-size: 3vw;
 }
 </style>

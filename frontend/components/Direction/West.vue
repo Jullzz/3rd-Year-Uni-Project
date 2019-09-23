@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container w-full">
     <!-- displays hit going west with an image -->
-    <div class="image_west">
+    <div class="image_west inline-block">
       <!-- static images used.. located in assest folder -->
       <img src="~/assets/images/Left_arrow.png" />
     </div>
-    <h1 class="text_west" id="West">{{ west }} West</h1>
+      <h1 class="text_west inline" id="West">{{ west }} West</h1>
   </div>
 </template>
 
@@ -22,11 +22,9 @@ export default {
   padding-top: 20px;
   padding-left: 4px;
   padding-right: 4px;
-  float: left;
   width: 4vw;
 }
 .text_west {
-  float: left;
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 </style>
