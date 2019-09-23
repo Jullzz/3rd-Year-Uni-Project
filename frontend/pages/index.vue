@@ -9,17 +9,22 @@
       :pointUpdate="updateActivePoint"
       :dataPoints="dataPoints"
     />
-    <div>
+    <div class="mb-4 w-full h-10">
       <!-- ChoiceBox-->
-      <h1 style="float: left;">
+      <div class="inline-block pl-8">
+      <h1>
         Location: {{ this.childData.data }}
         <ChoiceBox :dataTitle="title" :data="childData" />
       </h1>
-      <h1 style="float: right;">
+      </div>
+      <div class="float-right pr-8">
+      <h1>
         Duration: {{ this.time.data
         }}<ChoiceBox :dataTitle="timeArray" :data="time" />
       </h1>
+      </div>
     </div>
+    
     <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
       <DoughnutCharts :Hits="hits" :DirectionV="direction" />
