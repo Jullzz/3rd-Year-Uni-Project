@@ -1,2 +1,7 @@
 node_modules/
 package-lock.json
+frontend/.nuxt/components/nuxt-build-indicator.vue
+frontend/.nuxt/App.js
+frontend/.nuxt/index.js
+frontend/.nuxt/router.js
+frontend/.nuxt/components/nuxt-child.js
