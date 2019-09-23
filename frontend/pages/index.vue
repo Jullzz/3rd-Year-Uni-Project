@@ -4,11 +4,21 @@
       <NavBar />
     </div>
     <!-- map display -->
-    <Map class="w-full" :pointUpdate="updateActivePoint" />
+    <Map
+      class="w-full"
+      :pointUpdate="updateActivePoint"
+      :dataPoints="dataPoints"
+    />
     <div>
-      <!-- Upon empty location... such is displayed-->
-      <h1 v-if="activePoint === null">No point selected</h1>
-      <h1 class="act" v-else>{{ activePoint }}</h1>
+      <!-- ChoiceBox-->
+      <h1 style="float: left;">
+        Location: {{ this.childData.data }}
+        <ChoiceBox :dataTitle="title" :data="childData" />
+      </h1>
+      <h1 style="float: right;">
+        Duration: {{ this.time.data
+        }}<ChoiceBox :dataTitle="timeArray" :data="time" />
+      </h1>
     </div>
     <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
@@ -27,6 +37,7 @@ import Map from "~/components/Map.vue";
 import DoughnutCharts from "@/components/DoughnutChart/DoughnutCharts.vue";
 import LineChart from "~/components/LineChart/LineChart.vue";
 import NavBar from "~/components/NavBar/NavBar.vue";
+import ChoiceBox from "~/components/ChoiceBox.vue";
 
 export default {
   components: {
@@ -34,30 +45,74 @@ export default {
     Map,
     DoughnutCharts,
     LineChart,
-    NavBar
+    NavBar,
+    ChoiceBox
   },
-  // async asyncData({ $axios, error }) {
-  //   try {
-  //     const { data } = await $axios.get("http://web:8000/api/getPointData");
-  //     console.log(data);
-  //     // return {
-  //     //   api: data
-  //     // };
-  //   } catch (e) {
-  //     error({
-  //       statusCode: 503,
-  //       message: "Unable to fetch events at this time. Plaese try again."
-  //     });
-  //   }
-  // },
+  beforeUpdate() {
+    if (this.childData.data !== this.chilDataComparator) {
+      this.choiceboxCheck(this.childData.data);
+      this.chilDataComparator = this.childData.data;
+    }
+  },
 
   data() {
     return {
+      chilDataComparator: "No Location Selected",
       activePoint: null,
       hits: null,
       bike: null,
       pedestrian: null,
-      direction: null
+      direction: null,
+      title: [
+        { label: "Rosalind 1", value: "Rosalind 1" },
+        { label: "Rosalind 2", value: "Rosalind 2" }
+      ],
+      childData: { data: "No Location Selected" },
+      timeArray: [
+        { value: "Hourly", label: "Hourly" },
+        { value: "Daily", label: "Daily" },
+        { value: "Weekly", label: "Weekly" },
+        { value: "Monthly", label: "Monthly" },
+        { value: "Yearly", label: "Yearly" }
+      ],
+      time: { data: "Hourly" },
+      dataPoints: [
+        // Fake test data
+        {
+          title: "Rosalind 1",
+          counts: { bike: 264, pedestrian: 23 },
+          bike: [10, 20, 40, 30, 50, 60],
+          pedestrian: [1, 5, 6, 40, 60, 10],
+          location: { lat: -36.757234, lng: 144.279113 },
+          direction: {
+            bike: {
+              west: 100,
+              east: 164
+            },
+            pedestrian: {
+              west: 10,
+              east: 13
+            }
+          }
+        },
+        {
+          title: "Rosalind 2",
+          counts: { bike: 100, pedestrian: 241 },
+          bike: [10, 20, 20, 30, 40, 30],
+          pedestrian: [1, 5, 6, 40, 60, 10],
+          location: { lat: -36.748794, lng: 144.290756 },
+          direction: {
+            bike: {
+              west: 40,
+              east: 60
+            },
+            pedestrian: {
+              west: 100,
+              east: 141
+            }
+          }
+        }
+      ]
     };
   },
   methods: {
@@ -69,6 +124,14 @@ export default {
       this.bike = newPoint.bike;
       this.pedestrian = newPoint.pedestrian;
       this.direction = newPoint.direction;
+      this.childData.data = newPoint.title;
+    },
+    choiceboxCheck(title) {
+      for (let i = 0; i < this.dataPoints.length; i++) {
+        if (this.dataPoints[i].title === title) {
+          this.updateActivePoint(this.dataPoints[i]);
+        }
+      }
     }
   }
 };
