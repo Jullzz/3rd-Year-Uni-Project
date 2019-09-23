@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _63d661de = () => interopDefault(import('../pages/Table.vue' /* webpackChunkName: "pages/Table" */))
-const _c5f10b96 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _dc31a178 = () => interopDefault(import('..\\pages\\Table.vue' /* webpackChunkName: "pages_Table" */))
+const _60d9da68 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
@@ -17,11 +17,11 @@ export const routerOptions = {
 
   routes: [{
       path: "/Table",
-      component: _63d661de,
+      component: _dc31a178,
       name: "Table"
     }, {
       path: "/",
-      component: _c5f10b96,
+      component: _60d9da68,
       name: "index"
     }],
 
