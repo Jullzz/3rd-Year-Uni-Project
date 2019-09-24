@@ -31,9 +31,9 @@ def test():
     loadString = base64.b64decode(load64)
 
     data_dict = {
-            'title': 'Rosalind1'
+            'title': 'Rosalind1',
             'lat': loadString[0],
-            'lng':loadString[1],
+            'lng': loadString[1],
             'direction1': loadString[2],
             'direction2': loadString[3],
             'bikeDir1': loadString[4],
