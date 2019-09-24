@@ -108,13 +108,13 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
             },
             fields: {
                 lat: res.lat,
-                lng:5,
-                direction1: 'East',
-                direction2: 'West',
-                bikeDir1: 1,
-                bikeDir2: 1,
-                pedDir1: 1,
-                pedDir2: 1 
+                lng: res.lng,
+                direction1: res.direction1,
+                direction2: res.direction2,
+                bikeDir1: res.bikeDir1,
+                bikeDir2: res.bikeDir2,
+                pedDir1: res.pedDir1,
+                pedDir2: res.pedDir2 
             }
         }
     ])
