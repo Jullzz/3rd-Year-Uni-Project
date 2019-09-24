@@ -6,18 +6,19 @@
         <div class="direction_left">
           <div class="container">
             <!-- static images used.. located in assest folder -->
-            <img src="~/assets/images/Bicycle.png" class="cyclist" />
+            <img src="~/assets/images/bike2.png" class="cyclist" />
             <Direction
               align="center"
               class="direction"
               :Direction="direction_bike"
+              title="Cyclists"
             />
           </div>
         </div>
         <!-- Displays the doughnut chart -->
         <div class="doughnut_chart">
           <!-- Tota hits to be show for UI ease -->
-          <h2 class="title" id="total">{{ total }} Hits</h2>
+          <h2 class="title" id="total">{{ total }} Total Counts</h2>
           <DoughnutChart :chart-data="datacollection" />
         </div>
         <!-- display the direction of the PEDESTRIAN -->
@@ -27,6 +28,7 @@
               align="center"
               class="direction"
               :Direction="direction_pes"
+              title="Pedestrians"
             />
             <!-- static images used.. located in assest folder -->
             <img src="~/assets/images/Pedestrian.png" class="cyclist" />

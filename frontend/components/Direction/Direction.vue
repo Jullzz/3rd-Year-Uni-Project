@@ -1,7 +1,7 @@
 <template>
   <div class="Direction text-center">
     <!-- Sum total of hit going both direction -->
-    <h1 class="Total">{{ Total.sum }} Hits</h1>
+    <h1 class="Total">{{ Total.sum }} {{title}}</h1>
     <div class="container">
       <!-- display hits going west by passing a single prop data-->
       <West :west="Direction.west" />
@@ -20,7 +20,8 @@ import East from "~/components/Direction/East.vue";
 
 export default {
   props: {
-    Direction: null
+    Direction: null,
+    title: ""
   },
   components: {
     West,
