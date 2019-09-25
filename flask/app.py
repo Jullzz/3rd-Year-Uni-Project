@@ -45,6 +45,8 @@ def test():
     info = json.dumps(data_dict)
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
+    for x in loadString:
+        print(x, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
