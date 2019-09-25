@@ -46,7 +46,7 @@ def test():
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
     for x in loadString:
-        string = x + ", "
+        string = 'x' + ", "
     print(string, file=sys.stderr)
     return "done"
 
