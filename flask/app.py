@@ -29,7 +29,7 @@ def test():
     obj = json.loads(request.get_data().decode('utf-8'))
     load64 = obj.get('payload_raw')
     loadString = base64.b64decode(load64)
-
+    string = ""
     data_dict = {
             'title': 'Rosalind1',
             'lat': loadString[0],
@@ -46,7 +46,8 @@ def test():
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
     for x in loadString:
-        print(x, file=sys.stderr)
+        string = x + ", "
+    print(string, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
