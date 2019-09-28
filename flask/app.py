@@ -24,7 +24,28 @@ def get_data():
     )
     return response
 @app.route(URL_BASE + 'test2')
-return test()
+def test():
+    loadString = [1,2,3,4,5,6,7,8]
+    string = ""
+    data_dict = {
+            'title': 'Rosalind1',
+            'lat': 3,
+            'lng': 5,
+            'direction1': loadString[2],
+            'direction2': loadString[3],
+            'bikeDir1': loadString[4],
+            'bikeDir2': loadString[5],
+            'pedDir1': loadString[6],
+            'pedDir2': loadString[7] 
+    }
+    
+    info = json.dumps(data_dict)
+    info_array = [info]
+    response = requests.get(API_SA +'/test/singleData', json=info_array)
+    for x in loadString:
+        string += 'x'
+    print(string, file=sys.stderr)
+    return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
