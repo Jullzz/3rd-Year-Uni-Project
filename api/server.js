@@ -116,7 +116,10 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
             },
             timestamp: data.timestamp
         }
-    ])
+    ],
+    {
+        precision: 's'
+    })
     .catch(err => console.log(err))
     .then(result => res.json(result))
 });
