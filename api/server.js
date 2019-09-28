@@ -101,6 +101,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
 
 app.get(BASE_URL + "test/singleData", (req, res, next) => {
     let data = JSON.parse(req.body);
+    console.log(data);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
