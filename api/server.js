@@ -98,6 +98,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     count++;
+    console.log(count);
     let data = JSON.parse(req.body);
     influx.writePoints([
         {
