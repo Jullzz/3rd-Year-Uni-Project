@@ -97,8 +97,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 });*/
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
-    count++;
-    console.log(count);
+    count= count + 86400;
     let data = JSON.parse(req.body);
     influx.writePoints([
         {
@@ -124,6 +123,6 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > 5').then(data =>
-        res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > ' + String(getLastRecordedTime() - 8640*10)).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message})).then(console.log("POOP"));;;
 });
