@@ -97,11 +97,8 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
-    let date = new Date()
+    let date = new Date();
     let timestamp = ((date/1000)-(date%1000/1000)) - data.timestamp;
-    console.log(date/1000);
-    console.log(date%1000);
-    console.log(timestamp);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
@@ -129,6 +126,9 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > ' + String(getLastRecordedTime() - 86400*10)).then(data =>
+    let data = JSON.parse(req.body);
+    let date = new Date();
+    let timestamp = ((date/1000)-(date%1000/1000));
+    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > ' + String(timestamp - 86400*5)).then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message})).then(console.log("POOP"));;;
 });

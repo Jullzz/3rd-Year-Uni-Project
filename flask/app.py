@@ -45,7 +45,6 @@ def test2():
         info = json.dumps(data_dict)
         info_array = [info]
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        print(data_dict['timestamp'], file=sys.stderr)
     
     return "done"
 
