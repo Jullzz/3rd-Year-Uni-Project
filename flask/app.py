@@ -23,17 +23,20 @@ def get_data():
         mimetype='application/json'
     )
     return response
+@app.route(URL_BASE + 'test2')
+test()
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
     obj = json.loads(request.get_data().decode('utf-8'))
     load64 = obj.get('payload_raw')
-    loadString = base64.b64decode(load64)
+    loadString1 = base64.b64decode(load64)
+    loadString = [1,2,3,4,5,6,7,8]
     string = ""
     data_dict = {
             'title': 'Rosalind1',
-            'lat': loadString[0],
-            'lng': loadString[1],
+            'lat': 3,
+            'lng': 5,
             'direction1': loadString[2],
             'direction2': loadString[3],
             'bikeDir1': loadString[4],
@@ -46,7 +49,7 @@ def test():
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
     for x in loadString:
-        string = 'x' + ", "
+        string += 'x'
     print(string, file=sys.stderr)
     return "done"
 
