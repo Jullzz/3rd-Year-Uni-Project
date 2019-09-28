@@ -130,6 +130,6 @@ app.get(BASE_URL + "frontPull", (req, res, next)=>{
     let date = new Date();
     let timestamp = ((date/1000)-(date%1000/1000));
     console.log(timestamp-(86400*5));
-    influx.query('SELECT * FROM cpu_load_short WHERE time <' + String(timestamp-(86400*5))).then(data =>
+    influx.query('SELECT * FROM cpu_load_short WHERE time >' + String(timestamp-(86400*5))).then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
