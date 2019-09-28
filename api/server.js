@@ -99,6 +99,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
     let date = new Date();
     let timestamp = ((date/1000)-(date%1000/1000)) - data.timestamp;
+    console.log(timestamp);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
