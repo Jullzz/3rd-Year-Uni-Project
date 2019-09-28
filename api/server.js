@@ -24,9 +24,6 @@ app.get(BASE_URL, (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
 
-app.get(BASE_URL + "testpoint", (req, res, next) => {
-    res.json({sent: true})
-});
 
 app.get(BASE_URL + "getPointData", (req, res, next) => {
     influx.query('SELECT * FROM cpu_load_short').then(data =>
@@ -39,7 +36,7 @@ app.get(BASE_URL + "deleteAllData", (req, res, next) => {
         res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
 
-app.get(BASE_URL + "test/writePoints", (req, res, next) => {
+/*app.get(BASE_URL + "test/writePoints", (req, res, next) => {
     let data = req.body.map(point => {
         return {
             measurement: "cpu_load_short",
@@ -52,7 +49,7 @@ app.get(BASE_URL + "test/writePoints", (req, res, next) => {
     .then(result => res.json({done: true}));
 })
 
-/*app.get(BASE_URL + "test/writePoint", (req, res, next) => {
+app.get(BASE_URL + "test/writePoint", (req, res, next) => {
     let data = [JSON.parse(req.body)].map(point => {
         // console.log(typeof point.time)
         return {
@@ -77,7 +74,7 @@ app.get(BASE_URL + "test/writePoints", (req, res, next) => {
 ....##....########..######.....##.......##...........######..########....##.....#######..##.......
 */
 
-app.get(BASE_URL + "test/populatedb", (req, res, next) => {
+/*app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
@@ -97,11 +94,10 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-});
+});*/
 
-app.get(BASE_URL + "test/singleData", (req, res, next) => {
+app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
-    console.log(data);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
@@ -122,4 +118,10 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
+});
+
+app.get(BASE_URL + "frontPull", (req, res, next)=>{
+    influx.query('SELECT FROM "cpu_load_short"').then(data =>
+        console.log(data);
+        res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });

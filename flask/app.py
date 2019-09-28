@@ -41,7 +41,7 @@ def test2():
     
     info = json.dumps(data_dict)
     info_array = [info]
-    response = requests.get(API_SA +'/api/test/singleData', json=info_array)
+    response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
     return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])
