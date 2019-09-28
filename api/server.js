@@ -114,9 +114,9 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
                 bikeDir1: data.bikeDir1,
                 bikeDir2: data.bikeDir2,
                 pedDir1: data.pedDir1,
-                pedDir2: data.pedDir2,
-                timestamp: count
-            }
+                pedDir2: data.pedDir2
+            },
+            timestamp: count
         }
     ])
     .catch(err => console.log(err))
