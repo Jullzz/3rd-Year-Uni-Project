@@ -118,7 +118,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
                 pedDir1: data.pedDir1,
                 pedDir2: data.pedDir2
             },
-            timestamp: data.timestamp
+            timestamp: timestamp
         }
     ],
     {
