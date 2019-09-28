@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const Influx = require('influx');
 const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
-
+var count= 0;
 var HTTP_PORT = 8000
 
 const BASE_URL = "/api/"
@@ -97,12 +97,14 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 });*/
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
+    count++;
     let data = JSON.parse(req.body);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: data.title
+                title: data.title,
+                time: count
             },
             fields: {
                 lat: data.lat,
@@ -121,6 +123,6 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > 5').then(data =>
+    influx.query('SELECT * FROM "cpu_load_short" WHERE TIME > 5).then(data =>
         res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
