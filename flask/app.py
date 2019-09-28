@@ -44,7 +44,7 @@ def test2():
     for x in loadString:
         string += str(x)
     print(string, file=sys.stderr)
-    return response = requests.get(API_SA +'/api/test/singleData', json=info_array)
+    return requests.get(API_SA +'/api/test/singleData', json=info_array)
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
