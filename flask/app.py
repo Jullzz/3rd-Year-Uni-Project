@@ -41,11 +41,10 @@ def test2():
     
     info = json.dumps(data_dict)
     info_array = [info]
-    response = requests.get(API_SA +'/test/singleData', json=info_array)
     for x in loadString:
         string += str(x)
     print(string, file=sys.stderr)
-    return "done"
+    return response = requests.get(API_SA +'/api/test/singleData', json=info_array)
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
