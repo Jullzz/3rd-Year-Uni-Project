@@ -24,7 +24,7 @@ def get_data():
     )
     return response
 @app.route(URL_BASE + 'test2')
-def test():
+def test2():
     loadString = [1,2,3,4,5,6,7,8]
     string = ""
     data_dict = {
