@@ -101,6 +101,8 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
 
 app.get(BASE_URL + "test/singleData", (req, res, next) => {
     console.log("SinglePoint Reached");
+    console.log(res);
+    /*
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
@@ -120,5 +122,5 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
         }
     ])
     .catch(err => console.log(err))
-    .then(result => res.json(result))
+    .then(result => res.json(result))*/
 });
