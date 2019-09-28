@@ -100,26 +100,21 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
 });
 
 app.get(BASE_URL + "test/singleData", (req, res, next) => {
-    console.log("SinglePoint Reached");
-    console.log(JSON.parse(req.body));
-    
-   // console.log(JSON.parse(res.body).title);
-    /*
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: 'Rosalind1'
+                title: req.body.title
             },
             fields: {
-                lat: res.lat,
-                lng: res.lng,
-                direction1: res.direction1,
-                direction2: res.direction2,
-                bikeDir1: res.bikeDir1,
-                bikeDir2: res.bikeDir2,
-                pedDir1: res.pedDir1,
-                pedDir2: res.pedDir2 
+                lat: req.body.lat,
+                lng: req.body.lng,
+                direction1: req.body.direction1,
+                direction2: req.body.direction2,
+                bikeDir1: req.body.bikeDir1,
+                bikeDir2: req.body.bikeDir2,
+                pedDir1: req.body.pedDir1,
+                pedDir2: req.body.pedDir2 
             }
         }
     ])
