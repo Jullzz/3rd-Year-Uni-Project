@@ -104,8 +104,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: data.title,
-                timestamp: count
+                title: data.title
             },
             fields: {
                 lat: data.lat,
@@ -115,7 +114,8 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
                 bikeDir1: data.bikeDir1,
                 bikeDir2: data.bikeDir2,
                 pedDir1: data.pedDir1,
-                pedDir2: data.pedDir2 
+                pedDir2: data.pedDir2,
+                timestamp: count
             }
         }
     ])
