@@ -104,7 +104,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
             measurement: 'cpu_load_short',
             tags: { 
                 title: data.title,
-                time: count
+                timestamp: count
             },
             fields: {
                 lat: data.lat,
