@@ -36,12 +36,16 @@ def test2():
             'bikeDir1': loadString[4],
             'bikeDir2': loadString[5],
             'pedDir1': loadString[6],
-            'pedDir2': loadString[7] 
+            'pedDir2': loadString[7] ,
+            'timestamp': 0
     }
     
     info = json.dumps(data_dict)
     info_array = [info]
-    response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+    for x in 10
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        info_array[0][0]['timestamp']= 86400*x
+    
     return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])

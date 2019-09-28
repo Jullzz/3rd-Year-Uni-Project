@@ -8,7 +8,6 @@ app.use(bodyParser.json());
 const Influx = require('influx');
 const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
-var count= 0;
 var HTTP_PORT = 8000
 
 const BASE_URL = "/api/"
@@ -97,7 +96,6 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 });*/
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
-    count= count + 86400;
     let data = JSON.parse(req.body);
     influx.writePoints([
         {
@@ -115,7 +113,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
                 pedDir1: data.pedDir1,
                 pedDir2: data.pedDir2
             },
-            timestamp: count
+            timestamp: data.timestamp
         }
     ])
     .catch(err => console.log(err))
