@@ -40,8 +40,8 @@ def test2():
     }
     
     info = json.dumps(data_dict)
-    info_array = [info]
-    response = requests.get(API_SA +'/api/test/singleData', json=info_array)
+    #info_array = [info]
+    response = requests.get(API_SA +'/api/test/singleData', json=info)
     for x in loadString:
         string += str(x)
     print(string, file=sys.stderr)
