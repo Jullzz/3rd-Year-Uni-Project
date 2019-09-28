@@ -126,9 +126,8 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    let data = JSON.parse(req.body);
     let date = new Date();
     let timestamp = ((date/1000)-(date%1000/1000));
-    influx.query('SELECT * FROM "cpu_load_short"').then(data =>
+    influx.query('SELECT * FROM cpu_load_short').then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message})).then(console.log("POOP"));;;
 });
