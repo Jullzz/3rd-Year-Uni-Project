@@ -100,6 +100,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
 });
 
 app.get(BASE_URL + "test/singleData", (req, res, next) => {
+    let data = JSON.parse(req.body);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
@@ -107,14 +108,14 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
                 title: req.body.title
             },
             fields: {
-                lat: req.body.lat,
-                lng: req.body.lng,
-                direction1: req.body.direction1,
-                direction2: req.body.direction2,
-                bikeDir1: req.body.bikeDir1,
-                bikeDir2: req.body.bikeDir2,
-                pedDir1: req.body.pedDir1,
-                pedDir2: req.body.pedDir2 
+                lat: data.lat,
+                lng: data.lng,
+                direction1: data.direction1,
+                direction2: data.direction2,
+                bikeDir1: data.bikeDir1,
+                bikeDir2: data.bikeDir2,
+                pedDir1: data.pedDir1,
+                pedDir2: data.pedDir2 
             }
         }
     ])
