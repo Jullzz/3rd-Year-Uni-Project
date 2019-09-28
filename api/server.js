@@ -119,5 +119,5 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
         }
     ])
     .catch(err => console.log(err))
-    .then(result => res.json(result))*/
+    .then(result => res.json(result))
 });
