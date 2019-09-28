@@ -24,7 +24,7 @@ def get_data():
     )
     return response
 @app.route(URL_BASE + 'test2')
-    return test()
+return test()
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
