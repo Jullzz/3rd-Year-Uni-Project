@@ -42,7 +42,7 @@ def test2():
     
     info = json.dumps(data_dict)
     info_array = [info]
-    for x in 10
+    for x in range(10)
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
         info_array[0][0]['timestamp']= 86400*x
     
