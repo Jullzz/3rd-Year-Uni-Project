@@ -98,7 +98,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
     let date = new Date()
-    let timestamp = (date/1000)-(date%1000) - data.timestamp;
+    let timestamp = ((date/1000)-(date%1000)) - data.timestamp;
     console.log(timestamp)
     influx.writePoints([
         {
