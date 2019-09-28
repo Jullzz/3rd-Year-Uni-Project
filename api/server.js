@@ -97,7 +97,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
-    console.log(date.getTime()/10);
+    console.log((new Date()).getTime()/10);
     influx.writePoints([
         {
             measurement: 'cpu_load_short',
