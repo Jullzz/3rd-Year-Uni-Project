@@ -44,7 +44,7 @@ def test2():
     info_array = [info]
     for x in range(10):
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        info_array[0][0]['timestamp']= 86400*x
+        info_array[0]['timestamp']= 86400*x
     
     return "done"
 
