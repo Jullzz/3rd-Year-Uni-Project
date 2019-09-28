@@ -40,11 +40,11 @@ def test2():
             'timestamp': 0
     }
     
-    info = json.dumps(data_dict)
-    info_array = [info]
     for x in range(10):
+        info['timestamp']= 86400*x
+        info = json.dumps(data_dict)
+        info_array = [info]
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        info_array[0]['timestamp']= 86400*x
     
     return "done"
 
