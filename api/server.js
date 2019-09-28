@@ -100,7 +100,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let date = new Date()
     let timestamp = (date/1000)-(date%1000) - data.timestamp;
     console.log(timestamp)
-    /*influx.writePoints([
+    influx.writePoints([
         {
             measurement: 'cpu_load_short',
             tags: { 
@@ -116,14 +116,14 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
                 pedDir1: data.pedDir1,
                 pedDir2: data.pedDir2
             },
-            timestamp: timestamp
+            timestamp: data.timestamp
         }
     ],
     {
         precision: 's'
     })
     .catch(err => console.log(err))
-    .then(result => res.json(result))*/
+    .then(result => res.json(result))
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
