@@ -101,6 +101,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
 
 app.get(BASE_URL + "test/singleData", (req, res, next) => {
     console.log("SinglePoint Reached");
+    console.log(res);
     console.log(res.body);
     /*
     influx.writePoints([
