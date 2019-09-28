@@ -128,7 +128,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
     let date = new Date();
-    let timestamp = ((date/1000)-(date%1000/1000));
+    let timestamp = ((date/1000)-(date%1000));
     let s = new Date(1569329173).toISOString();
     console.log(s);
     influx.query('SELECT * FROM cpu_load_short WHERE time > now() - 5d').then(data =>
