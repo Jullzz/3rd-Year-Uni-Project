@@ -52,7 +52,7 @@ app.get(BASE_URL + "test/writePoints", (req, res, next) => {
     .then(result => res.json({done: true}));
 })
 
-app.get(BASE_URL + "test/writePoint", (req, res, next) => {
+/*app.get(BASE_URL + "test/writePoint", (req, res, next) => {
     let data = [JSON.parse(req.body)].map(point => {
         // console.log(typeof point.time)
         return {
@@ -65,7 +65,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
     influx.writePoints(data)
     .catch(err => console.log(err))
     .then(result => res.json({done: true}));
-})
+})*/
 
 /*
 .########.########..######..########..........##.....######..########.########.##.....##.########.
