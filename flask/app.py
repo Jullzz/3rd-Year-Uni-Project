@@ -29,8 +29,8 @@ def test2():
     string = ""
     data_dict = {
             'title': 'Rosalind1',
-            'lat': 3,
-            'lng': 5,
+            'lat': loadString[0],
+            'lng': loadString[1],
             'direction1': loadString[2],
             'direction2': loadString[3],
             'bikeDir1': loadString[4],
@@ -42,9 +42,6 @@ def test2():
     info = json.dumps(data_dict)
     info_array = [info]
     response = requests.get(API_SA +'/api/test/singleData', json=info_array)
-    for x in loadString:
-        string += str(x)
-    print(string, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])

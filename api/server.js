@@ -106,7 +106,7 @@ app.get(BASE_URL + "test/singleData", (req, res, next) => {
         {
             measurement: 'cpu_load_short',
             tags: { 
-                title: req.body.title
+                title: data.title
             },
             fields: {
                 lat: data.lat,
