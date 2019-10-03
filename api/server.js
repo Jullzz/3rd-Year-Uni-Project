@@ -11,6 +11,8 @@ const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
 var HTTP_PORT = 8000
 
+var Name = "HourlyRosalind";
+
 const BASE_URL = "/api/"
 
 // Start server
@@ -37,8 +39,12 @@ app.get(BASE_URL + "getPointData", (req, res, next) => {
 app.get(BASE_URL + "deleteAllData", (req, res, next) => {
     influx.query('DELETE FROM "cpu_load_short"').then(data =>
         res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+        influx.query('DELETE FROM "Location"').then(data =>
+            res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+            influx.query('DELETE FROM "HourlyRosalind"').then(data =>
+                res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
-
+/*
 app.get(BASE_URL + "test/writePoints", (req, res, next) => {
     let data = req.body.map(point => {
         return {
@@ -66,7 +72,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
     .catch(err => console.log(err))
     .then(result => res.json({done: true}));
 })
-
+*/
 /*
 .########.########..######..########..........##.....######..########.########.##.....##.########.
 ....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
@@ -79,15 +85,34 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 
 app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     influx.writePoints([
-        {
+        {  
             measurement: 'cpu_load_short',
-            tags: {host: 'server02', direction: "out"},
-            fields: {value: 3.2}
+            tags: { 
+                title: 'Rosalind1'
+            },
+            fields: {
+                lat: 1,
+                lng:5,
+                direction1: 'East',
+                direction2: 'West',
+                bikeDir1: 1,
+                bikeDir2: 1,
+                pedDir1: 1,
+                pedDir2: 1 
+            }
         },
         {
+            
             measurement: 'cpu_load_short',
-            tags: {host: 'server03', direction: "out"},
-            fields: {value: 2.2}
+            tags: { 
+                title: 'Bendigo'
+            },
+            fields: {
+                lat: -36.757234,
+                lng: 144.279113,
+                bike: 100,
+                pedestrian: 12
+            }
         },
         {
             measurement: 'cpu_load_short',
@@ -99,25 +124,63 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     .then(result => res.json(result))
 });
 
-app.get(BASE_URL + "test/singleData", (req, res, next) => {
+app.get(BASE_URL + "mapping", (req, res, next) => {
     influx.writePoints([
         {
-            measurement: 'cpu_load_short',
+            measurement: 'Location',
             tags: { 
-                title: 'Rosalind1'
+                title: 'Rosalind 1'
+            },
+            fields: {            
+                    lat: -36.748794,
+                    lng: 144.290756, 
+                    bike: 264,
+                    pedestrian: 23
+            }
+        },
+        {
+            measurement: 'Location',
+            tags: { 
+                title: 'Bendigo'
             },
             fields: {
-                lat: res.lat,
-                lng:5,
-                direction1: 'East',
-                direction2: 'West',
-                bikeDir1: 1,
-                bikeDir2: 1,
-                pedDir1: 1,
-                pedDir2: 1 
+                    lat: -36.757234,
+                    lng: 144.279113,
+                    bike: 100,
+                    pedestrian: 12
             }
         }
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
+    influx.query('SELECT lat, lng, bike, pedestrian * FROM Location').then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+
+app.get(BASE_URL + "counts", (req, res, next) => {
+    influx.writePoints([
+        {
+            measurement: 'HourlyRosalind',
+            tags: { 
+                title: 'HourlyRosalind'
+            },
+            fields: {            
+                    bikeW: 15,
+                    bikeE: 5,
+                    pedestrianW: 18,
+                    pedestrianE: 19
+            }
+        }
+    ])
+    .catch(err => console.log(err))
+    .then(result => res.json(result))
+    influx.query('SELECT bikeW, bikeE, pedestrianW, pedestrianE FROM HourlyRosalind').then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+app.get(BASE_URL + Name, (req, res, next) => {
+
+    var customSelect = 'SELECT * FROM ' + Name;
+
+    influx.query(customSelect).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
