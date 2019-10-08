@@ -129,7 +129,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
     let date = new Date();
     console.log(date);
-    let timestamp = (date-10);
+    let timestamp = (date-86400*10);
     let s = new Date(timestamp).toISOString();
     let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
     console.log(s);
