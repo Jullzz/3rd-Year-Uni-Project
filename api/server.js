@@ -131,7 +131,7 @@ app.get(BASE_URL + "frontPull", (req, res, next)=>{
     console.log(date);
     let timestamp = ((date/1000)-(date%1000/1000));
     let s = new Date(timestamp).toISOString();
-    let queryString = 'SELECT * FROM cpu_load_short WHERE time > "' + s + '"'
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\''
     console.log(queryString);
     console.log(s);
     console.log(timestamp);
