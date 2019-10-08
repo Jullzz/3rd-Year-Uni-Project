@@ -41,11 +41,23 @@ def test2():
     }
     
     for x in range(10):
+        data_dict['timestamp']= 3600*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
         data_dict['timestamp']= 86400*x
         info = json.dumps(data_dict)
         info_array = [info]
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-    
+        data_dict['timestamp']= 604800*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 2419200*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        
     return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])
