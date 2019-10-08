@@ -161,3 +161,10 @@ app.get(BASE_URL + "pullCustom", (req, res, next)=>{
     influx.query(queryString).then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
+
+app.get(BASE_URL + "pullTest", (req, res, next)=>{
+    let s = new Date(((Math.floor(Date.now()/1000)-5*86400)*1000)).toISOString();
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    influx.query(queryString).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+});
