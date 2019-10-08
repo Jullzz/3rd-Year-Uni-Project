@@ -127,14 +127,10 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    let date = Math.floor(new Date()/1000);
-    console.log(date);
-    console.log(date.toISOString());
-    let timestamp = (date+86400*10);
+    let date = Math.floor(Date.now()/1000);
+    let timestamp = ((date-86400*5)*1000);
     let s = new Date(timestamp).toISOString();
     let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
-    console.log(timestamp);
-    console.log(s);
     influx.query(queryString).then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
