@@ -8,7 +8,8 @@ app.use(bodyParser.json());
 const Influx = require('influx');
 const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
-var HTTP_PORT = 8000
+const pointsPulled = 15;
+var HTTP_PORT = 8000;
 
 const BASE_URL = "/api/"
 
@@ -126,9 +127,45 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     .then(result => res.json(result))
 });
 
-app.get(BASE_URL + "frontPull", (req, res, next)=>{
+app.get(BASE_URL + "pullHours", (req, res, next)=>{
     let date = Math.floor(Date.now()/1000);
-    let timestamp = ((date-86400*5)*1000);
+    let timestamp = ((date-3600*pointsPulled)*1000);
+    let s = new Date(timestamp).toISOString();
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    influx.query(queryString).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+});
+
+app.get(BASE_URL + "pullDays", (req, res, next)=>{
+    let date = Math.floor(Date.now()/1000);
+    let timestamp = ((date-86400*pointsPulled)*1000);
+    let s = new Date(timestamp).toISOString();
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    influx.query(queryString).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+});
+
+app.get(BASE_URL + "pullWeeks", (req, res, next)=>{
+    let date = Math.floor(Date.now()/1000);
+    let timestamp = ((date-604800*pointsPulled)*1000);
+    let s = new Date(timestamp).toISOString();
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    influx.query(queryString).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+});
+
+app.get(BASE_URL + "pullMonths", (req, res, next)=>{
+    let date = Math.floor(Date.now()/1000);
+    let timestamp = ((date-2419200*pointsPulled)*1000);
+    let s = new Date(timestamp).toISOString();
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    influx.query(queryString).then(data =>
+    res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
+});
+
+app.get(BASE_URL + "pullCustom", (req, res, next)=>{
+    let date = Math.floor(Date.now()/1000);
+    let timestamp = ((date-(req.body))*1000);
     let s = new Date(timestamp).toISOString();
     let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
     influx.query(queryString).then(data =>
