@@ -127,7 +127,7 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "frontPull", (req, res, next)=>{
-    let date = new Date();
+    let date = Math.floor(new Date()/1000);
     console.log(date);
     let timestamp = (date-86400*10);
     let s = new Date(timestamp).toISOString();
