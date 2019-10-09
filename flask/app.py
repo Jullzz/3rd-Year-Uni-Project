@@ -23,28 +23,68 @@ def get_data():
         mimetype='application/json'
     )
     return response
+@app.route(URL_BASE + 'test2')
+def test2():
+    loadString = [1,2,3,4,5,6,7,8]
+    string = ""
+    data_dict = {
+            'title': 'Rosalind1',
+            'lat': loadString[0],
+            'lng': loadString[1],
+            'direction1': loadString[2],
+            'direction2': loadString[3],
+            'bikeDir1': loadString[4],
+            'bikeDir2': loadString[5],
+            'pedDir1': loadString[6],
+            'pedDir2': loadString[7] ,
+            'timestamp': 0
+    }
+    
+    for x in range(10):
+        data_dict['timestamp']= 3600*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 86400*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 604800*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 2419200*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        
+    return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])
 def test():
     obj = json.loads(request.get_data().decode('utf-8'))
     load64 = obj.get('payload_raw')
-    loadString = base64.b64decode(load64)
-
-    #data_dict = {
-    #        'title': 'Rosalind1'
-    #        'lat': loadString[0],
-    #        'lng':loadString[1],
-    #        'direction1': loadString[2],
-    #        'direction2': loadString[3],
-    #        'bikeDir1': loadString[4],
-    #        'bikeDir2': loadString[5],
-    #        'pedDir1': loadString[6],
-    #        'pedDir2': loadString[7] 
-    #}
-    data_dict = 'null'
+    loadString1 = base64.b64decode(load64)
+    loadString = [1,2,3,4,5,6,7,8]
+    string = ""
+    data_dict = {
+            'title': 'Rosalind1',
+            'lat': 3,
+            'lng': 5,
+            'direction1': loadString[2],
+            'direction2': loadString[3],
+            'bikeDir1': loadString[4],
+            'bikeDir2': loadString[5],
+            'pedDir1': loadString[6],
+            'pedDir2': loadString[7] 
+    }
+    
     info = json.dumps(data_dict)
     info_array = [info]
     response = requests.get(API_SA +'/test/singleData', json=info_array)
+    for x in loadString:
+        string += 'x'
+    print(string, file=sys.stderr)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
