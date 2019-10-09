@@ -37,7 +37,7 @@ app.get(BASE_URL + "getPointData", (req, res, next) => {
 });
 
 app.get(BASE_URL + "deleteAllData", (req, res, next) => {
-    influx.query('DELETE FROM "cpu_load_short"').then(data =>
+    influx.query('DELETE FROM "Rosalind"').then(data =>
         res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
         influx.query('DELETE FROM "Location"').then(data =>
             res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
@@ -153,16 +153,16 @@ app.get(BASE_URL + "mapping", (req, res, next) => {
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-    influx.query('SELECT lat, lng, bike, pedestrian * FROM Location').then(data =>
+    influx.query('SELECT lat, lng, bike, pedestrian FROM Location').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
 
 app.get(BASE_URL + "counts", (req, res, next) => {
     influx.writePoints([
         {
-            measurement: 'HourlyRosalind',
+            measurement: 'Rosalind',
             tags: { 
-                title: 'HourlyRosalind'
+                title: 'Rosalind'
             },
             fields: {            
                     bikeW: 15,
@@ -170,16 +170,62 @@ app.get(BASE_URL + "counts", (req, res, next) => {
                     pedestrianW: 18,
                     pedestrianE: 19
             }
+        },
+        {
+            measurement: 'Bendigo',
+            tags: { 
+                title: 'Bendigo'
+            },
+            fields: {            
+                    bikeW: 20,
+                    bikeE: 6,
+                    pedestrianW: 13,
+                    pedestrianE: 14
+            }
         }
+
     ])
     .catch(err => console.log(err))
     .then(result => res.json(result))
-    influx.query('SELECT bikeW, bikeE, pedestrianW, pedestrianE FROM HourlyRosalind').then(data =>
+    influx.query('SELECT bikeW, bikeE, pedestrianW, pedestrianE FROM Rosalind').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
-app.get(BASE_URL + Name, (req, res, next) => {
+app.get(BASE_URL + "Hourly" + ":point", (req, res, next) => {
 
-    var customSelect = 'SELECT * FROM ' + Name;
+    var nameUrl = req.params.point;
+    var customSelect = 'SELECT * FROM ' + nameUrl;
+
+    influx.query(customSelect).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+app.get(BASE_URL + "Weekly" + ":point", (req, res, next) => {
+
+    var nameUrl = req.params.point;
+    var customSelect = 'SELECT * FROM ' + nameUrl;
+
+    influx.query(customSelect).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+app.get(BASE_URL + "Daily" + ":point", (req, res, next) => {
+
+    var nameUrl = req.params.point;
+    var customSelect = 'SELECT * FROM ' + nameUrl;
+
+    influx.query(customSelect).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+app.get(BASE_URL + "Monthly" + ":point", (req, res, next) => {
+
+    var nameUrl = req.params.point;
+    var customSelect = 'SELECT * FROM ' + nameUrl;
+
+    influx.query(customSelect).then(data =>
+        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
+});
+app.get(BASE_URL + "Yearly" + ":point", (req, res, next) => {
+
+    var nameUrl = req.params.point;
+    var customSelect = 'SELECT * FROM ' + nameUrl;
 
     influx.query(customSelect).then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
