@@ -164,16 +164,21 @@ app.get(BASE_URL + "pullCustom", (req, res, next)=>{
 
 app.get(BASE_URL + "pullTest", (req, res, next)=>{
     let data = new Array(10*2);
+    var interval = 86400;
+    var i;
     for(i=0;i<data.length;i++){data[i] = 0;}
-    let lastDate = (Math.floor(Date.now()/1000)-10*86400)*1000;
+    let lastDate = (Math.floor(Date.now()/1000)-10*interval)*1000;
     let s = new Date(lastDate).toISOString();
     let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\' AND  "title" = \'Rosalind1\'';
     influx.query(queryString).then(results =>{
-    var i;
     for(i=0;i<results.length;i++){
+   console.log(data[19-(Math.floor((time/(interval*1000))*2)+1)]);
+    console.log(data[i]);
     var time = ((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time);
-    data[19-(Math.floor(time/86400000)*2)] = results[i].pedDir1;
-    data[19-(Math.floor((time/86400000)*2+1))]= results[i].bikeDir1;
+    data[19-(Math.floor(time/(interval*1000))*2)] = data[19-(Math.floor(time/interval*1000)*2)] + results[i].pedDir1+results[i].pedDir2;
+    data[19-((Math.floor((time/(interval*1000))*2)+1))]= data[19-((Math.floor(time/interval*1000)*2)+1)]+results[i].bikeDir2+results[i].bikeDir1;
+    console.log(data[19-((Math.floor((time/(interval*1000))*2)+1))]);
+    console.log(results[i].pedDir1+results[i].pedDir2);
     }
     res.json(data);
     }).catch(err=> res.status(404).json({error: err.message}));;
