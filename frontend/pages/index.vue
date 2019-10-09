@@ -122,12 +122,13 @@ export default {
           this.choiceboxCheck(this.childData.data);
           this.chilDataComparator = this.childData.data;
         }
-    },
-     'time.data': function(val) {
-        if (this.timeComparator !== this.time.data) {
-      // infinite loop prevetion for Time selection call
-      this.timeUpdate(this.time.data);
-      this.timeComparator = this.time.data;
+      },
+      'time.data': function(val) {
+          if (this.timeComparator !== this.time.data) {
+        // infinite loop prevetion for Time selection call
+        this.timeUpdate(this.time.data);
+        this.timeComparator = this.time.data;
+      }
     }
   },
   methods: {

@@ -11,13 +11,8 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 /* Plugins */
 
-<<<<<<< HEAD
-import nuxt_plugin_axios_06e0cc3a from 'nuxt_plugin_axios_06e0cc3a' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_axios_35d7b3dd from 'nuxt_plugin_axios_35d7b3dd' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_iview_fabcf5d2 from 'nuxt_plugin_iview_fabcf5d2' // Source: ..\\plugins\\iview (mode: 'all')
-=======
-import nuxt_plugin_axios_7c7674b0 from 'nuxt_plugin_axios_7c7674b0' // Source: ./axios.js (mode: 'all')
-import nuxt_plugin_iview_fabcf5d2 from 'nuxt_plugin_iview_fabcf5d2' // Source: ../plugins/iview (mode: 'all')
->>>>>>> Flask-branch
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -147,13 +142,8 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
-<<<<<<< HEAD
-  if (typeof nuxt_plugin_axios_06e0cc3a === 'function') {
-    await nuxt_plugin_axios_06e0cc3a(app.context, inject)
-=======
-  if (typeof nuxt_plugin_axios_7c7674b0 === 'function') {
-    await nuxt_plugin_axios_7c7674b0(app.context, inject)
->>>>>>> Flask-branch
+  if (typeof nuxt_plugin_axios_35d7b3dd === 'function') {
+    await nuxt_plugin_axios_35d7b3dd(app.context, inject)
   }
 
   if (typeof nuxt_plugin_iview_fabcf5d2 === 'function') {

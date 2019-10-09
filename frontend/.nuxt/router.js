@@ -3,13 +3,8 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-<<<<<<< HEAD
-const _6a760280 = () => interopDefault(import('..\\pages\\Table.vue' /* webpackChunkName: "pages_Table" */))
-const _3968ada4 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
-=======
-const _3d84060a = () => interopDefault(import('../pages/Table.vue' /* webpackChunkName: "pages/Table" */))
-const _0c76b12e = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
->>>>>>> Flask-branch
+const _2cfb1a4b = () => interopDefault(import('..\\pages\\Table.vue' /* webpackChunkName: "pages_Table" */))
+const _08247522 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
@@ -22,19 +17,11 @@ export const routerOptions = {
 
   routes: [{
       path: "/Table",
-<<<<<<< HEAD
-      component: _6a760280,
+      component: _2cfb1a4b,
       name: "Table"
     }, {
       path: "/",
-      component: _3968ada4,
-=======
-      component: _3d84060a,
-      name: "Table"
-    }, {
-      path: "/",
-      component: _0c76b12e,
->>>>>>> Flask-branch
+      component: _08247522,
       name: "index"
     }],
 
