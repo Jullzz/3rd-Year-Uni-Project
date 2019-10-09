@@ -1,32 +1,39 @@
 <template>
+<<<<<<< HEAD
   <div>
     <div v-if="DirectionV != null" align="center">
+=======
+  <div >
+    <div v-if="Hits != null" align="center">
+>>>>>>> Flask-branch
       <div class="container">
         <!-- display the direction of the CYCLIST -->
         <div class="direction_left">
           <div class="container">
             <!-- static images used.. located in assest folder -->
-            <img src="~/assets/images/Bicycle.png" class="cyclist" />
+            <img src="~/assets/images/bike2.png" class="cyclist" />
             <Direction
               align="center"
               class="direction"
               :Direction="direction_bike"
+              title="Cyclists"
             />
           </div>
         </div>
         <!-- Displays the doughnut chart -->
         <div class="doughnut_chart">
           <!-- Tota hits to be show for UI ease -->
-          <h2 class="title" id="total">{{ total }} Hits</h2>
+          <h2 class="title" id="total">{{ total }} Total Counts</h2>
           <DoughnutChart :chart-data="datacollection" />
         </div>
         <!-- display the direction of the PEDESTRIAN -->
-        <div class="direction_right">
+        <div class="direction_right mb-8">
           <div class="container">
             <Direction
               align="center"
               class="direction"
               :Direction="direction_pes"
+              title="Pedestrians"
             />
             <!-- static images used.. located in assest folder -->
             <img src="~/assets/images/Pedestrian.png" class="cyclist" />
@@ -118,11 +125,11 @@ export default {
 }
 .title {
   margin-top: 10px;
-  font-size: 4vw;
+  font-size: 3vw;
 }
 .direction_left,
 .direction_right {
-  margin: auto;
+  /* margin: auto; */
   width: 37.5%;
   float: left;
   padding: 10px;

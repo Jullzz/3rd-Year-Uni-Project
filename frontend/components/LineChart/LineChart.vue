@@ -1,5 +1,6 @@
 <template>
-  <div v-if="bike != null" class="container">
+  <div v-if="bike != null" class="container w-full text-center">
+    <h1 class="text-base text-5xl text-green-800">Path Use Over Time</h1>
     <!-- data is passed through to display the linechart-->
     <line-chart :chart-data="datacollection" class="chart" />
   </div>
@@ -141,4 +142,7 @@ export default {
   width: 100%;
   height: 400px;
 }
+/* #line-title {
+  font-size: 3rem
+} */
 </style>

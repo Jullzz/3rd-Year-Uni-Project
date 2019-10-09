@@ -188,7 +188,10 @@ export default {
 
           // Set active data point in parent
           // TODO: Change to use a unique ID
-          point.marker.addListener("click", () => self.pointUpdate(point));
+          point.marker.addListener("click", () => {
+            self.pointUpdate(point)
+            self.enlarged = false
+          })
         }
       });
     },

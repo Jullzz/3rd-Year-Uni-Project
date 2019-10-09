@@ -4,30 +4,45 @@
       <NavBar />
     </div>
     <!-- map display -->
-    <Map class="w-full" :pointUpdate="updateActivePoint" :dataPoints="map" />
-    <div style="width: 100%">
-      <!-- ChoiceBox of Locations-->
-      <h1 style="float: left;">
-        <!-- Displays choice Locatiton upon selection-->
-        Location: {{ this.childData.data }}
-        <!-- location Choicebox component-->
-        <ChoiceBox :dataTitle="title" :data="childData" />
-      </h1>
-      <!-- ChoiceBox of Times-->
-      <h1 style="float: right;">
-        <!-- Displays choice of Duration upon selection-->
-        Duration: {{ this.time.data }}
-        <!-- Duration Choicebox component-->
-        <ChoiceBox :dataTitle="timeArray" :data="time" />
-      </h1>
+    <Map
+      class="w-full shadow shadow-lg"
+      :pointUpdate="updateActivePoint"
+      :dataPoints="map"
+    />
+
+    <!-- Time and point selection boxes -->
+    <div class="my-4 w-full h-10">
+      <!-- ChoiceBox-->
+      <div class="inline-block pl-8">
+        <h3 class="inline">
+          Location: 
+        </h3>
+        <ChoiceBox class="inline" :dataTitle="title" :data="childData" />
+      </div>
+      <div class="float-right pr-8">
+        <h3 class="inline">
+          Duration: 
+        </h3>
+        <ChoiceBox class="inline" :dataTitle="timeArray" :data="time" />
+      </div>
     </div>
-    <div>
+    <!-- End selection boxes -->
+
+    <div id="dataContainer">
+      <!-- Title -->
+      <div class="w-full text-center text-green-800">
+        <h1 id="active-title">{{ activePoint }}</h1>
+      </div>
+
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
-      <DoughnutCharts :DirectionV="direction" />
-    </div>
-    <div class="mt-10">
+      <div id="doughnutContainer">
+        <DoughnutCharts :DirectionV="direction" />
+      </div>
+
       <!-- linechart display -->
-      <LineChart :bike="bike" :pedestrian="pedestrian" :label="time" />
+      <div id="lineContainer" class="mt-10">
+        <LineChart :bike="bike" :pedestrian="pedestrian" :label="time"/>
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +89,7 @@ export default {
 
   data() {
     return {
+      chilDataComparator: "No Location Selected",
       activePoint: null,
       hits: null,
       bike: null,
@@ -100,18 +116,15 @@ export default {
   mounted() {
     this.CBoxTitle(this.map);
   },
-  beforeUpdate() {
-    // Conditional statement to prevent infinite loops
-    if (this.markerSelected === true) {
-      // infinite loop prevetion for general
-      this.choiceboxCheck(this.childData.data);
-      this.markerSelected = false;
-    } else if (this.childData.data !== this.chilDataComparator) {
-      // infinite loop prevetion for location selection call
-      this.choiceboxCheck(this.childData.data);
-      this.chilDataComparator = this.childData.data;
-    }
-    if (this.timeComparator !== this.time.data) {
+  watch:{
+       'childData.data': function(val) {
+        if (this.childData.data !== this.chilDataComparator) {
+          this.choiceboxCheck(this.childData.data);
+          this.chilDataComparator = this.childData.data;
+        }
+    },
+     'time.data': function(val) {
+        if (this.timeComparator !== this.time.data) {
       // infinite loop prevetion for Time selection call
       this.timeUpdate(this.time.data);
       this.timeComparator = this.time.data;
@@ -195,5 +208,9 @@ body,
 .act {
   font-size: 2vw;
   font-weight: bold;
+}
+
+#active-title {
+  font-size: 4.5em;
 }
 </style>
