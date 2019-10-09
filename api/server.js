@@ -124,6 +124,7 @@ app.get(BASE_URL + "test/populatedb", (req, res, next) => {
     .then(result => res.json(result))
 });
 
+// Query for locations of the markers
 app.get(BASE_URL + "mapping", (req, res, next) => {
     influx.writePoints([
         {
@@ -157,6 +158,8 @@ app.get(BASE_URL + "mapping", (req, res, next) => {
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
 
+// Create a mock data. 
+//Query for data
 app.get(BASE_URL + "counts", (req, res, next) => {
     influx.writePoints([
         {
@@ -190,6 +193,8 @@ app.get(BASE_URL + "counts", (req, res, next) => {
     influx.query('SELECT bikeW, bikeE, pedestrianW, pedestrianE FROM Rosalind').then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
+
+// Query for data based on location for hourly
 app.get(BASE_URL + "Hourly" + ":point", (req, res, next) => {
 
     var nameUrl = req.params.point;
@@ -198,6 +203,8 @@ app.get(BASE_URL + "Hourly" + ":point", (req, res, next) => {
     influx.query(customSelect).then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
+
+// Query for data based on location for weekly
 app.get(BASE_URL + "Weekly" + ":point", (req, res, next) => {
 
     var nameUrl = req.params.point;
@@ -206,6 +213,8 @@ app.get(BASE_URL + "Weekly" + ":point", (req, res, next) => {
     influx.query(customSelect).then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
+
+// Query for data based on location for daily
 app.get(BASE_URL + "Daily" + ":point", (req, res, next) => {
 
     var nameUrl = req.params.point;
@@ -214,6 +223,9 @@ app.get(BASE_URL + "Daily" + ":point", (req, res, next) => {
     influx.query(customSelect).then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
+
+// Query for data based on location for monthly
+
 app.get(BASE_URL + "Monthly" + ":point", (req, res, next) => {
 
     var nameUrl = req.params.point;
@@ -222,6 +234,8 @@ app.get(BASE_URL + "Monthly" + ":point", (req, res, next) => {
     influx.query(customSelect).then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
+
+// Query for data based on location for yearly
 app.get(BASE_URL + "Yearly" + ":point", (req, res, next) => {
 
     var nameUrl = req.params.point;
