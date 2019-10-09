@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
   <div>
     <div v-if="DirectionV != null" align="center">
-=======
-  <div >
-    <div v-if="Hits != null" align="center">
->>>>>>> Flask-branch
       <div class="container">
         <!-- display the direction of the CYCLIST -->
         <div class="direction_left">
