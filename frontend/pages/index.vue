@@ -5,7 +5,7 @@
     </div>
     <!-- map display -->
     <Map
-      class="w-full"
+      class="w-full shadow shadow-lg"
       :pointUpdate="updateActivePoint"
       :dataPoints="dataPoints"
     />
@@ -28,18 +28,21 @@
     </div>
     <!-- End selection boxes -->
 
-    <!-- Title -->
-    <div class="w-full text-center text-green-800">
-      <h1 id="active-title">{{ activePoint }}</h1>
-    </div>
+    <div id="dataContainer">
+      <!-- Title -->
+      <div class="w-full text-center text-green-800">
+        <h1 id="active-title">{{ activePoint }}</h1>
+      </div>
 
-    <div>
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
-      <DoughnutCharts :Hits="hits" :DirectionV="direction" />
-    </div>
-    <div class="mt-10">
+      <div id="doughnutContainer">
+        <DoughnutCharts :Hits="hits" :DirectionV="direction" />
+      </div>
+
       <!-- linechart display -->
-      <LineChart :bike="bike" :pedestrian="pedestrian" />
+      <div id="lineContainer" class="mt-10">
+        <LineChart :bike="bike" :pedestrian="pedestrian" />
+      </div>
     </div>
   </div>
 </template>
