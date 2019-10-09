@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <div v-if="Hits != null" align="center">
       <div class="container">
         <!-- display the direction of the CYCLIST -->
@@ -22,7 +22,7 @@
           <DoughnutChart :chart-data="datacollection" />
         </div>
         <!-- display the direction of the PEDESTRIAN -->
-        <div class="direction_right">
+        <div class="direction_right mb-8">
           <div class="container">
             <Direction
               align="center"
@@ -110,7 +110,7 @@ export default {
 }
 .direction_left,
 .direction_right {
-  margin: auto;
+  /* margin: auto; */
   width: 37.5%;
   float: left;
   padding: 10px;
