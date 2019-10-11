@@ -16,7 +16,7 @@ const BASE_URL = "/api/"
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT)) 
-    influx.query('CREATE DATABASE mydb;');
+    influx.query('CREATE DATABASE mydb;').catch();
 });
 
 // Root path
@@ -26,7 +26,7 @@ app.get(BASE_URL, (req, res, next) => {
 
 
 app.get(BASE_URL + "getPointData", (req, res, next) => {
-    influx.query('SELECT * FROM cpu_load_short').then(data =>
+    influx.query('SELECT * FROM cpu_load_short').catch().then(data =>
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
     //res.json(data)
 });
@@ -127,9 +127,9 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     .then(result => res.json(result))
 });
 
-app.get(BASE_URL + "pullHours", (req, res, next)=>{
+app.get(BASE_URL + "pullHours/:point", (req, res, next)=>{
     let s = new Date(((Math.floor(Date.now()/1000)-3600*pointsPulled)*1000)).toISOString();
-    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\'';
+    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\' AND "title" = \''+req.params.point+'\'';
     influx.query(queryString).then(data =>
     res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
 });
@@ -172,15 +172,16 @@ app.get(BASE_URL + "pullTest", (req, res, next)=>{
     let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\' AND  "title" = \'Rosalind1\'';
     influx.query(queryString).then(results =>{
     for(i=0;i<results.length;i++){
-   console.log(data[19-(Math.floor((time/(interval*1000))*2)+1)]);
+    console.log(data[19-(Math.floor((time/(interval*1000))*2)+1)]);
+    console.log(19-(Math.floor((time/(interval*1000))*2)+1));
+    console.log(time/(interval*1000));
     console.log(data[i]);
+    console.log(results[i]);
     var time = ((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time);
     data[19-(Math.floor(time/(interval*1000))*2)] = data[19-(Math.floor(time/interval*1000)*2)] + results[i].pedDir1+results[i].pedDir2;
     data[19-((Math.floor((time/(interval*1000))*2)+1))]= data[19-((Math.floor(time/interval*1000)*2)+1)]+results[i].bikeDir2+results[i].bikeDir1;
-    console.log(data[19-((Math.floor((time/(interval*1000))*2)+1))]);
-    console.log(results[i].pedDir1+results[i].pedDir2);
     }
-    res.json(data);
+    res.json(results[1]);
     }).catch(err=> res.status(404).json({error: err.message}));;
 
 });
