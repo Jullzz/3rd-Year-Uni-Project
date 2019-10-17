@@ -3,8 +3,8 @@ const pkg = require('./package')
 
 module.exports = {
   server: {
-    port: 3001, // default: 3000
-    host: "localhost" //'0.0.0.0', // default: localhost
+    port: 3000, // default: 3000
+    host: '0.0.0.0', // default: localhost
   },
   mode: 'spa',
 

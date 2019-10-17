@@ -58,7 +58,7 @@ import ChoiceBox from "~/components/ChoiceBox.vue";
 import axios from "axios";
 
 // Setting a base url used for multiple calls
-const baseUrl = "http://localhost:3000/";
+// const baseUrl = "http://web:8000";
 
 export default {
   components: {
@@ -71,15 +71,18 @@ export default {
   },
   // Calls in the first set of array to define locations of pathways
   async asyncData({ $axios, error }) {
-    let url = baseUrl + "mapping";
+    let url = "http://localhost/api/mapping";
     console.log(url);
     try {
+      console.log("before await")
       const { data } = await $axios.get(url);
+      console.log(data);
       return {
         // Said Array of location will be send to the map component to be displayed
         map: data
       };
     } catch (e) {
+      console.log(e)
       error({
         statusCode: 503,
         message: "Unable to fetch events at this time. Plaese try again."
@@ -114,6 +117,7 @@ export default {
     };
   },
   mounted() {
+    console.log("test");
     this.CBoxTitle(this.map);
   },
   watch:{

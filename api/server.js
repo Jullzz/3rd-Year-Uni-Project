@@ -122,7 +122,7 @@ app.get(BASE_URL + "test/writePoint", (req, res, next) => {
 });*/
 
 // Query for locations of the markers
-app.get(BASE_URL + "mapping", (req, res, next) => {
+app.get(BASE_URL + "test", (req, res, next) => {
 
     influx.writePoints([
         {
@@ -225,6 +225,36 @@ app.get(BASE_URL + "counts", (req, res, next) => {
         res.json(data)).catch(err => res.status(404).json({error: err.message}));;
 });
 
+app.get(BASE_URL + "mapping", (req, res, next) => {
+    console.log('in mapping');
+    var locations = new Array(2).fill({ title:"", lat: "", lng:"", counts:{bike: 0, ped: 0}})
+    influx.query('SELECT lat, title, lng, bikeDir1, bikeDir2, pedDir1, pedDir2 FROM cpu_load_short').then(data =>
+        {
+            var i =0;
+            for(i=0;i<data.length;i++)
+            {
+                if(data[i].title=="Rosalind1")
+                {
+                    locations[0].title = data[i].title;
+                    locations[0].lat = data[i].lat;
+                    locations[0].lng = data[i].lng;
+                    locations[0].counts.bike += data[i].bikeDir1 + data[i].bikeDir2;
+                    locations[0].counts.ped += data[i].pedDir1 + data[i].pedDir2;
+                }
+                else if(data[i].title=="Rosalind2")
+                {
+                //    locations[1].title = data[i].title;
+                //    locations[1].lat = data[i].lat;
+                //    locations[1].lng = data[i].lng;
+                //    locations[1].counts.bike += data[i].bikeDir1 + data[i].bikeDir2;
+                //    locations[1].counts.ped += data[i].pedDir1 + data[i].pedDir2;
+                }
+            }
+        
+        res.json(locations)}).catch(err => res.status(404).json({error: err.message}));;
+});
+
+
 // Query for data based on location for hourly
 app.get(BASE_URL + "Hourly" + ":point", (req, res, next) => {
 
@@ -312,17 +342,20 @@ app.get(BASE_URL + "pullCustom", (req, res, next)=>{
 });
 
 app.get(BASE_URL + "pullTest", (req, res, next)=>{
-    let data = new Array(10*2);
-    for(i=0;i<data.length;i++){data[i] = 0;}
-    let lastDate = (Math.floor(Date.now()/1000)-10*86400)*1000;
-    let s = new Date(lastDate).toISOString();
-    let queryString = 'SELECT * FROM cpu_load_short WHERE time > \'' + s + '\' AND  "title" = \'Rosalind1\'';
-    influx.query(queryString).then(results =>{
+    var interval = 86400;
     var i;
+    var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}};
+    influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.floor(Date.now()/1000)-pointsPulled*interval)*1000)).toISOString() + '\' AND  "title" = \'Rosalind1\'').then(results =>{
     for(i=0;i<results.length;i++){
-    var time = ((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time);
-    data[19-(Math.floor(time/86400000)*2)] = results[i].pedDir1;
-    data[19-(Math.floor((time/86400000)*2+1))]= results[i].bikeDir1;
+     data.Ped.East[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(interval*1000)))] += results[i].pedDir1;
+    data.Bike.East[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(interval*1000)))] += results[i].bikeDir1;
+     data.Ped.West[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(interval*1000)))] += results[i].pedDir2;
+    data.Bike.West[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(interval*1000)))] += results[i].bikeDir2;
+console.log(results[i].pedDir1);
+console.log(results[i].pedDir2);
+console.log(results[i].bikeDir1);
+console.log(results[i].bikeDir2);
+
     }
     res.json(data);
     }).catch(err=> res.status(404).json({error: err.message}));;
