@@ -29,8 +29,8 @@ def test2():
     string = ""
     data_dict = {
             'title': 'Rosalind1',
-            'lat': loadString[0],
-            'lng': loadString[1],
+            'lat': -36.757234,
+            'lng': 144.279113,
             'direction1': loadString[2],
             'direction2': loadString[3],
             'bikeDir1': loadString[4],
@@ -57,7 +57,40 @@ def test2():
         info = json.dumps(data_dict)
         info_array = [info]
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        
+
+    loadString = [1,2,3,4,5,6,7,8]
+    string = ""
+    data_dict = {
+            'title': 'Rosalind2',
+            'lat': -36.748794,
+            'lng': 144.290756,
+            'direction1': loadString[6],
+            'direction2': loadString[4],
+            'bikeDir1': loadString[2],
+            'bikeDir2': loadString[7],
+            'pedDir1': loadString[1],
+            'pedDir2': loadString[5] ,
+            'timestamp': 0
+    }
+
+    for x in range(10):
+        data_dict['timestamp']= 3600*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 86400*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 604800*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+        data_dict['timestamp']= 2419200*x
+        info = json.dumps(data_dict)
+        info_array = [info]
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+    
     return "done"
 
 @app.route(URL_BASE + 'test', methods=['POST'])

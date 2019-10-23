@@ -58,7 +58,7 @@ import ChoiceBox from "~/components/ChoiceBox.vue";
 import axios from "axios";
 
 // Setting a base url used for multiple calls
-// const baseUrl = "http://web:8000";
+ const baseUrl = "http://web:8000";
 
 export default {
   components: {
@@ -71,7 +71,7 @@ export default {
   },
   // Calls in the first set of array to define locations of pathways
   async asyncData({ $axios, error }) {
-    let url = "http://localhost/api/mapping";
+    let url = "http://ec2-18-188-251-3.us-east-2.compute.amazonaws.com/api/mapping";
     console.log(url);
     try {
       console.log("before await")
@@ -138,7 +138,7 @@ export default {
   methods: {
     // API call to attain location marker to display on maps
     async locationMapping() {
-      let url = baseUrl + "Hourly" + this.locationTitle.replace(" ", "_");
+      let url = "http://localhost/api/pullHours/" + this.locationTitle.replace(" ", "_");
       console.log(url);
       try {
         let response = await axios.get(url);
@@ -149,7 +149,7 @@ export default {
     },
     // API call to update duration upon changes
     async timeUpdate(newPoint) {
-      let url = baseUrl + newPoint + this.locationTitle.replace(" ", "_");
+      let url = "http://localhost/api/pull/" + newPoint + this.locationTitle.replace(" ", "_");
       console.log(url);
       try {
         let response = await axios.get(url);
