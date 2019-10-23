@@ -7,7 +7,7 @@
     <Map
       class="w-full shadow shadow-lg"
       :pointUpdate="updateActivePoint"
-      :dataPoints="dataPoints"
+      :dataPoints="map"
     />
 
     <!-- Time and point selection boxes -->
@@ -36,12 +36,12 @@
 
       <!-- doughnut chart display... accepting to prop data. One for charts the other for direction-->
       <div id="doughnutContainer">
-        <DoughnutCharts :Hits="hits" :DirectionV="direction" />
+        <DoughnutCharts :DirectionV="direction" />
       </div>
 
       <!-- linechart display -->
       <div id="lineContainer" class="mt-10">
-        <LineChart :bike="bike" :pedestrian="pedestrian" />
+        <LineChart :bike="bike" :pedestrian="pedestrian" :label="time"/>
       </div>
     </div>
   </div>
@@ -55,6 +55,11 @@ import LineChart from "~/components/LineChart/LineChart.vue";
 import NavBar from "~/components/NavBar/NavBar.vue";
 import ChoiceBox from "~/components/ChoiceBox.vue";
 
+import axios from "axios";
+
+// Setting a base url used for multiple calls
+// const baseUrl = "http://web:8000";
+
 export default {
   components: {
     Logo,
@@ -64,19 +69,41 @@ export default {
     NavBar,
     ChoiceBox
   },
+  // Calls in the first set of array to define locations of pathways
+  async asyncData({ $axios, error }) {
+    let url = "http://localhost/api/mapping";
+    console.log(url);
+    try {
+      console.log("before await")
+      const { data } = await $axios.get(url);
+      console.log(data);
+      return {
+        // Said Array of location will be send to the map component to be displayed
+        map: data
+      };
+    } catch (e) {
+      console.log(e)
+      error({
+        statusCode: 503,
+        message: "Unable to fetch events at this time. Plaese try again."
+      });
+    }
+  },
+
   data() {
     return {
       chilDataComparator: "No Location Selected",
       activePoint: null,
       hits: null,
       bike: null,
+      locationTitle: null,
+      content: null,
       pedestrian: null,
+      selectedLocation: null,
       direction: null,
-      title: [
-        { label: "Rosalind 1", value: "Rosalind 1" },
-        { label: "Rosalind 2", value: "Rosalind 2" }
-      ],
+      title: [],
       childData: { data: "No Location Selected" },
+      chilDataComparator: "No Location Selected",
       timeArray: [
         { value: "Hourly", label: "Hourly" },
         { value: "Daily", label: "Daily" },
@@ -85,68 +112,91 @@ export default {
         { value: "Yearly", label: "Yearly" }
       ],
       time: { data: "Hourly" },
-      dataPoints: [
-        // Fake test data
-        {
-          title: "Rosalind 1",
-          counts: { bike: 264, pedestrian: 23 },
-          bike: [10, 20, 40, 30, 50, 60],
-          pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.757234, lng: 144.279113 },
-          direction: {
-            bike: {
-              west: 100,
-              east: 164
-            },
-            pedestrian: {
-              west: 10,
-              east: 13
-            }
-          }
-        },
-        {
-          title: "Rosalind 2",
-          counts: { bike: 100, pedestrian: 241 },
-          bike: [10, 20, 20, 30, 40, 30],
-          pedestrian: [1, 5, 6, 40, 60, 10],
-          location: { lat: -36.748794, lng: 144.290756 },
-          direction: {
-            bike: {
-              west: 40,
-              east: 60
-            },
-            pedestrian: {
-              west: 100,
-              east: 141
-            }
-          }
-        }
-      ]
+      timeComparator: "Hourly",
+      markerSelected: false
     };
   },
-  watch: {
-    'childData.data': function(val) {
+  mounted() {
+    console.log("test");
+    this.CBoxTitle(this.map);
+  },
+  watch:{
+       'childData.data': function(val) {
         if (this.childData.data !== this.chilDataComparator) {
           this.choiceboxCheck(this.childData.data);
           this.chilDataComparator = this.childData.data;
         }
+      },
+      'time.data': function(val) {
+          if (this.timeComparator !== this.time.data) {
+        // infinite loop prevetion for Time selection call
+        this.timeUpdate(this.time.data);
+        this.timeComparator = this.time.data;
+      }
     }
   },
   methods: {
-    //declaring data needed for components to display charts
-    //TODO prop data clean-up
+    // API call to attain location marker to display on maps
+    async locationMapping() {
+      let url = baseUrl + "Hourly" + this.locationTitle.replace(" ", "_");
+      console.log(url);
+      try {
+        let response = await axios.get(url);
+        this.updateByLocation(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    // API call to update duration upon changes
+    async timeUpdate(newPoint) {
+      let url = baseUrl + newPoint + this.locationTitle.replace(" ", "_");
+      console.log(url);
+      try {
+        let response = await axios.get(url);
+        this.updateByTime(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    // Checks if  location selected exist
+    // Updates choiceBox placeholder
     updateActivePoint(newPoint) {
-      this.activePoint = newPoint.title;
-      this.hits = newPoint.counts;
-      this.bike = newPoint.bike;
-      this.pedestrian = newPoint.pedestrian;
-      this.direction = newPoint.direction;
+      this.choiceboxCheck(newPoint.title);
       this.childData.data = newPoint.title;
     },
+    // initialize different variables with data to display on charts
+    updateByLocation(newPoint) {
+      // Data for doughnut chart
+      this.direction = newPoint.direction;
+      // Data for linechart
+      this.pedestrian = newPoint.direction.pedestrian;
+      this.bike = newPoint.direction.bike;
+      console.log();
+    },
+    // updates when changes are made to the duration
+    updateByTime(newPoint) {
+      this.pedestrian = newPoint.direction.pedestrian;
+      this.bike = newPoint.direction.bike;
+    },
+    // intialise an array for the choiceboxes
+    CBoxTitle(data) {
+      let arr = [];
+      data.forEach((item, index) => {
+        let obj = {
+          value: item.title,
+          label: item.title
+        };
+        arr.push(obj);
+      });
+      this.title = arr;
+    },
+    // Func to check is location exist
     choiceboxCheck(title) {
-      for (let i = 0; i < this.dataPoints.length; i++) {
-        if (this.dataPoints[i].title === title) {
-          this.updateActivePoint(this.dataPoints[i]);
+      for (let i = 0; i < this.map.length; i++) {
+        if (this.map[i].title === title) {
+          this.locationTitle = title;
+          this.locationMapping();
+          this.markerSelected = true;
         }
       }
     }

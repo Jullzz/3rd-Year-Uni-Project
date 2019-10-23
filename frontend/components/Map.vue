@@ -86,33 +86,6 @@ export default {
       // },
     };
   },
-  //   // {
-  //   //   title:
-  //   //   counts: {bike: , pedestrian:}
-  //   //   pedestrian: [],
-  //   //   location: { lat: , lng: },
-  //   //   direction: {
-  //   //     bike: {
-  //   //       west: ,
-  //   //       east:
-  //   //     },
-  //   //     pedestrian: {
-  //   //       west: ,
-  //   //       east:
-  //   //     }
-  //   //   }
-  //   // }
-
-  //   // [
-  //   //   {
-  //   //     time:
-  //   //     pedestrian: {
-  //   //       total:
-  //   //       east: [] west: []
-  //   //     }
-  //   //   }
-  //   // ]
-  // ]
 
   watch: {
     heatmapOn: function() {

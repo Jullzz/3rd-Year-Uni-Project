@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <div v-if="Hits != null" align="center">
+  <div>
+    <div v-if="DirectionV != null" align="center">
       <div class="container">
         <!-- display the direction of the CYCLIST -->
         <div class="direction_left">
@@ -45,7 +45,6 @@ import Direction from "~/components/Direction/Direction.vue";
 
 export default {
   props: {
-    Hits: null,
     DirectionV: null
   },
   components: {
@@ -63,18 +62,33 @@ export default {
     };
   },
   beforeUpdate() {
-    //function will be called to update data before updating page
-    this.updateEvent(this.Hits, this.DirectionV);
+    //function will be called to update data before rerendering page
+    this.updateEvent(this.DirectionV);
     this.fillData();
   },
   methods: {
-    //local data will be instatiated by prop data
-    updateEvent(newPoint, direction) {
-      this.bike = newPoint.bike;
-      this.pedestrian = newPoint.pedestrian;
-      this.total = newPoint.bike + newPoint.pedestrian;
-      this.direction_bike = direction.bike;
-      this.direction_pes = direction.pedestrian;
+    // Data from parent pages will be locally initialised on local variables
+    updateEvent(newPoint) {
+      // Calculating total Cyclist and Pedestrians
+      // Data retreived from aprrents is an array
+      this.bike = this.totalCal(newPoint.bike.east, newPoint.bike.west);
+      this.pedestrian = this.totalCal(
+        newPoint.pedestrian.east,
+        newPoint.pedestrian.west
+      );
+      // Calculating total
+      this.total = this.bike + this.pedestrian;
+      // Initialise data to pass to child component
+      this.direction_bike = newPoint.bike;
+      this.direction_pes = newPoint.pedestrian;
+    },
+    // Func to calculate total in an array
+    totalCal(arr1, arr2) {
+      var sum = 0;
+      arr1.forEach((num, index) => {
+        sum = sum + num + arr2[index];
+      });
+      return sum;
     },
     //data will be passed into a doughnut chart js file to render the chart
     //with provided data selected by user

@@ -31,8 +31,8 @@ def test2():
             'title': 'Rosalind1',
             'lat': loadString[0],
             'lng': loadString[1],
-            'direction1': loadString[6]+ loadString[4],
-            'direction2': loadString[5]+ loadString[7],
+            'direction1': loadString[2],
+            'direction2': loadString[3],
             'bikeDir1': loadString[4],
             'bikeDir2': loadString[5],
             'pedDir1': loadString[6],
@@ -57,37 +57,6 @@ def test2():
         info = json.dumps(data_dict)
         info_array = [info]
         response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-    data_dict = {
-            'title': 'Rosalind2',
-            'lat': loadString[0],
-            'lng': loadString[4],
-            'direction1': loadString[6]+ loadString[4],
-            'direction2': loadString[5]+ loadString[7],
-            'bikeDir1': loadString[7],
-            'bikeDir2': loadString[3],
-            'pedDir1': loadString[1],
-            'pedDir2': loadString[2] ,
-            'timestamp': 0
-        }
-
-    for x in range(10):
-        data_dict['timestamp']= 3600*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 86400*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 604800*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 2419200*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-
         
     return "done"
 
