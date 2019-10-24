@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const Influx = require('influx');
 const influx = new Influx.InfluxDB('http://db:8086/mydb');
 
-const pointsPulled = 15;
+const pointsPulled = 15;// the amount of buckets created for each pull and consequently the appropriate timeframe also uses this
 var HTTP_PORT = 8000;
 
 const BASE_URL = "/api/"
@@ -16,86 +16,14 @@ const BASE_URL = "/api/"
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT)) 
-    influx.query('CREATE DATABASE mydb;').catch();
+    influx.query('CREATE DATABASE mydb;').catch();// as soon as the api is up, it creates the database to use.
 });
 
 // Root path
 app.get(BASE_URL, (req, res, next) => {
     res.sendFile(__dirname + '/public/index.html')
 });
-
-
-app.get(BASE_URL + "getPointData", (req, res, next) => {
-    influx.query('SELECT * FROM cpu_load_short').catch().then(data =>
-        res.json(data)).catch(err => res.status(404).json({error: err.message}));;
-    //res.json(data)
-});
-
-app.get(BASE_URL + "deleteAllData", (req, res, next) => {
-    influx.query('DELETE FROM "cpu_load_short"').then(data =>
-        res.json(data)).catch(err=> res.status(404).json({error: err.message}));;
-});
-
-/*app.get(BASE_URL + "test/writePoints", (req, res, next) => {
-    let data = req.body.map(point => {
-        return {
-            measurement: "cpu_load_short",
-            tags: {host: point.host, direction: point.direction},
-            fields: {value: point.value}
-        }
-    });
-    influx.writePoints(data)
-    .catch(err => console.log(err))
-    .then(result => res.json({done: true}));
-})
-
-app.get(BASE_URL + "test/writePoint", (req, res, next) => {
-    let data = [JSON.parse(req.body)].map(point => {
-        // console.log(typeof point.time)
-        return {
-            measurement: "cpu_load_short",
-            // timestamp: point.time,
-            tags: {host: point.host, direction: point.direction},
-            fields: {value: point.value}
-        }
-    });
-    influx.writePoints(data)
-    .catch(err => console.log(err))
-    .then(result => res.json({done: true}));
-})*/
-
-/*
-.########.########..######..########..........##.....######..########.########.##.....##.########.
-....##....##.......##....##....##............##.....##....##.##..........##....##.....##.##.....##
-....##....##.......##..........##...........##......##.......##..........##....##.....##.##.....##
-....##....######....######.....##..........##........######..######......##....##.....##.########.
-....##....##.............##....##.........##..............##.##..........##....##.....##.##.......
-....##....##.......##....##....##........##.........##....##.##..........##....##.....##.##.......
-....##....########..######.....##.......##...........######..########....##.....#######..##.......
-*/
-
-/*app.get(BASE_URL + "test/populatedb", (req, res, next) => {
-    influx.writePoints([
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server02', direction: "out"},
-            fields: {value: 3.2}
-        },
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server03', direction: "out"},
-            fields: {value: 2.2}
-        },
-        {
-            measurement: 'cpu_load_short',
-            tags: {host: 'server11', direction: "out"},
-            fields: {value:  444.99}
-        }
-    ])
-    .catch(err => console.log(err))
-    .then(result => res.json(result))
-});*/
-
+// this function is responsible for wirting to the influx databse using their function
 app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     let data = JSON.parse(req.body);
     let date = new Date();
@@ -126,21 +54,22 @@ app.get(BASE_URL + "sendSingleData", (req, res, next) => {
     .catch(err => console.log(err))
     .then(result => res.json(result))
 });
-
+//pulles 15 hours worth of data
 app.get(BASE_URL + "pullHours/:point", (req, res, next)=>{
     var i;
-    var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}}; 
-    influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.floor(Date.now()/1000)-pointsPulled*3600)*1000)).toISOString() + '\' AND "title" = \''+req.params.point+'\'').then(results =>{
-    for(i=0;i<results.length;i++){
+    var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}}; //creates an empty array for each bike and pedestrain, each east and west. the info witl be sorted into these buckets or the front end to use
+    influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.floor(Date.now()/1000)-pointsPulled*3600)*1000)).toISOString() + '\' AND "title" = \''+req.params.point+'\'').then(results =>{// this function queries the data base and asks for all the data from 15 hours before the current time
+    for(i=0;i<results.length;i++){// for each record in the database,based on the time, it is given an index and then the information for that record is added to the appropriate bucket
      data.Ped.East[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(3600*1000)))] += results[i].pedDir1;
     data.Bike.East[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(3600*1000)))] += results[i].bikeDir1;
      data.Ped.West[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(3600*1000)))] += results[i].pedDir2;
     data.Bike.West[((pointsPulled)-1)-(Math.floor((((Math.floor(Date.now()/1000))*1000)-Date.parse(results[i].time))/(3600*1000)))] += results[i].bikeDir2;
     }
-
+// array of integers is then returned for the front end to use for the line chart
     res.json(data);}).catch(err=> res.status(404).json({error: err.message}));;
 });
-
+// collects all the data from the data bases and places them into a locations array. curently hardcoded but could easily be changed.
+// as the data goes in, it is sorted into 1 of the 2 locations and its values are added to the appropriate count, whether bike or pedestrian
 app.get(BASE_URL + "mapping", (req, res, next)=>{
 var locations = new Array(2);
 locations[0] = { title:"", location: {lat: 0, lng: 0}, counts:{bike: 0, ped: 0}};
@@ -169,7 +98,7 @@ locations[1] = { title:"", location: {lat: 0, lng: 0}, counts:{bike: 0, ped: 0}}
             }    
       res.json(locations)}).catch(err => res.status(404).json({error: err.message}));;
 });
-
+//pulls 15 days worth of data
 app.get(BASE_URL + "pullDays/:point", (req, res, next)=>{
    var i;
     var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}};
@@ -183,7 +112,7 @@ influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.fl
     res.json(data);
     }).catch(err=> res.status(404).json({error: err.message}));;
 });
-
+// pulls 15 weeks worth of data
 app.get(BASE_URL + "pullWeeks/:point", (req, res, next)=>{
    var i;
     var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}};
@@ -197,7 +126,7 @@ influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.fl
     res.json(data);
     }).catch(err=> res.status(404).json({error: err.message}));;
 });
-
+//pulls 15 months worth of data
 app.get(BASE_URL + "pullMonths/:point", (req, res, next)=>{
    var i;
     var data = { Bike: {West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}, Ped:{West: new Array(pointsPulled).fill(0), East: new Array(pointsPulled).fill(0)}};
@@ -211,7 +140,7 @@ influx.query('SELECT * FROM cpu_load_short WHERE time > \'' + (new Date((Math.fl
     res.json(data);
     }).catch(err=> res.status(404).json({error: err.message}));;
 });
-
+//To be used for testing
 app.get(BASE_URL + "pullCustom/:point/:interval", (req, res, next)=>{
     var interval = req.param.interval;
     var i;

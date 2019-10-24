@@ -8,91 +8,7 @@ URL_BASE = "/flask/"
 #   http://web:8000
 API_SA = 'http://web:8000'
 
-@app.route(URL_BASE)
-def hello_world():
-    return render_template('index.html')
-
-
-@app.route(URL_BASE + 'displayAll')
-def get_data():
-    response = requests.get(API_SA +'/api/getPointData').content
-    y = json.loads(response)
-
-    ret = app.response_class(
-        response=json.dumps(y),
-        status=200,
-        mimetype='application/json'
-    )
-    return response
-@app.route(URL_BASE + 'test2')
-def test2():
-    loadString = [1,2,3,4,5,6,7,8]
-    string = ""
-    data_dict = {
-            'title': 'Rosalind1',
-            'lat': -36.757234,
-            'lng': 144.279113,
-            'direction1': loadString[2],
-            'direction2': loadString[3],
-            'bikeDir1': loadString[4],
-            'bikeDir2': loadString[5],
-            'pedDir1': loadString[6],
-            'pedDir2': loadString[7] ,
-            'timestamp': 0
-    }
-    
-    for x in range(10):
-        data_dict['timestamp']= 3600*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 86400*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 604800*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 2419200*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-
-    loadString = [1,2,3,4,5,6,7,8]
-    string = ""
-    data_dict = {
-            'title': 'Rosalind2',
-            'lat': -36.748794,
-            'lng': 144.290756,
-            'direction1': loadString[6],
-            'direction2': loadString[4],
-            'bikeDir1': loadString[2],
-            'bikeDir2': loadString[7],
-            'pedDir1': loadString[1],
-            'pedDir2': loadString[5] ,
-            'timestamp': 0
-    }
-
-    for x in range(10):
-        data_dict['timestamp']= 3600*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 86400*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 604800*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-        data_dict['timestamp']= 2419200*x
-        info = json.dumps(data_dict)
-        info_array = [info]
-        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
-    
-    return "done"
+count =0;# used because everytime 1 person is detected the arduino send 3 packages
 
 @app.route(URL_BASE + 'test', methods=['GET','POST'])
 def test():
@@ -112,38 +28,15 @@ def test():
             'pedDir2': 0,
             'timestamp':0
     }
-    if random()<0.5:
+    if random()<0.5:## function to determine whether it is a cyclist or pedestrian
         data_dict['bikeDir1']=1;
         data_dict['pedDir1']=0;
-    
+    count++
     info = json.dumps(data_dict)
     info_array = [info]
-    response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
+    if count=3:# if its on its 3 package, it finally sends to the database
+        count=0
+        response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
     return "done"
-
-@app.route(URL_BASE + 'sendIt')
-def send_data():
-    return requests.get(API_SA +'/test/writePoints', json=json.loads(requests.get(API_SA +'/api/getPointData').content)).content
-
-@app.route(URL_BASE + 'deleteAll')
-def post_data():
-    return requests.get(API_SA+ '/api/deleteAllData').content
-
-@app.route(URL_BASE + 'sendCustomData', methods=['GET','POST'])
-def send_customer_data():
-    if request.method =='POST':
-        data_dict = {
-            # 'time': int(request.form['time']),
-            'direction': request.form['direction'],
-            'host': request.form['host'],
-            'value': int(request.form['value'])
-        }
-        info = json.dumps(data_dict)
-        #info_array = [info, info, info]
-        info_array = [info]
-        response = requests.get(API_SA +'/test/writePoint', json=info_array)
-    return response.content
-
-
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
