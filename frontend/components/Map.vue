@@ -106,7 +106,7 @@ export default {
                   point.location.lat,
                   point.location.lng
                 ),
-                weight: (point.counts.bike + point.counts.pedestrian) * 10000
+                weight: (point.counts.bike + point.counts.ped) * 10000
               };
             })
           );
@@ -120,7 +120,7 @@ export default {
                   point.location.lat,
                   point.location.lng
                 ),
-                weight: point.counts.pedestrian * 10000
+                weight: point.counts.ped * 10000
               };
             })
           );
@@ -211,7 +211,7 @@ export default {
             point.title +
             "</h1>" +
             "Pedestrians:<b> " +
-            point.counts.pedestrian +
+            point.counts.ped +
             "<br /></b>Bikes:<b> " +
             point.counts.bike +
             "</b></div>";
@@ -239,7 +239,7 @@ export default {
                 point.location.lat,
                 point.location.lng
               ),
-              weight: (point.counts.bike + point.counts.pedestrian) * 10000
+              weight: (point.counts.bike + point.counts.ped) * 10000
             };
           })
         );

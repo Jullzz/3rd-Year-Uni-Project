@@ -45,8 +45,8 @@ export default {
     // on local data
     setProps(Direction) {
       // datas retreived is an array
-      this.east = this.TotalCal(Direction.east);
-      this.west = this.TotalCal(Direction.west);
+      this.east = this.TotalCal(Direction.East);
+      this.west = this.TotalCal(Direction.West);
       this.Total();
     },
     // func to convert from array to variable

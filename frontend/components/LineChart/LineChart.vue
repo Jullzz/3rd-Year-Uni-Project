@@ -45,9 +45,9 @@ export default {
   },
   methods: {
     // Func fro dyanamic labeling depending on the duration selected
-    labelCheck() {
-      if (this.label.data === "Hourly") {
-        this.Labels = ["1pm", "2pm", "3pm", "4pm", "5pm", "6pm"];
+    labelCheck() {/*
+      if (this.label.data === "Hours") {
+        this.Labels = ["", "2pm", "3pm", "4pm", "5pm", "6pm","","","","","","","",""];
       } else if (this.label.data === "Daily") {
         this.Labels = [
           "Monday",
@@ -57,7 +57,7 @@ export default {
           "Friday",
           "Saturday"
         ];
-      } else if (this.label.data === "Weekly") {
+      } else if (this.label.data === "Weeks") {
         this.Labels = [
           "Week 1",
           "Week 2",
@@ -66,20 +66,34 @@ export default {
           "Week 5",
           "Week 6"
         ];
-      } else if (this.label.data === "Monthly") {
+      } else if (this.label.data === "Months") {
         this.Labels = ["January", "February", "March", "April", "May", "June"];
-      } else if (this.label.data === "Yearly") {
-        this.Labels = ["2014", "2015", "2016", "2017", "2018", "2019"];
-      }
+      }*/
+	this.Labels = [
+	   "15 " +this.label.data + " ago",
+           "14 " +this.label.data + " ago",
+           "13 " +this.label.data + " ago",
+           "12 " +this.label.data + " ago",
+           "11 " +this.label.data + " ago",
+           "10 " +this.label.data + " ago",
+           "9 " +this.label.data + " ago",
+           "8 " +this.label.data + " ago",
+           "7 " +this.label.data + " ago",
+           "6 " +this.label.data + " ago",
+           "5 " +this.label.data + " ago",
+           "4 " +this.label.data + " ago",
+           "3 " +this.label.data + " ago",
+           "2 " +this.label.data + " ago",
+           "1 " +this.label.data + " ago"];
     },
     // combine east and west array received from parrent
     totalCal() {
       var sumB = [];
       var sumP = [];
-      var bikeW = this.bike.west;
-      var bikeE = this.bike.east;
-      var pedW = this.pedestrian.west;
-      var pedE = this.pedestrian.east;
+      var bikeW = this.bike.West;
+      var bikeE = this.bike.East;
+      var pedW = this.pedestrian.West;
+      var pedE = this.pedestrian.East;
       // array for bike
       bikeW.forEach((num, index) => {
         sumB.push(num + bikeE[index]);

@@ -71,7 +71,7 @@ export default {
   },
   // Calls in the first set of array to define locations of pathways
   async asyncData({ $axios, error }) {
-    let url = "http://ec2-18-188-251-3.us-east-2.compute.amazonaws.com/api/mapping";
+    let url = "http://ec2-18-188-110-228.us-east-2.compute.amazonaws.com/api/mapping";
     console.log(url);
     try {
       console.log("before await")
@@ -105,14 +105,13 @@ export default {
       childData: { data: "No Location Selected" },
       chilDataComparator: "No Location Selected",
       timeArray: [
-        { value: "Hourly", label: "Hourly" },
-        { value: "Daily", label: "Daily" },
-        { value: "Weekly", label: "Weekly" },
-        { value: "Monthly", label: "Monthly" },
-        { value: "Yearly", label: "Yearly" }
+        { value: "Hours", label: "Hours" },
+        { value: "Days", label: "Days" },
+        { value: "Weeks", label: "Weeks" },
+        { value: "Months", label: "Months" },
       ],
-      time: { data: "Hourly" },
-      timeComparator: "Hourly",
+      time: { data: "Hours" },
+      timeComparator: "Hours",
       markerSelected: false
     };
   },
@@ -138,7 +137,7 @@ export default {
   methods: {
     // API call to attain location marker to display on maps
     async locationMapping() {
-      let url = "http://localhost/api/pullHours/" + this.locationTitle.replace(" ", "_");
+      let url = "http://ec2-18-188-110-228.us-east-2.compute.amazonaws.com/api/pullHours/" + this.locationTitle.replace(" ", "_");
       console.log(url);
       try {
         let response = await axios.get(url);
@@ -149,7 +148,7 @@ export default {
     },
     // API call to update duration upon changes
     async timeUpdate(newPoint) {
-      let url = "http://localhost/api/pull/" + newPoint + this.locationTitle.replace(" ", "_");
+      let url = "http://ec2-18-188-110-228.us-east-2.compute.amazonaws.com/api/pull" + newPoint+"/" + this.locationTitle.replace(" ", "_");
       console.log(url);
       try {
         let response = await axios.get(url);
@@ -161,22 +160,23 @@ export default {
     // Checks if  location selected exist
     // Updates choiceBox placeholder
     updateActivePoint(newPoint) {
+console.log(newPoint.title);
       this.choiceboxCheck(newPoint.title);
       this.childData.data = newPoint.title;
     },
     // initialize different variables with data to display on charts
     updateByLocation(newPoint) {
       // Data for doughnut chart
-      this.direction = newPoint.direction;
+      this.direction = newPoint;
       // Data for linechart
-      this.pedestrian = newPoint.direction.pedestrian;
-      this.bike = newPoint.direction.bike;
+      this.pedestrian = newPoint.Ped;
+      this.bike = newPoint.Bike;
       console.log();
     },
     // updates when changes are made to the duration
     updateByTime(newPoint) {
-      this.pedestrian = newPoint.direction.pedestrian;
-      this.bike = newPoint.direction.bike;
+      this.pedestrian = newPoint.Ped;
+      this.bike = newPoint.Bike;
     },
     // intialise an array for the choiceboxes
     CBoxTitle(data) {

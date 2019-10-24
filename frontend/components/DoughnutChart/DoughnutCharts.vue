@@ -69,18 +69,19 @@ export default {
   methods: {
     // Data from parent pages will be locally initialised on local variables
     updateEvent(newPoint) {
+console.log(newPoint);
       // Calculating total Cyclist and Pedestrians
       // Data retreived from aprrents is an array
-      this.bike = this.totalCal(newPoint.bike.east, newPoint.bike.west);
+      this.bike = this.totalCal(newPoint.Bike.East, newPoint.Bike.West);
       this.pedestrian = this.totalCal(
-        newPoint.pedestrian.east,
-        newPoint.pedestrian.west
+        newPoint.Ped.East,
+        newPoint.Ped.West
       );
       // Calculating total
       this.total = this.bike + this.pedestrian;
       // Initialise data to pass to child component
-      this.direction_bike = newPoint.bike;
-      this.direction_pes = newPoint.pedestrian;
+      this.direction_bike = newPoint.Bike;
+      this.direction_pes = newPoint.Ped;
     },
     // Func to calculate total in an array
     totalCal(arr1, arr2) {

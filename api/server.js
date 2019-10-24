@@ -143,8 +143,8 @@ app.get(BASE_URL + "pullHours/:point", (req, res, next)=>{
 
 app.get(BASE_URL + "mapping", (req, res, next)=>{
 var locations = new Array(2);
-locations[0] = { title:"", lat: "", lng:"", counts:{bike: 0, ped: 0}};
-locations[1] = { title:"", lat: "", lng:"", counts:{bike: 0, ped: 0}};
+locations[0] = { title:"", location: {lat: 0, lng: 0}, counts:{bike: 0, ped: 0}};
+locations[1] = { title:"", location: {lat: 0, lng: 0}, counts:{bike: 0, ped: 0}};
     influx.query('SELECT lat, title, lng, bikeDir1, bikeDir2, pedDir1, pedDir2 FROM cpu_load_short').then(data =>
         {
             var i =0;
@@ -153,16 +153,16 @@ locations[1] = { title:"", lat: "", lng:"", counts:{bike: 0, ped: 0}};
                 if(data[i].title=="Rosalind1")
                 {
                     locations[0].title = data[i].title;
-                    locations[0].lat = data[i].lat;
-                    locations[0].lng = data[i].lng;
+                    locations[0].location.lat = data[i].lat;
+                    locations[0].location.lng = data[i].lng;
                     locations[0].counts.bike += data[i].bikeDir1 + data[i].bikeDir2;
                     locations[0].counts.ped += data[i].pedDir1 + data[i].pedDir2;
                 }
 		else
                 {
                     locations[1].title = data[i].title;
-                    locations[1].lat = data[i].lat;
-                    locations[1].lng = data[i].lng;
+                    locations[1].location.lat = data[i].lat;
+                    locations[1].location.lng = data[i].lng;
                     locations[1].counts.bike += data[i].bikeDir1 + data[i].bikeDir2;
                     locations[1].counts.ped += data[i].pedDir1 + data[i].pedDir2;
                 }
