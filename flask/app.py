@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from random import *
 import http.client, sys, requests, json, base64, struct
 app = Flask(__name__)
 URL_BASE = "/flask/"
@@ -93,31 +94,31 @@ def test2():
     
     return "done"
 
-@app.route(URL_BASE + 'test', methods=['POST'])
+@app.route(URL_BASE + 'test', methods=['GET','POST'])
 def test():
-    obj = json.loads(request.get_data().decode('utf-8'))
-    load64 = obj.get('payload_raw')
-    loadString1 = base64.b64decode(load64)
+    #obj = json.loads(request.get_data().decode('utf-8'))
+    #load64 = obj.get('payload_raw')
+    #loadString1 = base64.b64decode(load64)
     loadString = [1,2,3,4,5,6,7,8]
-    string = ""
     data_dict = {
             'title': 'Rosalind1',
-            'lat': 3,
-            'lng': 5,
-            'direction1': loadString[2],
-            'direction2': loadString[3],
-            'bikeDir1': loadString[4],
-            'bikeDir2': loadString[5],
-            'pedDir1': loadString[6],
-            'pedDir2': loadString[7] 
+            'lat': -36.757234,
+            'lng': 144.279113,
+            'direction1': 1,
+            'direction2': 0,
+            'bikeDir1': 0,
+            'bikeDir2': 0,
+            'pedDir1': 1,
+            'pedDir2': 0,
+            'timestamp':0
     }
+    if random()<0.5:
+        data_dict['bikeDir1']=1;
+        data_dict['pedDir1']=0;
     
     info = json.dumps(data_dict)
     info_array = [info]
-    response = requests.get(API_SA +'/test/singleData', json=info_array)
-    for x in loadString:
-        string += 'x'
-    print(string, file=sys.stderr)
+    response = requests.get(API_SA +'/api/sendSingleData', json=info_array)
     return "done"
 
 @app.route(URL_BASE + 'sendIt')
